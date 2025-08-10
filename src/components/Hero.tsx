@@ -16,13 +16,13 @@ export default function Hero() {
                     />
                </div>
 
-               {/* Decorative Background Elements - Jangkar + Univ */}
+               {/* Decorative Background Elements - Radar + Univ */}
                <div className="absolute inset-0 pointer-events-none">
-                    {/* Jangkar SVG - Center, 70% width, higher z-index */}
+                    {/* Radar SVG - Center, 70% width, higher z-index */}
                     <div className="absolute left-1/2 top-0 transform -translate-x-1/2 translate-y-20 w-[60%] z-[-2]">
                          <Image
                               src="/assets/decorative/radar.png"
-                              alt="Jangkar Rule"
+                              alt="Radar"
                               width={1000}
                               height={1000}
                               className="w-full h-auto opacity-100"
