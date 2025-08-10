@@ -51,10 +51,9 @@ export default function AboutSection() {
                                                   />
                                              </div>
                                         </div>
-                                        
                                         {/* Description Text */}
                                         <div className="text-left">
-                                             <p className="text-sm lg:text-base leading-relaxed text-[midnightblue] font-['Poppins']">
+                                             <p className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl leading-snug sm:leading-relaxed md:leading-relaxed text-[midnightblue] font-['Poppins'] break-words">
                                                   Bentuk <span className="font-bold">&quot;X&quot;</span> dan <span className="font-bold">dua kaki</span> melambangkan manusia sebagai <span className="font-bold">pusat eksplorasi</span> yang aktif bergerak maju, menjelajahi dunia <span className="font-bold">akademik dan teknologi</span>.
                                              </p>
                                         </div>
@@ -155,7 +154,7 @@ export default function AboutSection() {
                               <div className="lg:col-span-3">
                                    <div className="space-y-6">
                                         {/* Description Text */}
-                                        <div className="text-[midnightblue] text-sm lg:text-base leading-relaxed font-['Poppins']">
+                                        <div className="text-[midnightblue] text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl leading-snug sm:leading-relaxed md:leading-relaxed font-['Poppins'] text-left break-words">
                                              <span className="font-normal">Logo ini </span>
                                              <span className="font-bold">merepresentasikan semangat eksplorasi akademik</span>
                                              <span className="font-normal"> dan </span>
