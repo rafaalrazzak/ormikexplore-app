@@ -174,10 +174,14 @@ export default function Hero() {
                               <button className="w-44 h-11 bg-blue-950 rounded-[8px] flex items-center justify-center cursor-pointer select-none
                                    hover:translate-y-2 hover:[box-shadow:0_0px_0_0_rgba(226,220,0,1.00),0_0px_0_0_rgba(226,220,0,0.4)]
                                    hover:border-b-[0px]
+                                   active:translate-y-2 active:[box-shadow:0_0px_0_0_rgba(226,220,0,1.00),0_0px_0_0_rgba(226,220,0,0.4)]
+                                   active:border-b-[0px]
                                    transition-all duration-150 [box-shadow:1px_3px_1px_1px_rgba(226,220,0,1.00),0_6px_0_0_rgba(226,220,0,0.4)]
                                    border-b-[1px] border-yellow-400
+                                   touch-manipulation
                               ">
-                                   <span className="text-white text-sm font-semibold font-['Poppins'] transform transition-transform duration-200 active:scale-95">
+                                   <span className="text-white text-sm font-semibold font-['Poppins'] transform transition-transform duration-200 
+                                        active:scale-95 group-active:scale-95">
                                         CAMPUS EXPLORE
                                    </span>
                                    <Image
@@ -185,7 +189,7 @@ export default function Hero() {
                                         alt="Arrow Up"
                                         width={18}
                                         height={18}
-                                        className="ml-2"
+                                        className="ml-2 transition-transform duration-200 active:scale-95"
                                    />
                               </button>
                          </div>
