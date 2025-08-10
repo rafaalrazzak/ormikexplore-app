@@ -61,7 +61,7 @@ export default function Hero() {
                          <div className="flex justify-center items-end ">
 
                               {/* Left Building */}
-                              <div className="absolute right-[calc(100%-980px)] w-full h-full z-[1]">
+                              <div className="absolute right-[calc(100%-970px)] w-full h-full z-[1]">
                                    <Image
                                         src="/assets/background/building/left.png"
                                         alt=""
@@ -120,13 +120,13 @@ export default function Hero() {
                <div className="relative z-content max-w-container mx-auto px-4 py-6 z-[3]">
                     <div className="flex flex-col items-center">
                          {/* Logo */}
-                         <div className="mb-5">
+                         <div className="mb-3">
                               <Image
                                    src="/assets/logo-ormik.svg"
                                    alt="ORMIK 2025"
                                    width={181}
                                    height={181}
-                                   className="w-[60px] h-[60px] md:w-[80px] md:h-[80px] lg:w-[100px] lg:h-[100px]"
+                                   className="w-[60px] h-[60px] md:w-[80px] md:h-[80px] lg:w-[120px] lg:h-[120px]"
                               />
                          </div>
 
