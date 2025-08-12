@@ -1,5 +1,4 @@
 import Image from "next/image";
-import CoreTeamSection from "./CoreTeamSection";
 
 export default function AboutSection() {
      return (
@@ -19,7 +18,7 @@ export default function AboutSection() {
                     {/* Background Image */}
                     <div className="absolute inset-0 z-[1] m-4 lg:m-8 shadow-lg">
                          <Image
-                              src="/assets/background/bg-logo.png"
+                              src="/assets/background/bg-yellow.png"
                               alt=""
                               fill
                               className="opacity-100 rounded-xl object-center"
