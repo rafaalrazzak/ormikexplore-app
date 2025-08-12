@@ -12,15 +12,7 @@ export default function AboutSection() {
                     <Image src="/assets/hexagonal.png" alt="decorative" width={160} height={70} className="w-full h-auto" />
                </div>
 
-               <div className="absolute inset-0 z-background">
-                    <Image
-                         src="/assets/background/hero.png"
-                         alt=""
-                         fill
-                         className="object- object-center-top"
-                         priority
-                    />
-               </div>
+               
 
                {/* Yellow Section */}
                <section className="relative py-8 sm:10 md:12 lg:py-16 overflow-hidden">
@@ -286,8 +278,6 @@ export default function AboutSection() {
                     </div>
                </section>
 
-               {/* Core Team Section */}
-               <CoreTeamSection />
           </div>
      );
 }
