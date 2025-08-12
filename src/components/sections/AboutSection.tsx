@@ -11,8 +11,6 @@ export default function AboutSection() {
                     <Image src="/assets/hexagonal.png" alt="decorative" width={160} height={70} className="w-full h-auto" />
                </div>
 
-               
-
                {/* Yellow Section */}
                <section className="relative py-8 sm:10 md:12 lg:py-16 overflow-hidden">
                     {/* Background Image */}
@@ -195,7 +193,7 @@ export default function AboutSection() {
 
                     <div className="absolute inset-0 z-[1] m-4 lg:m-8 shadow-lg">
                          <Image
-                              src="/assets/background/hero.png"
+                              src="/assets/background/bg-horizontal.png"
                               alt=""
                               fill
                               className="opacity-100 rounded-xl object-center"
