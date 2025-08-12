@@ -7,7 +7,7 @@ export default function Footer() {
                     {/* Background Image */}
                     <div className="absolute inset-0 z-[1]">
                          <Image
-                              src="/assets/background/bg-logo.png"
+                              src="/assets/background/bg-yellow.png"
                               alt=""
                               fill
                               className="object-cover"
