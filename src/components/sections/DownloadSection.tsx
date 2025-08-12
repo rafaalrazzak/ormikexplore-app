@@ -45,7 +45,7 @@ export default function DownloadSection() {
                                              {/* Button Background */}
                                              <div className="relative w-[280px] h-[50px] sm:w-[320px] sm:h-[60px] lg:w-[380px] lg:h-[70px] xl:w-[400px] xl:h-[75px] mx-auto lg:mx-0 rounded-xl sm:rounded-2xl overflow-hidden shadow-lg group-hover:shadow-2xl group-hover:shadow-blue-500/20 transition-all duration-300">
                                                   <Image
-                                                       src="/assets/background/bg-logo.png"
+                                                       src="/assets/background/bg-yellow.png"
                                                        alt=""
                                                        fill
                                                        className="object-fill group-hover:brightness-110 transition-all duration-300"
@@ -70,7 +70,7 @@ export default function DownloadSection() {
 
                     </div>
 
-                    {/* Footer Section Overlay with bg-logo.png background */}
+                    {/* Footer Section */}
                     <Footer />
                </div>
 
