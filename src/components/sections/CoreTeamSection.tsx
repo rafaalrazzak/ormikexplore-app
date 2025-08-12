@@ -76,7 +76,7 @@ const coreTeamData: TeamMember[] = [
      {
           id: 10,
           name: "Kedisiplinan",
-          position: "NEW POSITION",
+          position: "KEDISIPLINAN",
           description: "Tegas bukan berarti menakutkan, tapi peduli dan bertanggung jawab. Tim kedisiplinan menjaga agar jalannya acara tetap kondusif dan tertib. ",
           image: "https://placehold.co/1920x1080"
      },
@@ -122,51 +122,123 @@ export default function CoreTeamSection() {
           <section className="relative py-16 lg:py-24 overflow-hidden">
 
                {/* Decorative clouds */}
-               <div className="absolute top-10 left-10 w-32 h-20 opacity-70 z-[2]">
+               <div className="absolute top-10 left-10 w-32 h-20 opacity-70 z-[11]">
                     <Image src="/assets/cloud.png" alt="cloud" width={128} height={80} className="w-full h-auto" />
                </div>
-               <div className="absolute bottom-10 right-10 w-40 h-24 opacity-70 z-[2]">
-                    <Image src="/assets/cloud-right.png" alt="cloud" width={160} height={96} className="w-full h-auto" />
-               </div>
+                  <div className="absolute bottom-6 -right-30 w-96 h-56 opacity-95 z-[11]">
+                         <Image src="/assets/cloud.png" alt="cloud" width={384} height={224} className="w-full h-auto -rotate-12" />
+                  </div>
 
-               <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+               <div className="mx-auto px-4 sm:px-8 lg:px-12 relative z-10">
                     {/* Title */}
-                    <div className="text-center mb-12 lg:mb-16">
-                         <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-['Poppins'] text-[gold] mb-4"
+                    <div className="text-center mb-16 lg:mb-20">
+                         <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold font-['Poppins'] text-[gold] mb-6"
                          >
                               THE CORE TEAM IN HERE
                          </h2>
                     </div>
 
                     {/* Team Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 max-w-7xl">
-                         {coreTeamData.map((member) => (
-                              <div
-                                   key={member.id}
-                                   className="relative w-full max-w-sm mx-auto shadow-lg group bg-white"
-                                   style={{ aspectRatio: "16/9" }}
-                              >
-                                   <div className="relative w-full h-0" style={{ paddingBottom: "56.25%" }}>
-                                        <Image
-                                             src={member.image}
-                                             alt={member.position}
-                                             fill
-                                             unoptimized={true}
-                                             className="object-contain w-full h-full transition-transform duration-500"
-                                        />
-                                        <div className="absolute inset-0 flex flex-col justify-center items-center p-4 text-center opacity-0 backdrop-blur-md transition-opacity duration-500 group-hover:opacity-100 bg-[midnightblue]/60">
-                                             <h3 className="text-[gold] text-xl md:text-2xl font-bold mb-2 font-['Poppins']" >
-                                                  {member.position}
-                                             </h3>
-                                             <p className="text-white text-sm md:text-sm leading-relaxed">
-                                                  {member.description}
-                                             </p>
+                    <div className="space-y-4">
+                         {/* Top Row - Left to Right */}
+                         <div className="relative overflow-hidden">
+                              <div className="flex animate-scroll-left space-x-4">
+                                   {/* Duplicate the first half of array to create seamless loop */}
+                                   {[...coreTeamData.slice(0, Math.ceil(coreTeamData.length / 2)), ...coreTeamData.slice(0, Math.ceil(coreTeamData.length / 2))].map((member, index) => (
+                                        <div
+                                             key={`top-${member.id}-${index}`}
+                                             className="relative w-full max-w-md mx-auto shadow-lg group bg-white flex-shrink-0"
+                                             style={{ aspectRatio: "16/9" }}
+                                        >
+                                             <div className="relative w-full h-0" style={{ paddingBottom: "56.25%" }}>
+                                                  <Image
+                                                       src={member.image}
+                                                       alt={member.position}
+                                                       fill
+                                                       unoptimized={true}
+                                                       className="object-contain w-full h-full transition-transform duration-500"
+                                                  />
+                                                  <div className="absolute inset-0 flex flex-col justify-center items-center p-4 text-center opacity-0 backdrop-blur-md transition-opacity duration-500 group-hover:opacity-100 bg-[midnightblue]/60">
+                                                       <h3 className="text-[gold] text-2xl md:text-3xl font-bold mb-3 font-['Poppins']" >
+                                                            {member.position}
+                                                       </h3>
+                                                       <p className="text-white text-base md:text-lg leading-relaxed">
+                                                            {member.description}
+                                                       </p>
+                                                  </div>
+                                             </div>
                                         </div>
-                                   </div>
+                                   ))}
                               </div>
-                         ))}
+                         </div>
+
+                         {/* Bottom Row - Right to Left */}
+                         <div className="relative overflow-hidden">
+                              <div className="flex animate-scroll-right space-x-4">
+                                   {/* Duplicate the second half of array to create seamless loop */}
+                                   {[...coreTeamData.slice(Math.ceil(coreTeamData.length / 2)), ...coreTeamData.slice(Math.ceil(coreTeamData.length / 2))].map((member, index) => (
+                                        <div
+                                             key={`bottom-${member.id}-${index}`}
+                                             className="relative w-full max-w-md mx-auto shadow-lg group bg-white flex-shrink-0"
+                                             style={{ aspectRatio: "16/9" }}
+                                        >
+                                             <div className="relative w-full h-0" style={{ paddingBottom: "56.25%" }}>
+                                                  <Image
+                                                       src={member.image}
+                                                       alt={member.position}
+                                                       fill
+                                                       unoptimized={true}
+                                                       className="object-contain w-full h-full transition-transform duration-500"
+                                                  />
+                                                  <div className="absolute inset-0 flex flex-col justify-center items-center p-4 text-center opacity-0 backdrop-blur-md transition-opacity duration-500 group-hover:opacity-100 bg-[midnightblue]/60">
+                                                       <h3 className="text-[gold] text-2xl md:text-3xl font-bold mb-3 font-['Poppins']" >
+                                                            {member.position}
+                                                       </h3>
+                                                       <p className="text-white text-base md:text-lg leading-relaxed">
+                                                            {member.description}
+                                                       </p>
+                                                  </div>
+                                             </div>
+                                        </div>
+                                   ))}
+                              </div>
+                         </div>
                     </div>
+
+                    <style jsx>{`
+                               @keyframes scroll-left {
+                                     0% {
+                                           transform: translateX(0);
+                                     }
+                                     100% {
+                                           transform: translateX(-50%);
+                                     }
+                               }
+                               
+                               @keyframes scroll-right {
+                                     0% {
+                                           transform: translateX(-50%);
+                                     }
+                                     100% {
+                                           transform: translateX(0);
+                                     }
+                               }
+                               
+                               .animate-scroll-left {
+                                     animation: scroll-left 40s linear infinite;
+                               }
+                               
+                               .animate-scroll-right {
+                                     animation: scroll-right 40s linear infinite;
+                               }
+                               
+                               .animate-scroll-left:hover,
+                               .animate-scroll-right:hover {
+                                     animation-play-state: paused;
+                               }
+                         `}
+                    </style>
                </div>
-          </section>
+          </section >
      );
 }
