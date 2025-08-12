@@ -13,7 +13,7 @@ export const metadata: Metadata = {
         description: "Explore. Evolve. Engage. - Orientasi Mahasiswa Baru STT-NF 2025",
         url: "https://ormikexplore.nurulfikri.ac.id",
         siteName: "ORMIK EXPLORE 2025",
-        images: [{ url: "/assets/background/hero.png", width: 1440, height: 797 }],
+        images: [{ url: "/assets/background/bg-vertical.png", width: 1440, height: 797 }],
         locale: "id_ID",
         type: "website",
     },
