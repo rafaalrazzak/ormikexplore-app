@@ -6,12 +6,12 @@ export default function Hero() {
      return (
           <section className="relative min-h-screen text-center overflow-hidden bg-primary">
                {/* Background Image */}
-               <div className="absolute inset-0 z-background">
+               <div className="absolute inset-0 z-[background]">
                     <Image
-                         src="/assets/background/hero.png"
+                         src="/assets/background/bg-horizontal.png"
                          alt=""
                          fill
-                         className="object- object-center-top"
+                         className="object-cover object-top"
                          priority
                     />
                </div>
