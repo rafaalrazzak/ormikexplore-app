@@ -3,7 +3,7 @@ import Footer from "./Footer";
 
 export default function DownloadSection() {
      return (
-          <section className="relative pt-24 lg:pt-26 pb-8 lg:pb-10 overflow-hidden">
+          <section className="relative pt-24 lg:pt-26 pb-8 lg:pb-10 overflow-hidden" id="download">
 
                {/* Mascot positioned between download and footer with highest z-index */}
                <div className="absolute left-4 sm:left-6 md:left-8 lg:left-14 bottom-28 sm:bottom-30 md:bottom-32 lg:bottom-40 xl:bottom-32 z-[15]">

@@ -141,7 +141,7 @@ export default function Hero() {
                                    alt="ORMIK 2025"
                                    width={181}
                                    height={181}
-                                   className="w-[60px] h-[60px] md:w-[80px] md:h-[80px] lg:w-[120px] lg:h-[120px]"
+                                   className="w-[60px] h-[60px] md:w-[80px] md:h-[80px] lg:w-[120px] lg:h-[120px] "
                               />
                          </div>
 

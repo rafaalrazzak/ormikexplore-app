@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function AboutSection() {
      return (
-          <div className="relative">
+          <div className="relative" id="about">
 
                {/* Hexagonal decorative elements - positioned between Hero and About sections */}
                <div className="hidden lg:block absolute -top-24 left-20 w-[180px] z-[10] -rotate-12 opacity-80">

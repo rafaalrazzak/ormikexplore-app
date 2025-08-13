@@ -119,7 +119,7 @@ const coreTeamData: TeamMember[] = [
 
 export default function CoreTeamSection() {
      return (
-          <section className="relative py-16 lg:py-24 overflow-hidden">
+          <section className="relative py-16 lg:py-24 overflow-hidden" id="core-team">
 
                {/* Decorative clouds */}
                <div className="absolute inset-0 pointer-events-none">
