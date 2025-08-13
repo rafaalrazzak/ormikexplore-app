@@ -21,7 +21,7 @@ const campusData: CampusData[] = [
 
 export default function CampusExplore() {
      return (
-          <section className="relative py-16 lg:py-32">
+          <section className="relative py-16 lg:py-32 " id="campus-explore">
 
                {/* Decorative clouds */}
                <div className="absolute inset-0 pointer-events-none">
@@ -30,7 +30,7 @@ export default function CampusExplore() {
                          <Image src="/assets/cloud.png" alt="cloud" width={128} height={80} className="w-full h-auto" />
                     </div>
 
-                    <div className=" overflow-x-hidden absolute -bottom-16 -right-16  md:-bottom-20 md:-right-2 lg:-right-40 xl:right-0 w-56 h-32 sm:w-80 sm:h-44 md:w-[420px] md:h-60 lg:w-[480px] lg:h-72 opacity-100 z-[11]">
+                    <div className="absolute -bottom-16 -right-16  md:-bottom-20 md:-right-2 lg:-right-40 xl:right-0 w-56 h-32 sm:w-80 sm:h-44 md:w-[420px] md:h-60 lg:w-[480px] lg:h-72 opacity-100 z-[11]">
                          <Image
                               src="/assets/cloud.png"
                               alt="cloud"
@@ -74,7 +74,7 @@ export default function CampusExplore() {
                                    </div>
 
                                    {/* Campus Address */}
-                                   <div className="mb-6 px-1 sm:px-2 lg:px-6">
+                                   <div className="mb-6 px-6 sm:px-2 lg:px-6">
                                         <p className="text-white italic text-sm lg:text-base leading-relaxed">
                                              {campus.address}
                                         </p>

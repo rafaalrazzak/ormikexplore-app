@@ -1,8 +1,23 @@
+"use client";
 import Image from "next/image";
 import Countdown from "@/components/widgets/Countdown";
 import ScheduleCards from "@/components/widgets/ScheduleCards";
 
 export default function Hero() {
+     const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+          e.preventDefault();
+          const targetElement = document.getElementById(targetId);
+          if (targetElement) {
+               const headerOffset = 0; // Adjust if you have a fixed header
+               const elementPosition = targetElement.getBoundingClientRect().top;
+               const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+               window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+               });
+          }
+     };
      return (
           <section className="relative min-h-screen text-center overflow-hidden bg-primary">
                {/* Background Image */}
@@ -171,27 +186,33 @@ export default function Hero() {
 
                          {/* CTA Button */}
                          <div className="relative mb-8 lg:mb-20">
-                              <button className="w-44 h-11 bg-blue-950 rounded-[8px] flex items-center justify-center cursor-pointer select-none
-                                   hover:translate-y-2 hover:[box-shadow:0_0px_0_0_rgba(226,220,0,1.00),0_0px_0_0_rgba(226,220,0,0.4)]
-                                   hover:border-b-[0px]
-                                   active:translate-y-2 active:[box-shadow:0_0px_0_0_rgba(226,220,0,1.00),0_0px_0_0_rgba(226,220,0,0.4)]
-                                   active:border-b-[0px]
-                                   transition-all duration-150 [box-shadow:1px_3px_1px_1px_rgba(226,220,0,1.00),0_6px_0_0_rgba(226,220,0,0.4)]
-                                   border-b-[1px] border-yellow-400
-                                   touch-manipulation
-                              ">
-                                   <span className="text-white text-sm font-semibold font-['Poppins'] transform transition-transform duration-200 
-                                        active:scale-95 group-active:scale-95">
-                                        CAMPUS EXPLORE
-                                   </span>
-                                   <Image
-                                        src="/icons/ri_arrow-up-line.svg"
-                                        alt="Arrow Up"
-                                        width={18}
-                                        height={18}
-                                        className="ml-2 transition-transform duration-200 active:scale-95"
-                                   />
-                              </button>
+                              <a 
+                                   href="#campus-explore" 
+                                   className="inline-block"
+                                   onClick={(e) => handleSmoothScroll(e, 'campus-explore')}
+                              >
+                                   <button className="w-44 h-11 bg-blue-950 rounded-[8px] flex items-center justify-center cursor-pointer select-none
+                                        hover:translate-y-2 hover:[box-shadow:0_0px_0_0_rgba(226,220,0,1.00),0_0px_0_0_rgba(226,220,0,0.4)]
+                                        hover:border-b-[0px]
+                                        active:translate-y-2 active:[box-shadow:0_0px_0_0_rgba(226,220,0,1.00),0_0px_0_0_rgba(226,220,0,0.4)]
+                                        active:border-b-[0px]
+                                        transition-all duration-150 [box-shadow:1px_3px_1px_1px_rgba(226,220,0,1.00),0_6px_0_0_rgba(226,220,0,0.4)]
+                                        border-b-[1px] border-yellow-400
+                                        touch-manipulation
+                                   ">
+                                        <span className="text-white text-sm font-semibold font-['Poppins'] transform transition-transform duration-200 
+                                             active:scale-95 group-active:scale-95">
+                                             CAMPUS EXPLORE
+                                        </span>
+                                        <Image
+                                             src="/icons/ri_arrow-up-line.svg"
+                                             alt="Arrow Up"
+                                             width={18}
+                                             height={18}
+                                             className="ml-2 transition-transform duration-200 active:scale-95"
+                                        />
+                                   </button>
+                              </a>
                          </div>
 
                          {/* Countdown Component */}
