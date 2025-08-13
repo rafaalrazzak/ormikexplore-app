@@ -21,14 +21,31 @@ const campusData: CampusData[] = [
 
 export default function CampusExplore() {
      return (
-          <section className="relative py-16 lg:py-24 overflow-hidden">
+          <section className="relative py-16 lg:py-32">
 
                {/* Decorative clouds */}
                <div className="absolute top-10 left-10 w-32 h-20 opacity-70 z-[2]">
                     <Image src="/assets/cloud.png" alt="cloud" width={128} height={80} className="w-full h-auto" />
                </div>
-               <div className="absolute bottom-10 right-10 w-40 h-24 opacity-70 z-[2]">
-                    <Image src="/assets/cloud-right.png" alt="cloud" width={160} height={96} className="w-full h-auto" />
+
+                  <div className="absolute -bottom-16 -right-16  md:-bottom-20 md:-right-2 lg:-right-40 xl:right-0 w-56 h-32 sm:w-80 sm:h-44 md:w-[420px] md:h-60 lg:w-[480px] lg:h-72 opacity-100 z-[11]">
+                         <Image
+                               src="/assets/cloud.png"
+                               alt="cloud"
+                               fill
+                               className="w-full h-full object-contain -rotate-12"
+                               sizes="(max-width: 640px) 14rem, (max-width: 1024px) 20rem, (max-width: 1280px) 26rem, 30rem"
+                         />
+                  </div>
+
+               <div className="absolute inset-0 z-[1] m-4 lg:m-8">
+                    <Image
+                         src="/assets/background/bg-horizontal.png"
+                         alt=""
+                         fill
+                         className="opacity-60 rounded-xl object-center"
+                         priority
+                    />
                </div>
 
                <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -54,11 +71,11 @@ export default function CampusExplore() {
                                    </div>
 
                                    {/* Campus Address */}
-                                      <div className="mb-6 px-1 sm:px-2 lg:px-6">
-                                             <p className="text-white italic text-sm lg:text-base leading-relaxed">
-                                                   {campus.address}
-                                             </p>
-                                      </div>
+                                   <div className="mb-6 px-1 sm:px-2 lg:px-6">
+                                        <p className="text-white italic text-sm lg:text-base leading-relaxed">
+                                             {campus.address}
+                                        </p>
+                                   </div>
 
                                    {/* Campus Map */}
                                    <div className="w-full">
