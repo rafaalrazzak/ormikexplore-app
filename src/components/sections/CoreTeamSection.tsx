@@ -122,12 +122,14 @@ export default function CoreTeamSection() {
           <section className="relative py-16 lg:py-24 overflow-hidden">
 
                {/* Decorative clouds */}
-               <div className="absolute top-10 left-10 w-32 h-20 opacity-70 z-[11]">
-                    <Image src="/assets/cloud.png" alt="cloud" width={128} height={80} className="w-full h-auto" />
+               <div className="absolute inset-0 pointer-events-none">
+
+                    <div className="absolute bottom-6 -right-30 w-96 h-56 opacity-95 z-[11]">
+                         {/* <Image src="/assets/cloud.png" alt="cloud" width={384} height={224} className="w-full h-auto -rotate-12" /> */}
+                    </div>
+
                </div>
-                  <div className="absolute bottom-6 -right-30 w-96 h-56 opacity-95 z-[11]">
-                         <Image src="/assets/cloud.png" alt="cloud" width={384} height={224} className="w-full h-auto -rotate-12" />
-                  </div>
+
 
                <div className="mx-auto px-4 sm:px-8 lg:px-12 relative z-10">
                     {/* Title */}
@@ -142,6 +144,11 @@ export default function CoreTeamSection() {
                     <div className="space-y-4">
                          {/* Top Row - Left to Right */}
                          <div className="relative overflow-hidden">
+                              {/* Shadow overlay for right edge - Top Row */}
+                              <div className="absolute top-0 right-0 w-12 h-full z-[20] pointer-events-none">
+                                   <div className="w-full h-full bg-gradient-to-l from-[#000E61] via-[#000E61]/60 to-transparent"></div>
+                              </div>
+
                               <div className="flex animate-scroll-left space-x-4">
                                    {/* Duplicate the first half of array to create seamless loop */}
                                    {[...coreTeamData.slice(0, Math.ceil(coreTeamData.length / 2)), ...coreTeamData.slice(0, Math.ceil(coreTeamData.length / 2))].map((member, index) => (
@@ -174,7 +181,11 @@ export default function CoreTeamSection() {
 
                          {/* Bottom Row - Right to Left */}
                          <div className="relative overflow-hidden">
-                              <div className="flex animate-scroll-right space-x-4">
+                              {/* Shadow overlay for right edge - Bottom Row */}
+                              <div className="absolute top-0 right-0 w-12 h-full z-20 pointer-events-none">
+                                   <div className="w-full h-full bg-gradient-to-l from-[#000E61] via-[#000E61]/60 to-transparent"></div>
+                              </div>
+                              <div className="flex animate-scroll-left space-x-4">
                                    {/* Duplicate the second half of array to create seamless loop */}
                                    {[...coreTeamData.slice(Math.ceil(coreTeamData.length / 2)), ...coreTeamData.slice(Math.ceil(coreTeamData.length / 2))].map((member, index) => (
                                         <div
@@ -197,47 +208,13 @@ export default function CoreTeamSection() {
                                                        <p className="text-white text-base md:text-lg leading-relaxed">
                                                             {member.description}
                                                        </p>
-                                                  </div>    
+                                                  </div>
                                              </div>
                                         </div>
                                    ))}
                               </div>
                          </div>
                     </div>
-
-                    <style jsx>{`
-                               @keyframes scroll-left {
-                                     0% {
-                                           transform: translateX(0);
-                                     }
-                                     100% {
-                                           transform: translateX(-50%);
-                                     }
-                               }
-                               
-                               @keyframes scroll-right {
-                                     0% {
-                                           transform: translateX(-50%);
-                                     }
-                                     100% {
-                                           transform: translateX(0);
-                                     }
-                               }
-                               
-                               .animate-scroll-left {
-                                     animation: scroll-left 40s linear infinite;
-                               }
-                               
-                               .animate-scroll-right {
-                                     animation: scroll-right 40s linear infinite;
-                               }
-                               
-                               .animate-scroll-left:hover,
-                               .animate-scroll-right:hover {
-                                     animation-play-state: paused;
-                               }
-                         `}
-                    </style>
                </div>
           </section >
      );
