@@ -197,7 +197,7 @@ export default function CoreTeamSection() {
                                                        <p className="text-white text-base md:text-lg leading-relaxed">
                                                             {member.description}
                                                        </p>
-                                                  </div>
+                                                  </div>    
                                              </div>
                                         </div>
                                    ))}
