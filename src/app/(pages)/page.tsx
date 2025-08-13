@@ -19,6 +19,13 @@ export default function Home() {
                         className="object-cover object-top"
                         priority
                     />
+                    <Image
+                        src="/assets/background/bg-road-vertical.svg"
+                        alt=""
+                        fill
+                        className="object-cover object-top opacity-5"
+                        priority
+                    />
                 </div>
                 <AboutSection />
                 <CoreTeamSection />
