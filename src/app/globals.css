@@ -72,3 +72,15 @@ body {
 .animate-scroll-right:hover {
   animation-play-state: paused;
 }
+
+.text-gold-custom {
+  color: #ffd700;
+}
+.text-midnightblue-custom {
+  color: #191970;
+}
+.text-shadow-blob-tebal {
+  color: transparent;
+  -webkit-text-stroke: 12px var(--midnightblue-custom, #191970);
+  text-shadow: 0 0 10px var(--midnightblue-custom, #191970);
+}

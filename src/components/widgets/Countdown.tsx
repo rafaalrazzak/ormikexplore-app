@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect } from 'react';
-// import { motion, AnimatePresence } from 'framer-motion';
 import { motion, AnimatePresence } from 'framer-motion';
 import { countdownData } from '@/data/ormikData';
 
@@ -156,7 +155,7 @@ export default function Countdown() {
 
                {/* Countdown Numbers */}
                <div className="flex justify-center items-center gap-2 md:gap-4 lg:gap-6 xl:gap-7 mb-3 md:mb-4 lg:mb-5 relative z-5">
-                    {/* Animated Number Counter hanya saat animasi awal */}
+                    {/* Animated Number Counter */}
                     {[
                          { label: 'Day', value: timeLeft.days },
                          { label: 'Hour', value: timeLeft.hours },
@@ -168,10 +167,11 @@ export default function Countdown() {
                                    className="w-[50px] h-[35px] md:w-[65px] md:h-[45px] lg:w-[80px] lg:h-[55px] xl:w-[90px] xl:h-[60px] relative overflow-hidden"
                                    animate={isCountdownFinished ? {
                                         scale: [1, 1.1, 1],
-                                        rotate: [0, 5, -5, 0]
+                                        rotate: [0, 5, -5, 0],
                                    } : {}}
                                    transition={{ duration: 0.6, repeat: isCountdownFinished ? Infinity : 0, repeatDelay: 1 }}
                               >
+                                   {/* Lapisan bawah: Stroke dan Glow */}
                                    {animated ? (
                                         <AnimatePresence initial={false} mode="wait">
                                              <motion.div
@@ -180,21 +180,23 @@ export default function Countdown() {
                                                   animate={{ y: 0, opacity: 1 }}
                                                   exit={{ y: -30, opacity: 0 }}
                                                   transition={{ duration: 0.4, type: 'spring', bounce: 0.2 }}
-                                                  className={`w-[50px] h-[35px] md:w-[65px] md:h-[45px] lg:w-[80px] lg:h-[55px] xl:w-[90px] xl:h-[60px] left-[2px] md:left-[3px] lg:left-[4px] xl:left-[5px] top-0 absolute flex items-center justify-center font-bold font-['Poppins'] leading-tight ${isCountdownFinished ? 'text-gold animate-pulse' : 'text-[midnightblue]'} text-[20px] md:text-[26px] lg:text-[36px] xl:text-[42px]`}
+                                                  className={`w-full h-full absolute top-0 left-0 flex items-center justify-center font-bold font-['Poppins'] leading-tight text-[20px] md:text-[26px] lg:text-[36px] xl:text-[42px] ${isCountdownFinished ? 'text-gold-custom animate-pulse' : 'text-shadow-blob-tebal'}`}
                                              >
                                                   {item.value.toString().padStart(2, '0')}
                                              </motion.div>
                                         </AnimatePresence>
                                    ) : (
-                                        <div className={`w-[50px] h-[35px] md:w-[65px] md:h-[45px] lg:w-[80px] lg:h-[55px] xl:w-[90px] xl:h-[60px] left-[2px] md:left-[3px] lg:left-[4px] xl:left-[5px] top-0 absolute flex items-center justify-center font-bold font-['Poppins'] leading-tight ${isCountdownFinished ? 'text-gold animate-pulse' : 'text-[midnightblue]'} text-[20px] md:text-[26px] lg:text-[36px] xl:text-[42px]`}>
+                                        <div className={`w-full h-full absolute top-0 left-0 flex items-center justify-center font-bold font-['Poppins'] leading-tight text-[20px] md:text-[26px] lg:text-[36px] xl:text-[42px] ${isCountdownFinished ? 'text-gold-custom animate-pulse' : 'text-shadow-blob-tebal'}`}>
                                              {item.value.toString().padStart(2, '0')}
                                         </div>
                                    )}
-                                   <div className="w-[50px] h-[35px] md:w-[65px] md:h-[45px] lg:w-[80px] lg:h-[55px] xl:w-[90px] xl:h-[60px] left-0 top-0 absolute flex items-center justify-center text-[gold] text-[20px] md:text-[26px] lg:text-[36px] xl:text-[42px] font-bold font-['Poppins'] leading-tight pointer-events-none select-none">
+
+                                   {/* Lapisan atas: Teks Emas */}
+                                   <div className="w-full h-full absolute top-0 left-0 flex items-center justify-center text-gold-custom text-[20px] md:text-[26px] lg:text-[36px] xl:text-[42px] font-bold font-['Poppins'] leading-tight pointer-events-none select-none">
                                         {item.value.toString().padStart(2, '0')}
                                    </div>
                               </motion.div>
-                              <p className={`font-medium mt-1 md:mt-1.5 lg:mt-2 text-[10px] md:text-[12px] lg:text-[14px] xl:text-[16px] ${isCountdownFinished ? 'text-gold animate-pulse' : 'text-white'}`}>{item.label}</p>
+                              <p className={`font-medium mt-1 md:mt-1.5 lg:mt-2 text-[10px] md:text-[12px] lg:text-[14px] xl:text-[16px] ${isCountdownFinished ? 'text-gold-custom animate-pulse' : 'text-white'}`}>{item.label}</p>
                          </div>
                     ))}
                </div>
