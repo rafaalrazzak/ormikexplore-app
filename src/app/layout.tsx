@@ -14,7 +14,7 @@ export const metadata: Metadata = {
         description: "ORMIK EXPLORE 2025 memiliki visi menjadi titik mulai eksplorasi mahasiswa baru STT-NF dalam membangun semangat akademik, budaya positif, dan kesiapan diri di era modern.",
         url: "https://ormik.nurulfikri.ac.id",
         siteName: "ORMIK EXPLORE 2025 | STTNF",
-        images: [{ url: "/assets/logo-ormik.svg", width: 1200, height: 630 }],
+        images: [{ url: "/icons/logo.png", width: 1200, height: 630 }],
         locale: "id_ID",
         type: "website",
     },
