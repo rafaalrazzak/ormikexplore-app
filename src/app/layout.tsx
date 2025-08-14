@@ -6,19 +6,19 @@ import { inter, poppins } from "./fonts";
 
 export const metadata: Metadata = {
     title: "ORMIK EXPLORE 2025 | STTNF",
-    description: "Explore. Evolve. Engage. - Orientasi Mahasiswa Baru STT-NF 2025",
+    description: "ORMIK EXPLORE 2025 memiliki visi menjadi titik mulai eksplorasi mahasiswa baru STT-NF dalam membangun semangat akademik, budaya positif, dan kesiapan diri di era modern.",
     icons: { icon: "/assets/logo-ormik.svg" },
-    metadataBase: new URL("https://ormikexplore.nurulfikri.ac.id"),
+    metadataBase: new URL("https://ormik.nurulfikri.ac.id"),
     openGraph: {
         title: "ORMIK EXPLORE 2025",
-        description: "Explore. Evolve. Engage. - Orientasi Mahasiswa Baru STT-NF 2025",
-        url: "https://ormikexplore.nurulfikri.ac.id",
+        description: "ORMIK EXPLORE 2025 memiliki visi menjadi titik mulai eksplorasi mahasiswa baru STT-NF dalam membangun semangat akademik, budaya positif, dan kesiapan diri di era modern.",
+        url: "https://ormik.nurulfikri.ac.id",
         siteName: "ORMIK EXPLORE 2025",
-        images: [{ url: "/assets/background/bg-vertical.png", width: 1440, height: 797 }],
+        images: [{ url: "/assets/background/bg-horizontal.png", width: 1440, height: 797 }],
         locale: "id_ID",
         type: "website",
     },
-    alternates: { canonical: "https://ormikexplore.nurulfikri.ac.id" },
+    alternates: { canonical: "https://ormik.nurulfikri.ac.id" },
 };
 
 export default function RootLayout({
