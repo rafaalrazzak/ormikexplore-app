@@ -10,10 +10,10 @@ export const metadata: Metadata = {
     icons: { icon: "/assets/logo-ormik.svg" },
     metadataBase: new URL("https://ormik.nurulfikri.ac.id"),
     openGraph: {
-        title: "ORMIK EXPLORE 2025",
+        title: "ORMIK EXPLORE 2025 | STTNF",
         description: "ORMIK EXPLORE 2025 memiliki visi menjadi titik mulai eksplorasi mahasiswa baru STT-NF dalam membangun semangat akademik, budaya positif, dan kesiapan diri di era modern.",
         url: "https://ormik.nurulfikri.ac.id",
-        siteName: "ORMIK EXPLORE 2025",
+        siteName: "ORMIK EXPLORE 2025 | STTNF",
         images: [{ url: "/assets/background/bg-horizontal.png", width: 1440, height: 797 }],
         locale: "id_ID",
         type: "website",
