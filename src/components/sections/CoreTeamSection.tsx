@@ -124,10 +124,17 @@ export default function CoreTeamSection() {
                {/* Decorative clouds */}
                <div className="absolute inset-0 pointer-events-none">
 
-                    <div className="absolute bottom-6 -right-30 w-96 h-56 opacity-95 z-[11]">
-                         {/* <Image src="/assets/cloud.png" alt="cloud" width={384} height={224} className="w-full h-auto -rotate-12" /> */}
+                    <div className="absolute bottom-6 -right-30 w-48 h-28 sm:w-64 sm:h-36 md:w-80 md:h-48 lg:w-96 lg:h-56 xl:w-[28rem] xl:h-64 2xl:w-[32rem] 2xl:h-72 opacity-95 z-[11]">
+                         <Image src="/assets/cloud.png" alt="cloud" width={384} height={224} className="w-full h-auto -rotate-12" />
                     </div>
 
+                    <div className="absolute top-44 -right-6 w-26 h-26 sm:top-30 sm:right-0 sm:w-40 sm:h-40 md:top-44 md:right-0 md:w-40 md:h-40 lg:w-40 lg:h-40 xl:w-40 xl:h-40 2xl:h-72 z-[2]">
+                         <Image src="/assets/hexagonal.png" alt="hexagonal" width={50} height={50} className="w-full h-auto" />
+                    </div>
+                    
+                    <div className="absolute bottom-0 -left-12 w-26 h-26 sm:bottom-0 sm:-left-14 sm:w-40 sm:h-40 md:bottom-6 md:-left-10 md:w-40 md:h-40 lg:w-40 lg:h-40 xl:w-40 xl:h-40 2xl:h-72 z-[11]">
+                         <Image src="/assets/hexagonal.png" alt="hexagonal" width={50} height={50} className="w-full h-auto" />
+                    </div>
                </div>
 
 
@@ -166,10 +173,18 @@ export default function CoreTeamSection() {
                                                        className="object-contain w-full h-full transition-transform duration-500"
                                                   />
                                                   <div className="absolute inset-0 flex flex-col justify-center items-center p-4 text-center opacity-0 backdrop-blur-md transition-opacity duration-500 group-hover:opacity-100 bg-[midnightblue]/60">
-                                                       <h3 className="text-[gold] text-2xl md:text-3xl font-bold mb-3 font-['Poppins']" >
-                                                            {member.position}
-                                                       </h3>
-                                                       <p className="text-white text-base md:text-lg leading-relaxed">
+                                                       {/* Implementasi Teks Stroke */}
+                                                       <div className="relative mb-3">
+                                                            {/* Lapisan bawah: teks kuning solid dengan shadow dan glow */}
+                                                            <h3 className="absolute inset-0 flex items-center justify-center text-2xl md:text-3xl font-bold text-transparent font-['Poppins'] text-shadow-solid-glow">
+                                                                 {member.position}
+                                                            </h3>
+                                                            {/* Lapisan atas: teks biru tua */}
+                                                            <h3 className="relative z-10 text-2xl md:text-3xl font-bold text-midnightblue-custom font-['Poppins']">
+                                                                 {member.position}
+                                                            </h3>
+                                                       </div>
+                                                       <p className="text-white text-sm leading-relaxed drop-shadow-sm">
                                                             {member.description}
                                                        </p>
                                                   </div>
@@ -189,7 +204,7 @@ export default function CoreTeamSection() {
                                    {/* Duplicate the second half of array to create seamless loop */}
                                    {[...coreTeamData.slice(Math.ceil(coreTeamData.length / 2)), ...coreTeamData.slice(Math.ceil(coreTeamData.length / 2))].map((member, index) => (
                                         <div
-                                             key={`bottom-${member.id}-${index}`}
+                                             key={`top-${member.id}-${index}`}
                                              className="relative w-full max-w-md mx-auto shadow-lg group bg-white flex-shrink-0"
                                              style={{ aspectRatio: "16/9" }}
                                         >
@@ -202,10 +217,18 @@ export default function CoreTeamSection() {
                                                        className="object-contain w-full h-full transition-transform duration-500"
                                                   />
                                                   <div className="absolute inset-0 flex flex-col justify-center items-center p-4 text-center opacity-0 backdrop-blur-md transition-opacity duration-500 group-hover:opacity-100 bg-[midnightblue]/60">
-                                                       <h3 className="text-[gold] text-2xl md:text-3xl font-bold mb-3 font-['Poppins']" >
-                                                            {member.position}
-                                                       </h3>
-                                                       <p className="text-white text-base md:text-lg leading-relaxed">
+                                                       {/* Implementasi Teks Stroke */}
+                                                       <div className="relative mb-3">
+                                                            {/* Lapisan bawah: teks kuning solid dengan shadow dan glow */}
+                                                            <h3 className="absolute inset-0 flex items-center justify-center text-2xl md:text-3xl font-bold text-transparent font-['Poppins'] text-shadow-solid-glow">
+                                                                 {member.position}
+                                                            </h3>
+                                                            {/* Lapisan atas: teks biru tua */}
+                                                            <h3 className="relative z-10 text-2xl md:text-3xl font-bold text-midnightblue-custom font-['Poppins']">
+                                                                 {member.position}
+                                                            </h3>
+                                                       </div>
+                                                       <p className="text-white text-sm leading-relaxed drop-shadow-sm">
                                                             {member.description}
                                                        </p>
                                                   </div>

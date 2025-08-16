@@ -84,3 +84,10 @@ body {
   -webkit-text-stroke: 12px var(--midnightblue-custom, #191970);
   text-shadow: 0 0 10px var(--midnightblue-custom, #191970);
 }
+
+.text-shadow-solid-glow {
+  color: var(--gold-custom, #ffd700);
+  -webkit-text-stroke: 12px var(--midnightblue-custom, #ffd700);
+  text-shadow: -2px -2px 0 var(--gold-custom, #ffd700),
+    2px -2px 0 var(--gold-custom, #ffd700);
+}

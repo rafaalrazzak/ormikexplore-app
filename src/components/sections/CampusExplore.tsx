@@ -21,24 +21,19 @@ const campusData: CampusData[] = [
 
 export default function CampusExplore() {
      return (
-          <section className="relative py-16 lg:py-32 " id="campus-explore">
+          <section className="relative py-16 lg:py-32 overflow-hidden" id="campus-explore">
 
                {/* Decorative clouds */}
                <div className="absolute inset-0 pointer-events-none">
-                    
-                    <div className="absolute top-10 left-10 w-32 h-20 opacity-70 z-[2]">
-                         <Image src="/assets/cloud.png" alt="cloud" width={128} height={80} className="w-full h-auto" />
+
+                    <div className="absolute top-10 left-10 w-32 h-20 z-[12]">
+                         <Image src="/assets/decorative/iconexplore.svg" alt="cloud" width={128} height={80} className="w-full h-auto" />
                     </div>
 
-                    <div className="absolute -bottom-16 -right-16  md:-bottom-20 md:-right-2 lg:-right-40 xl:right-0 w-56 h-32 sm:w-80 sm:h-44 md:w-[420px] md:h-60 lg:w-[480px] lg:h-72 opacity-100 z-[11]">
-                         <Image
-                              src="/assets/cloud.png"
-                              alt="cloud"
-                              fill
-                              className="w-full h-full object-contain -rotate-12"
-                              sizes="(max-width: 640px) 14rem, (max-width: 1024px) 20rem, (max-width: 1280px) 26rem, 30rem"
-                         />
+                    <div className="absolute bottom-6 -right-30 w-48 h-28 sm:w-64 sm:h-36 md:w-80 md:h-48 lg:w-96 lg:h-56 xl:w-[28rem] xl:h-64 2xl:w-[32rem] 2xl:h-72 opacity-95 z-[11]">
+                         <Image src="/assets/cloud.png" alt="cloud" width={384} height={224} className="w-full h-auto -rotate-12" />
                     </div>
+
                </div>
 
                <div className="absolute inset-0 z-[1] m-4 lg:m-8">

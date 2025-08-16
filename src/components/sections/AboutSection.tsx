@@ -3,30 +3,40 @@ import Image from "next/image";
 export default function AboutSection() {
      return (
           <div className="relative" id="about">
+               <div className="absolute inset-0 pointer-events-none">
 
-               {/* Hexagonal decorative elements - positioned between Hero and About sections */}
-               <div className="hidden lg:block absolute -top-24 left-20 w-[180px] z-[10] -rotate-12 opacity-80">
-                    <Image src="/assets/hexagonal.png" alt="decorative" width={160} height={70} className="w-full h-auto" />
-               </div>
-               <div className="hidden lg:block absolute -top-18 right-20 w-[160px] z-[10] rotate-12 opacity-80">
-                    <Image src="/assets/hexagonal.png" alt="decorative" width={160} height={70} className="w-full h-auto" />
+                    {/* Hexagonal decorative elements - positioned between Hero and About sections */}
+                    <div className="hidden lg:block absolute -top-24 left-20 w-[180px] z-[10] -rotate-12 opacity-80">
+                         <Image src="/assets/hexagonal.png" alt="decorative" width={160} height={70} className="w-full h-auto" />
+                    </div>
+                    <div className="hidden lg:block absolute -top-18 right-20 w-[160px] z-[10] rotate-12 opacity-80">
+                         <Image src="/assets/hexagonal.png" alt="decorative" width={160} height={70} className="w-full h-auto" />
+                    </div>
+
+                    <div className="absolute -bottom-12 -left-24 md:-left-38 w-48 h-28 sm:w-64 sm:h-36 md:w-80 md:h-48 lg:w-96 lg:h-56 xl:w-[28rem] xl:h-52 2xl:w-[32rem] 2xl:h-72 opacity-95 z-[11]">
+                         <Image src="/assets/cloud.png" alt="cloud" width={384} height={224} className="w-full h-auto -rotate-12" />
+                    </div>
+
+                    <div className="absolute -bottom-6 right-1 md:right-0 w-20 h-20 sm:w-20 sm:h-20 md:w-30 md:h-30 lg:w-30 lg:h-30 xl:w-40 xl:h-40 2xl:w-50 2xl:h-50 opacity-95 z-[11]">
+                         <Image src="/assets/decorative/iconexplore.svg" alt="iconexplore" width={50} height={50} className="w-full h-auto" />
+                    </div>
                </div>
 
                {/* Yellow Section */}
-               <section className="relative py-8 sm:10 md:12 lg:py-16 overflow-hidden">
+               <section className="relative py-8 sm:px-10 sm:py-14 md:px-12 lg:py-16 overflow-hidden">
                     {/* Background Image */}
                     <div className="absolute inset-0 z-[1] m-4 lg:m-8 shadow-lg">
                          <Image
                               src="/assets/background/bg-yellow.png"
                               alt=""
                               fill
-                              className="opacity-100 rounded-xl object-center"
+                              className="object-cover rounded-2xl"
                               priority
                          />
                     </div>
 
-                    <div className="container mx-auto px-12 sm:px-4 lg:px-6 relative z-10">
-                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-center">
+                    <div className="relative container mx-auto px-12 sm:px-4 md:px-14 lg:px-18 xl:px-12 z-10">
+                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-18 items-center">
                               {/* Left Content - Explore Our Logo */}
                               <div className="lg:col-span-3">
                                    <div className="space-y-4 lg:space-y-6">
@@ -43,9 +53,9 @@ export default function AboutSection() {
                                              </div>
                                         </div>
                                         {/* Description Text */}
-                                        <div className="text-left">
-                                             <p className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl leading-snug sm:leading-relaxed md:leading-relaxed text-[midnightblue] font-['Poppins'] break-words">
-                                                  Bentuk <span className="font-semibold">&quot;X&quot;</span> dan <span className="font-semibold">dua kaki</span> melambangkan manusia sebagai <span className="font-semibold">pusat eksplorasi</span> yang aktif bergerak maju, menjelajahi dunia <span className="font-semibold">akademik dan teknologi</span>.
+                                        <div className="text-justify">
+                                             <p className="text-xs sm:text-sm  leading-snug sm:leading-relaxed md:leading-relaxed text-[midnightblue] font-['Poppins'] break-words">
+                                                  Bentuk <span className="font-bold">&quot;X&quot;</span> dan <span className="font-bold">dua kaki</span> melambangkan manusia sebagai <span className="font-bold">pusat eksplorasi</span> yang aktif bergerak maju, menjelajahi dunia <span className="font-bold">akademik dan teknologi</span>.
                                              </p>
                                         </div>
                                    </div>
@@ -53,6 +63,11 @@ export default function AboutSection() {
 
                               {/* Center Content - Logo Display */}
                               <div className="lg:col-span-6 flex justify-center">
+
+                                   <div className="absolute top-80 left-6 w-22 h-22 sm:top-[55%] sm:w-36 sm:-left-6 md:left-6 lg:left-[25%] xl:top-60 xl:left-[25%] xl:w-48 xl:h-48 opacity-100 z-[11]">
+                                        <Image src="/assets/abouts-tags.svg" alt="cloud" width={128} height={80} className="w-full h-auto" />
+                                   </div>
+
                                    <div className="relative p-8 lg:p-12 flex flex-col items-center text-white overflow-hidden w-full max-w-lg aspect-[4/3]">
                                         {/* Background Image */}
                                         <div className="absolute inset-0 z-0">
@@ -87,10 +102,10 @@ export default function AboutSection() {
 
                                         {/* Content - Above overlays */}
                                         <div className="relative z-[3] flex flex-col items-center justify-center h-full">
-                                             {/* Oval overlay */}
-                                             <div className="absolute -top-2 -right-24 lg:-right-40 md:-top-3 w-[200px] md:w-[200px] lg:w-[330px] z-[0] opacity-100">
+                                             {/* Ticket */}
+                                             <div className="absolute -top-2 -right-16 md:-top-3 w-[130px] sm:-right-34 sm:w-[270px] md:-right-40 md:w-[300px] lg:-right-30 lg:w-[240px] xl:-right-40 xl:w-[320px]">
                                                   <Image
-                                                       src="/assets/oval-overlay.svg"
+                                                       src="/assets/ticket.svg"
                                                        alt="decorative"
                                                        width={330}
                                                        height={70}
@@ -98,54 +113,15 @@ export default function AboutSection() {
                                                   />
                                              </div>
 
-                                             {/* Hole overlay */}
-                                             <div className="absolute top-2 -right-20 lg:-right-32 md:top-5 w-[170px] md:w-[200px] lg:w-[260px] z-[0] opacity-100">
-                                                  <Image
-                                                       src="/assets/hole.svg"
-                                                       alt="decorative"
-                                                       width={280}
-                                                       height={70}
-                                                       className="w-full h-auto"
-                                                  />
-                                             </div>
-
-                                             {/* Main logo */}
-                                             <div className="absolute -left-14 lg:-left-20 md:bottom-24 w-[100px] md:w-[200px] lg:w-[170px] z-[4] opacity-100">
-                                                  <Image
-                                                       src="/assets/logo-nobg.png"
-                                                       alt="decorative"
-                                                       width={170}
-                                                       height={70}
-                                                       className="w-full h-auto"
-                                                  />
-                                             </div>
-
-                                             {/* Description text */}
-                                             <div className="absolute bottom-1 z-[4] w-32 md:w-40 lg:w-48 h-16 md:h-20 lg:h-24 text-center flex items-center justify-center">
-                                                  <p className="text-blue-950 text-[8px] md:text-[10px] lg:text-xs font-['Poppins'] leading-tight">
-                                                       Font <span className="font-bold">geometris</span> & <span className="font-bold">tegas</span> yang mencerminkan <span className="font-bold">teknologi, struktur,</span> dan <span className="font-bold">profesionalisme</span>.
-                                                  </p>
-                                             </div>
-
-                                             {/* Ticket image */}
-                                             <div className="absolute -left-20 top-4 md:-left-24 lg:-left-28 md:top-8 w-40 h-48 md:w-48 md:h-60 lg:w-60 lg:h-72">
-                                                  <Image
-                                                       src="/assets/ticket.svg"
-                                                       alt="ticket"
-                                                       width={240}
-                                                       height={288}
-                                                       className="w-full h-full object-contain"
-                                                  />
-                                             </div>
                                         </div>
                                    </div>
                               </div>
 
                               {/* Right Content - Description */}
                               <div className="lg:col-span-3">
-                                   <div className="space-y-6">
+                                   <div className="space-y-0">
                                         {/* Description Text */}
-                                        <div className="text-[midnightblue] text-xs sm:text-sm md:text-base lg:text-base xl:text-lg leading-snug sm:leading-relaxed md:leading-relaxed font-['Poppins'] text-left break-words">
+                                        <div className="text-[midnightblue] text-xs sm:text-sm leading-snug sm:leading-relaxed md:leading-relaxed font-['Poppins'] text-justify break-words">
                                              <span className="font-normal">Logo ini </span>
                                              <span className="font-bold">merepresentasikan semangat eksplorasi akademik</span>
                                              <span className="font-normal"> dan </span>
@@ -160,27 +136,9 @@ export default function AboutSection() {
                                         </div>
 
                                         {/* Icon boxes with frame */}
-                                        <div className="relative">
-                                             {/* Frame border */}
-                                             <div className="flex items-center justify-center relative p-4">
-                                                  {/* Border image */}
-                                                  <div className="absolute inset-0 z-[10] w-[108%] bottom-3 -left-2.5">
-                                                       <Image src="/assets/background/logo/border.png" alt="border" fill className="object-contain" />
-                                                  </div>
-                                                  <div className="flex relative z-10">
-                                                       <div className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 flex items-center justify-center relative rounded-md">
-                                                            <Image src="/assets/background/logo/left.png" alt="background" fill />
-                                                            <Image src="/assets/list-logo/left.svg" alt="logo" width={56} height={56} className="w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 object-contain relative z-10" />
-                                                       </div>
-                                                       <div className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 flex items-center justify-center relative rounded-md">
-                                                            <Image src="/assets/background/logo/center.png" alt="background" fill />
-                                                            <Image src="/assets/list-logo/center.svg" alt="logo" width={56} height={56} className="w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 object-contain relative z-10" />
-                                                       </div>
-                                                       <div className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 flex items-center justify-center relative rounded-md">
-                                                            <Image src="/assets/background/logo/right.png" alt="background" fill />
-                                                            <Image src="/assets/list-logo/right.svg" alt="logo" width={56} height={56} className="w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 object-contain relative z-10" />
-                                                       </div>
-                                                  </div>
+                                        <div className="relative flex items-center justify-center">
+                                             <div className="w-40 h-20 sm:w-50 sm:h-24 md:w-64 md:h-36 lg:w-72 lg:h-24 flex items-center justify-center relative rounded-md">
+                                                  <Image src="/assets/logo-variations.svg" alt="logo" fill />
                                              </div>
                                         </div>
                                    </div>
@@ -190,19 +148,19 @@ export default function AboutSection() {
                </section>
 
                {/* Blue Section */}
-               <section className="relative bg-primary py-12 lg:py-20 sm:10 md:12">
+               <section className="relative py-8 sm:px-10 sm:py-14 md:px-12 lg:py-24">
 
                     <div className="absolute inset-0 z-[1] m-4 lg:m-8 shadow-lg">
                          <Image
                               src="/assets/background/bg-horizontal.png"
                               alt=""
                               fill
-                              className="opacity-100 rounded-xl object-center"
+                              className="object-cover rounded-2xl"
                               priority
                          />
                     </div>
 
-                    <div className="container mx-auto px-12 sm:px-6 lg:px-8 relative z-10">
+                    <div className="relative container mx-auto px-12 sm:px-4 md:px-14 lg:px-18 xl:px-12 z-10">
                          <div className="relative flex flex-col lg:flex-row items-start gap-6 lg:gap-0">
                               {/* Left Content - Blue Section (Larger width) */}
                               <div className="w-full lg:w-[58%] flex flex-col justify-start space-y-4 lg:space-y-6 lg:pr-6">
@@ -222,7 +180,7 @@ export default function AboutSection() {
                                              {/* Divider line */}
                                              <div className="h-8 sm:h-10 md:h-12 w-1.5 bg-white rounded-2xl opacity-100 mx-1"></div>
 
-                                             <div className="w-full max-w-[140px] sm:max-w-[140px] md:max-w-[180px] lg:max-w-[300px]">
+                                             <div className="w-full max-w-[180px] sm:max-w-[200px] md:max-w-[260px] lg:max-w-[300px]">
                                                   <Image
                                                        src="/assets/heading/orientasi-akademik.svg"
                                                        alt="Orientasi Akademik"
@@ -244,8 +202,8 @@ export default function AboutSection() {
 
                                    {/* Deskripsi */}
                                    <div className="text-left">
-                                        <p className="text-white text-xs sm:text-sm md:text-base lg:text-lg font-['Poppins'] leading-snug sm:leading-relaxed md:leading-relaxed">
-                                             Kegiatan yang bertujuan untuk <span className="font-semibold text-gold">memperkenalkan mahasiswa baru</span> dengan sistem <span className="font-semibold text-gold">perkuliahan</span> dan <span className="font-semibold text-gold">lingkungan kampus</span>.
+                                        <p className="text-white text-xs sm:text-sm font-['Poppins']">
+                                             Kegiatan yang bertujuan untuk <span className="font-bold text-gold">memperkenalkan mahasiswa baru</span> dengan sistem <span className="font-bold text-gold">perkuliahan</span> dan <span className="font-bold text-gold">lingkungan kampus</span>.
                                         </p>
                                    </div>
                               </div>
@@ -256,8 +214,8 @@ export default function AboutSection() {
                               </div>
 
                               {/* Right Content - ORMIK EXPLORE (Smaller width) */}
-                              <div className="w-full lg:w-[42%] flex flex-col justify-start space-y-4 lg:space-y-6 lg:pl-6 text-white relative">
-                                   <div className="w-full max-w-[180px] lg:max-w-[280px]">
+                              <div className="w-full lg:w-[42%] flex flex-col justify-start space-y-4 xl:ml-12  lg:space-y-6 lg:pl-6 text-white relative">
+                                   <div className="w-full max-w-[200px] sm:max-w-[300px] xl:max-w-[400px]">
                                         <Image
                                              src="/assets/heading/ormik-explore.svg"
                                              alt="Ormik Explore"
@@ -267,8 +225,8 @@ export default function AboutSection() {
                                         />
                                    </div>
                                    <div className="text-left">
-                                        <p className="text-xs sm:text-sm md:text-base lg:text-lg font-['Poppins'] leading-snug sm:leading-relaxed md:leading-relaxed">
-                                             <span className="font-bold text-gold ">ORMIK EXPLORE 2025</span> <span className="font-normal text-white">memiliki visi menjadi titik mulai eksplorasi mahasiswa baru STT-NF dalam membangun semangat akademik, budaya positif, dan kesiapan diri di era modern.</span>
+                                        <p className="text-xs sm:text-sm font-['Poppins']">
+                                             <span className="font-bold">ORMIK EXPLORE 2025</span> <span className="text-white">memiliki visi menjadi titik mulai eksplorasi mahasiswa baru STT-NF dalam membangun semangat akademik, budaya positif, dan kesiapan diri di era modern.</span>
                                         </p>
                                    </div>
                               </div>
