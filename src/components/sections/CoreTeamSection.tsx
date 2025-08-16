@@ -148,15 +148,15 @@ export default function CoreTeamSection() {
                     </div>
 
                     {/* Team Grid */}
-                    <div className="space-y-4">
+                    <div className="space-y-3">
                          {/* Top Row - Left to Right */}
-                         <div className="relative overflow-hidden">
+                         <div className="relative w-full overflow-hidden">
                               {/* Shadow overlay for right edge - Top Row */}
                               <div className="absolute top-0 right-0 w-12 h-full z-[20] pointer-events-none">
                                    <div className="w-full h-full bg-gradient-to-l from-[#000E61] via-[#000E61]/60 to-transparent"></div>
                               </div>
 
-                              <div className="flex animate-scroll-left space-x-4">
+                              <div className="flex animate-scroll-left gap-3">
                                    {/* Duplicate the first half of array to create seamless loop */}
                                    {[...coreTeamData.slice(0, Math.ceil(coreTeamData.length / 2)), ...coreTeamData.slice(0, Math.ceil(coreTeamData.length / 2))].map((member, index) => (
                                         <div
@@ -195,12 +195,12 @@ export default function CoreTeamSection() {
                          </div>
 
                          {/* Bottom Row - Right to Left */}
-                         <div className="relative overflow-hidden">
+                         <div className="relative w-full overflow-hidden">
                               {/* Shadow overlay for right edge - Bottom Row */}
                               <div className="absolute top-0 right-0 w-12 h-full z-20 pointer-events-none">
                                    <div className="w-full h-full bg-gradient-to-l from-[#000E61] via-[#000E61]/60 to-transparent"></div>
                               </div>
-                              <div className="flex animate-scroll-left space-x-4">
+                              <div className="flex animate-scroll-left gap-3">
                                    {/* Duplicate the second half of array to create seamless loop */}
                                    {[...coreTeamData.slice(Math.ceil(coreTeamData.length / 2)), ...coreTeamData.slice(Math.ceil(coreTeamData.length / 2))].map((member, index) => (
                                         <div
