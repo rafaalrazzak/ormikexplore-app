@@ -1,36 +1,88 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ORMIK Explore App
 
-## Getting Started
+A modern, responsive event web app for ORMIK Explore, built with [Next.js](https://nextjs.org), Tailwind CSS, and TypeScript.
 
-First, run the development server:
+## 🚀 Features
+
+- **Landing Page** with hero, countdown, and schedule widgets
+- **Dynamic Maintenance Mode** (with env config, bypass, and progress)
+- **Smooth Section Navigation** (scroll-to-section, responsive navbar)
+- **404 & Unauthorized Pages** with mascot and animation
+- **Mobile-first, Responsive Design**
+- **Customizable via `.env.local`**
+
+## 🛠️ Getting Started
+
+### 1. Install dependencies
 
 ```bash
+pnpm install
+# or
+npm install
+# or
+yarn install
+```
+
+### 2. Run the development server
+
+```bash
+pnpm dev
+# or
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## ⚙️ Environment Variables
 
-## Learn More
+Edit `.env.local` to configure maintenance and other settings:
 
-To learn more about Next.js, take a look at the following resources:
+```env
+NEXT_PUBLIC_MAINTENANCE_MODE=false
+NEXT_PUBLIC_MAINTENANCE_MESSAGE="Website sedang dalam proses maintenance untuk memberikan pengalaman yang lebih baik."
+NEXT_PUBLIC_MAINTENANCE_END_TIME="2025-08-20T05:15:00+07:00"
+NEXT_PUBLIC_MAINTENANCE_BYPASS_PASSWORD=yourpassword
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Set `NEXT_PUBLIC_MAINTENANCE_MODE=true` to activate maintenance mode.
+- Set `NEXT_PUBLIC_MAINTENANCE_BYPASS_PASSWORD` for bypass access.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Maintenance Bypass
 
-## Deploy on Vercel
+- **Via URL:**  
+  Access `/maintenance?pass=yourpassword` to bypass maintenance (cookie will be set).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🧩 Project Structure
+
+- `src/app/` – Next.js app directory (pages, layouts, routing)
+- `src/components/sections/` – Main page sections (Hero, About, Core Team, etc.)
+- `src/components/widgets/` – Countdown, Schedule, and other widgets
+- `src/components/pages/` – Special pages (Maintenance, NotFound, Unauthorized)
+- `src/utils/` – Utility functions (maintenance, config, etc.)
+
+---
+
+## ✨ Customization
+
+- **Mascot:**  
+  Change mascot asset in `public/assets/mascot.png` (or update path in components).
+- **Section Content:**  
+  Edit components in `src/components/sections/` for your event.
+
+---
+
+## 📝 License
+
+MIT
+
+---
+
+## 🙏 Credits
+
+Built with [Next.js](https://nextjs.org), [Tailwind CSS](https://tailwindcss.com), and [Framer Motion](https://www.framer.com/motion/).
