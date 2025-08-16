@@ -13,7 +13,7 @@ export interface CountdownData {
 
 // Countdown target date for ORMIK EXPLORE DAY 1
 export const countdownData: CountdownData = {
-     targetDate: new Date("2025-09-15T08:00:00+07:00").toISOString(), // September 15, 2025 8:00 AM WIB (Asia/Jakarta)
+     targetDate: new Date("2025-09-15T07:30:00+07:00").toISOString(), // September 15, 2025 8:00 AM WIB (Asia/Jakarta)
      title: "GO TO ORMIK EXPLORE DAY 1"
 };
 
