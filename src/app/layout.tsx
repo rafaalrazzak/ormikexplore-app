@@ -7,7 +7,7 @@ import { inter, poppins } from "./fonts";
 export const metadata: Metadata = {
     title: "ORMIK EXPLORE 2025 | STTNF",
     description: "ORMIK EXPLORE 2025 memiliki visi menjadi titik mulai eksplorasi mahasiswa baru STT-NF dalam membangun semangat akademik, budaya positif, dan kesiapan diri di era modern.",
-    icons: { icon: "/assets/logo-ormik.svg" },
+    icons: { icon: "/icons/logo.png", apple: "/icons/logo.png" },
     metadataBase: new URL("https://ormik.nurulfikri.ac.id"),
     openGraph: {
         title: "ORMIK EXPLORE 2025 | STTNF",
@@ -19,6 +19,25 @@ export const metadata: Metadata = {
         type: "website",
     },
     alternates: { canonical: "https://ormik.nurulfikri.ac.id" },
+    twitter: {
+        card: "summary_large_image",
+        title: "ORMIK EXPLORE 2025 | STTNF",
+        description: "ORMIK EXPLORE 2025 memiliki visi menjadi titik mulai eksplorasi mahasiswa baru STT-NF dalam membangun semangat akademik, budaya positif, dan kesiapan diri di era modern.",
+        creator: "@ormiksttnf",
+        images: ["/icons/logo.png"],
+    },
+    keywords: [
+        "ormik",
+        "ormik explore",
+        "ormik explore 2025",
+        "ormik sttnf",
+        "sttnf",
+        "sttnf ormik",
+        "ormik nurulfikri",
+        "nurulfikri ormik",
+        "ormik explore nurulfikri",
+        "ormik explore sttnf"
+    ]
 };
 
 export default function RootLayout({

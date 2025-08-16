@@ -64,7 +64,7 @@ export default function MaintenancePage() {
           return () => clearInterval(interval);
      }, []);
      return (
-          <div className="relative h-screen overflow-hidden bg-primary">
+          <div className="relative min-h-screen overflow-hidden bg-primary">
                {/* Background Image */}
                <div className="absolute inset-0 z-[background]">
                     <Image
@@ -79,14 +79,13 @@ export default function MaintenancePage() {
                {/* Decorative Background Elements */}
                <div className="absolute inset-0 pointer-events-none">
                     {/* Radar SVG - Center */}
-                    <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[60%] md:w-[50%] lg:w-[40%] z-[-1] opacity-30">
+                    <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[60%] md:w-[50%] lg:w-[40%] z-[-1]">
                          <Image
                               src="/assets/decorative/radar.png"
                               alt="Radar"
                               width={800}
                               height={800}
-                              className="w-full h-auto animate-spin"
-                              style={{ animationDuration: '20s' }}
+                              className="w-full h-auto"
                          />
                     </div>
 
@@ -182,9 +181,6 @@ export default function MaintenancePage() {
                               </p>
                               <p className="text-white/80 text-sm md:text-base leading-relaxed font-['Poppins']">
                                    {maintenanceMessage || "Website ORMIK EXPLORE 2025 sedang dalam proses maintenance untuk memberikan pengalaman yang lebih baik. Kami akan segera kembali!"}
-                              </p>
-                              <p className="text-white/70 text-sm md:text-base font-['Poppins']">
-                                   Terima kasih atas kesabaran Anda. 🚀
                               </p>
                          </motion.div>
 

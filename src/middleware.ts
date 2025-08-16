@@ -3,13 +3,13 @@ import { NextRequest, NextResponse } from 'next/server';
 export function middleware(request: NextRequest) {
      // Check if maintenance mode is enabled
      const isMaintenanceMode = process.env.NEXT_PUBLIC_MAINTENANCE_MODE === 'true';
-     
+
      // Skip maintenance check for maintenance page, API routes, and static assets
      const isMaintenancePage = request.nextUrl.pathname === '/maintenance';
      const isApiRoute = request.nextUrl.pathname.startsWith('/api');
-     const isStaticAsset = request.nextUrl.pathname.startsWith('/_next') || 
-                          request.nextUrl.pathname.startsWith('/assets') ||
-                          request.nextUrl.pathname.includes('.');
+     const isStaticAsset = request.nextUrl.pathname.startsWith('/_next') ||
+          request.nextUrl.pathname.startsWith('/assets') ||
+          request.nextUrl.pathname.includes('.');
 
      // If maintenance mode is enabled and user is not on maintenance page
      if (isMaintenanceMode && !isMaintenancePage && !isApiRoute && !isStaticAsset) {
