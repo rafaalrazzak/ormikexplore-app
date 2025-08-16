@@ -3,6 +3,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { getMaintenanceConfig, getMaintenanceTimeRemaining, getMaintenanceEndTime } from "@/utils/maintenance";
+import { useRouter, useSearchParams } from "next/navigation";
 
 
 interface TimeRemaining {
@@ -11,18 +12,48 @@ interface TimeRemaining {
      minutes: number;
      seconds: number;
 }
+const bypassPassword = process.env.NEXT_PUBLIC_MAINTENANCE_BYPASS_PASSWORD;
+
 export default function MaintenancePage() {
      const [timeRemaining, setTimeRemaining] = useState<TimeRemaining | null>(null);
      const [maintenanceMessage, setMaintenanceMessage] = useState<string>(getMaintenanceConfig().message || "");
      const [endTime, setEndTime] = useState<Date | null>(getMaintenanceEndTime());
      const [progress, setProgress] = useState<number>(0);
      const [startTime, setStartTime] = useState<Date | null>(null);
+     const [showBypass, setShowBypass] = useState(false);
+     const [bypassInput, setBypassInput] = useState("");
+     const [bypassError, setBypassError] = useState("");
+     const router = useRouter();
+     const searchParams = useSearchParams();
 
      useEffect(() => {
           // Initial calculation
           setTimeRemaining(getMaintenanceTimeRemaining());
           setMaintenanceMessage(getMaintenanceConfig().message || "");
           setEndTime(getMaintenanceEndTime());
+
+          // Show bypass form if password env is set
+          setShowBypass(!!bypassPassword);
+
+          // Bypass via URL param
+          if (typeof window !== "undefined" && !!bypassPassword) {
+               const passParam = searchParams?.get("pass");
+               if (passParam && passParam === bypassPassword) {
+                    // Call API to set bypass cookie
+                    fetch("/api/maintenance-bypass", {
+                         method: "POST",
+                         headers: { "Content-Type": "application/json" },
+                         body: JSON.stringify({ password: passParam })
+                    })
+                         .then(res => {
+                              if (res.ok) {
+                                   router.push("/");
+                              } else {
+                                   setBypassError("Password salah!");
+                              }
+                         });
+               }
+          }
 
           // Cari waktu mulai maintenance (dari localStorage, atau asumsikan waktu sekarang jika belum ada)
           let initialStart = null;
@@ -31,7 +62,6 @@ export default function MaintenancePage() {
                if (stored) initialStart = new Date(stored);
           }
           if (!initialStart && getMaintenanceEndTime()) {
-               // Asumsikan maintenance dimulai saat user pertama kali buka page
                initialStart = new Date();
                if (typeof window !== "undefined") {
                     window.localStorage.setItem("maintenanceStartTime", initialStart.toISOString());
@@ -39,30 +69,40 @@ export default function MaintenancePage() {
           }
           setStartTime(initialStart);
 
-          const interval = setInterval(() => {
-               setTimeRemaining(getMaintenanceTimeRemaining());
-               setMaintenanceMessage(getMaintenanceConfig().message || "");
-               setEndTime(getMaintenanceEndTime());
+          // Progress calculation (hanya saat mount/refresh)
+          const end = getMaintenanceEndTime();
+          let start = initialStart;
+          if (!start && end) {
+               start = new Date(end.getTime() - 60 * 60 * 1000);
+          }
+          if (end && start) {
+               const now = new Date();
+               const total = end.getTime() - start.getTime();
+               const done = now.getTime() - start.getTime();
+               let percent = Math.max(0, Math.min(100, (done / total) * 100));
+               if (now > end) percent = 100;
+               setProgress(percent);
+          } else {
+               setProgress(75);
+          }
+     }, [searchParams]);
 
-               // Progress calculation
-               const end = getMaintenanceEndTime();
-               let start = initialStart;
-               if (!start && end) {
-                    start = new Date(end.getTime() - 60 * 60 * 1000); // fallback: 1 jam sebelum end
-               }
-               if (end && start) {
-                    const now = new Date();
-                    const total = end.getTime() - start.getTime();
-                    const done = now.getTime() - start.getTime();
-                    let percent = Math.max(0, Math.min(100, (done / total) * 100));
-                    if (now > end) percent = 100;
-                    setProgress(percent);
-               } else {
-                    setProgress(75); // fallback
-               }
-          }, 1000);
-          return () => clearInterval(interval);
-     }, []);
+     // Handle bypass form submit
+     async function handleBypassSubmit(e: React.FormEvent) {
+          e.preventDefault();
+          setBypassError("");
+          const res = await fetch("/api/maintenance-bypass", {
+               method: "POST",
+               headers: { "Content-Type": "application/json" },
+               body: JSON.stringify({ password: bypassInput })
+          });
+          if (res.ok) {
+               // Success: reload ke halaman utama
+               router.push("/");
+          } else {
+               setBypassError("Password salah!");
+          }
+     }
      return (
           <div className="relative min-h-screen overflow-hidden bg-primary">
                {/* Background Image */}
@@ -115,7 +155,7 @@ export default function MaintenancePage() {
                {/* Content */}
                <div className="relative z-content max-w-4xl mx-auto px-4 py-4 flex flex-col items-center justify-center h-full text-center overflow-hidden">
                     {/* Logo */}
-                    <motion.div 
+                    <motion.div
                          className=""
                          initial={{ scale: 0, opacity: 0 }}
                          animate={{ scale: 1, opacity: 1 }}
@@ -131,20 +171,20 @@ export default function MaintenancePage() {
                     </motion.div>
 
                     {/* Maintenance Content */}
-                    <motion.div 
+                    <motion.div
                          className="backdrop-blur-[15px] rounded-[16px] lg:rounded-[20px] bg-white/10 p-4 md:p-6 lg:p-8 border border-white/20 shadow-2xl max-w-2xl w-full"
                          initial={{ y: 50, opacity: 0 }}
                          animate={{ y: 0, opacity: 1 }}
                          transition={{ duration: 0.8, delay: 0.3 }}
                     >
                          {/* Maintenance Icon */}
-                         <motion.div 
+                         <motion.div
                               className="mb-4"
-                              animate={{ 
+                              animate={{
                                    rotate: [0, 10, -10, 0],
                                    scale: [1, 1.05, 1]
                               }}
-                              transition={{ 
+                              transition={{
                                    duration: 2,
                                    repeat: Infinity,
                                    ease: "easeInOut"
@@ -160,7 +200,7 @@ export default function MaintenancePage() {
                          </motion.div>
 
                          {/* Title */}
-                         <motion.h1 
+                         <motion.h1
                               className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-3 font-['Poppins']"
                               initial={{ opacity: 0 }}
                               animate={{ opacity: 1 }}
@@ -170,7 +210,7 @@ export default function MaintenancePage() {
                          </motion.h1>
 
                          {/* Description */}
-                         <motion.div 
+                         <motion.div
                               className="space-y-3 mb-6"
                               initial={{ opacity: 0 }}
                               animate={{ opacity: 1 }}
@@ -186,7 +226,7 @@ export default function MaintenancePage() {
 
                          {/* Countdown Timer (if end time is available) */}
                          {timeRemaining && (
-                              <motion.div 
+                              <motion.div
                                    className="mb-6"
                                    initial={{ opacity: 0 }}
                                    animate={{ opacity: 1 }}
@@ -196,7 +236,7 @@ export default function MaintenancePage() {
                                         Estimasi selesai maintenance:
                                    </h3>
                                    <div className="flex justify-center items-center gap-2 md:gap-3">
-                                        {[ 
+                                        {[
                                              { label: 'Hari', value: timeRemaining.days },
                                              { label: 'Jam', value: timeRemaining.hours },
                                              { label: 'Menit', value: timeRemaining.minutes },
@@ -218,7 +258,7 @@ export default function MaintenancePage() {
                          )}
 
                          {/* Animated Progress Bar */}
-                         <motion.div 
+                         <motion.div
                               className="mb-4"
                               initial={{ opacity: 0 }}
                               animate={{ opacity: 1 }}
@@ -239,14 +279,37 @@ export default function MaintenancePage() {
                                              damping: 18,
                                              mass: 0.5,
                                              duration: 0.7,
-                                         }}
+                                        }}
                                         style={{ minWidth: 8, maxWidth: '100%' }}
                                    />
                               </div>
                          </motion.div>
 
+                         {/* Bypass Form (Whitelist) */}
+                         {showBypass && (
+                              <motion.div
+                                   className="text-center mb-4"
+                                   initial={{ opacity: 0 }}
+                                   animate={{ opacity: 1 }}
+                                   transition={{ duration: 0.8, delay: 1.05 }}
+                              >
+                                   <form onSubmit={handleBypassSubmit} className="flex flex-col items-center gap-2">
+                                        <label className="text-white/80 text-xs md:text-sm font-medium font-['Poppins']">Masukkan password untuk akses penuh:</label>
+                                        <input
+                                             type="password"
+                                             value={bypassInput}
+                                             onChange={e => setBypassInput(e.target.value)}
+                                             className="rounded px-3 py-1 bg-white/20 text-white border border-white/30 focus:outline-none focus:ring-2 focus:ring-gold"
+                                             placeholder="Password whitelist"
+                                             autoComplete="off"
+                                        />
+                                        <button type="submit" className="mt-1 px-4 py-1 rounded bg-gold text-primary font-bold hover:bg-accent transition">Masuk</button>
+                                        {bypassError && <span className="text-red-400 text-xs mt-1">{bypassError}</span>}
+                                   </form>
+                              </motion.div>
+                         )}
                          {/* Contact Info */}
-                         <motion.div 
+                         <motion.div
                               className="text-center"
                               initial={{ opacity: 0 }}
                               animate={{ opacity: 1 }}
@@ -267,7 +330,7 @@ export default function MaintenancePage() {
                     </motion.div>
 
                     {/* Footer Info */}
-                    <motion.div 
+                    <motion.div
                          className="mt-6 text-center"
                          initial={{ opacity: 0 }}
                          animate={{ opacity: 1 }}
