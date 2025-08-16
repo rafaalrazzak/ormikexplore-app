@@ -85,6 +85,26 @@ export default function MaintenancePage() {
           } else {
                setProgress(75);
           }
+
+          // Set up interval for real-time countdown and progress
+          const interval = setInterval(() => {
+               setTimeRemaining(getMaintenanceTimeRemaining());
+               // Progress bar update
+               const end = getMaintenanceEndTime();
+               let start = initialStart;
+               if (!start && end) {
+                    start = new Date(end.getTime() - 60 * 60 * 1000);
+               }
+               if (end && start) {
+                    const now = new Date();
+                    const total = end.getTime() - start.getTime();
+                    const done = now.getTime() - start.getTime();
+                    let percent = Math.max(0, Math.min(100, (done / total) * 100));
+                    if (now > end) percent = 100;
+                    setProgress(percent);
+               }
+          }, 1000);
+          return () => clearInterval(interval);
      }, [searchParams]);
 
      // Handle bypass form submit
