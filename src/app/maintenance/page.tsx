@@ -1,14 +1,12 @@
-import MaintenancePage from '@/components/pages/MaintenancePage';
+"use client";
 
-export const metadata = {
-     title: 'Maintenance - ORMIK EXPLORE 2025',
-     description: 'Website sedang dalam proses maintenance. Kami akan segera kembali!',
-     robots: {
-          index: false,
-          follow: false,
-     },
-};
+import MaintenancePage from '@/components/pages/MaintenancePage';
+import { Suspense } from 'react';
 
 export default function Maintenance() {
-     return <MaintenancePage />;
+     return (
+          <Suspense fallback={null}>
+               <MaintenancePage />
+          </Suspense>
+     );
 }
