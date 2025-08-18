@@ -1,7 +1,6 @@
 
 import type { Metadata } from "next";
 import "./globals.css";
-import Navbar from "@/components/common/Navbar";
 import { inter, poppins } from "./fonts";
 
 function getMaintenanceMeta() {
@@ -81,7 +80,6 @@ export default function RootLayout({
             <body
                 className={`${inter.variable} ${poppins.variable} font-sans leading-normal m-0 antialiased`}
             >
-                {/* <Navbar /> */}
                 {children}
             </body>
         </html>

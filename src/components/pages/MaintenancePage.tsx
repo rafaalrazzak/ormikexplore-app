@@ -17,9 +17,6 @@ const bypassPassword = process.env.NEXT_PUBLIC_MAINTENANCE_BYPASS_PASSWORD;
 export default function MaintenancePage() {
      const [timeRemaining, setTimeRemaining] = useState<TimeRemaining | null>(null);
      const [maintenanceMessage, setMaintenanceMessage] = useState<string>(getMaintenanceConfig().message || "");
-     const [endTime, setEndTime] = useState<Date | null>(getMaintenanceEndTime());
-     const [progress, setProgress] = useState<number>(0);
-     const [startTime, setStartTime] = useState<Date | null>(null);
      const [showBypass, setShowBypass] = useState(false);
      const [bypassInput, setBypassInput] = useState("");
      const [bypassError, setBypassError] = useState("");
@@ -30,7 +27,6 @@ export default function MaintenancePage() {
           // Initial calculation
           setTimeRemaining(getMaintenanceTimeRemaining());
           setMaintenanceMessage(getMaintenanceConfig().message || "");
-          setEndTime(getMaintenanceEndTime());
 
           // Show bypass form if password env is set
           setShowBypass(!!bypassPassword);
@@ -67,45 +63,15 @@ export default function MaintenancePage() {
                     window.localStorage.setItem("maintenanceStartTime", initialStart.toISOString());
                }
           }
-          setStartTime(initialStart);
 
-          // Progress calculation (hanya saat mount/refresh)
-          const end = getMaintenanceEndTime();
-          let start = initialStart;
-          if (!start && end) {
-               start = new Date(end.getTime() - 60 * 60 * 1000);
-          }
-          if (end && start) {
-               const now = new Date();
-               const total = end.getTime() - start.getTime();
-               const done = now.getTime() - start.getTime();
-               let percent = Math.max(0, Math.min(100, (done / total) * 100));
-               if (now > end) percent = 100;
-               setProgress(percent);
-          } else {
-               setProgress(75);
-          }
 
-          // Set up interval for real-time countdown and progress
+          // Set up interval for real-time countdown
           const interval = setInterval(() => {
                setTimeRemaining(getMaintenanceTimeRemaining());
-               // Progress bar update
-               const end = getMaintenanceEndTime();
-               let start = initialStart;
-               if (!start && end) {
-                    start = new Date(end.getTime() - 60 * 60 * 1000);
-               }
-               if (end && start) {
-                    const now = new Date();
-                    const total = end.getTime() - start.getTime();
-                    const done = now.getTime() - start.getTime();
-                    let percent = Math.max(0, Math.min(100, (done / total) * 100));
-                    if (now > end) percent = 100;
-                    setProgress(percent);
-               }
           }, 1000);
           return () => clearInterval(interval);
-     }, [searchParams]);
+          // Add 'router' to dependencies to fix exhaustive-deps warning
+     }, [searchParams, router]);
 
      // Handle bypass form submit
      async function handleBypassSubmit(e: React.FormEvent) {
@@ -255,33 +221,7 @@ export default function MaintenancePage() {
                               </motion.div>
                          )}
 
-                         {/* Animated Progress Bar */}
-                         {/* <motion.div
-                              className="mb-4"
-                              initial={{ opacity: 0 }}
-                              animate={{ opacity: 1 }}
-                              transition={{ duration: 0.8, delay: 0.9 }}
-                         >
-                              <div className="flex items-center justify-between mb-2">
-                                   <span className="text-white/80 text-sm font-medium font-['Poppins']">Progress</span>
-                                   <span className="text-[gold] text-sm font-semibold font-['Poppins']">{Math.round(progress)}%</span>
-                              </div>
-                              <div className="w-full bg-white/20 rounded-full h-2 overflow-hidden">
-                                   <motion.div
-                                        className="bg-gradient-to-r from-[gold] to-accent h-2 rounded-full shadow-lg"
-                                        initial={{ width: 0 }}
-                                        animate={{ width: progress + "%" }}
-                                        transition={{
-                                             type: "spring",
-                                             stiffness: 120,
-                                             damping: 18,
-                                             mass: 0.5,
-                                             duration: 0.7,
-                                        }}
-                                        style={{ minWidth: 8, maxWidth: '100%' }}
-                                   />
-                              </div>
-                         </motion.div> */}
+                         {/* Progress bar dihapus karena tidak digunakan lagi */}
 
                          {/* Bypass Form (Whitelist) */}
                          {showBypass && (
