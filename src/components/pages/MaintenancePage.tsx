@@ -173,7 +173,7 @@ export default function MaintenancePage() {
                </div>
 
                {/* Content */}
-               <div className="relative z-content max-w-4xl mx-auto px-4 py-4 flex flex-col items-center justify-center h-full text-center overflow-hidden">
+               <div className="relative z-content max-w-4xl mx-auto px-4 py-2 flex flex-col items-center justify-center h-full text-center overflow-hidden">
                     {/* Logo */}
                     <motion.div
                          className=""
@@ -197,28 +197,6 @@ export default function MaintenancePage() {
                          animate={{ y: 0, opacity: 1 }}
                          transition={{ duration: 0.8, delay: 0.3 }}
                     >
-                         {/* Maintenance Icon */}
-                         <motion.div
-                              className="mb-4"
-                              animate={{
-                                   rotate: [0, 10, -10, 0],
-                                   scale: [1, 1.05, 1]
-                              }}
-                              transition={{
-                                   duration: 2,
-                                   repeat: Infinity,
-                                   ease: "easeInOut"
-                              }}
-                         >
-                              <div className="w-14 h-14 md:w-18 md:h-18 mx-auto rounded-full flex items-center justify-center">
-                                   <Image
-                                        src="/icons/sand-clock.svg"
-                                        alt="Maintenance Icon"
-                                        fill
-                                   />
-                              </div>
-                         </motion.div>
-
                          {/* Title */}
                          <motion.h1
                               className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-3 font-['Poppins']"
@@ -278,7 +256,7 @@ export default function MaintenancePage() {
                          )}
 
                          {/* Animated Progress Bar */}
-                         <motion.div
+                         {/* <motion.div
                               className="mb-4"
                               initial={{ opacity: 0 }}
                               animate={{ opacity: 1 }}
@@ -303,7 +281,7 @@ export default function MaintenancePage() {
                                         style={{ minWidth: 8, maxWidth: '100%' }}
                                    />
                               </div>
-                         </motion.div>
+                         </motion.div> */}
 
                          {/* Bypass Form (Whitelist) */}
                          {showBypass && (
@@ -314,16 +292,14 @@ export default function MaintenancePage() {
                                    transition={{ duration: 0.8, delay: 1.05 }}
                               >
                                    <form onSubmit={handleBypassSubmit} className="flex flex-col items-center gap-2">
-                                        <label className="text-white/80 text-xs md:text-sm font-medium font-['Poppins']">Masukkan password untuk akses penuh:</label>
                                         <input
                                              type="password"
                                              value={bypassInput}
                                              onChange={e => setBypassInput(e.target.value)}
                                              className="rounded px-3 py-1 bg-white/20 text-white border border-white/30 focus:outline-none focus:ring-2 focus:ring-gold"
-                                             placeholder="Password whitelist"
                                              autoComplete="off"
                                         />
-                                        <button type="submit" className="mt-1 px-4 py-1 rounded bg-gold text-primary font-bold hover:bg-accent transition">Masuk</button>
+                                        <button type="submit" className="mt-1 px-4 py-1 rounded bg-gold text-primary font-bold hover:underline hover:underline-offset-3 transition">Masuk</button>
                                         {bypassError && <span className="text-red-400 text-xs mt-1">{bypassError}</span>}
                                    </form>
                               </motion.div>
