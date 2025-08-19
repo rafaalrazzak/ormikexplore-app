@@ -1,10 +1,15 @@
 "use client";
 import Image from "next/image";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import "./handscan.css";
 
 export default function HandScanPage() {
      const scanRef = useRef<HTMLDivElement>(null);
+     const videoRef = useRef<HTMLVideoElement>(null);
+     const [showVideo, setShowVideo] = useState(false);
+     const [fadeOutScan, setFadeOutScan] = useState(false);
+     const [fadeInVideo, setFadeInVideo] = useState(false);
+
      useEffect(() => {
           // Handscan animation logic (from original, do not change)
           const scanContainer = scanRef.current;
@@ -15,12 +20,23 @@ export default function HandScanPage() {
                if (scanContainer.classList.contains("active")) {
                     scanContainer.classList.remove("active");
                     scanContainer.classList.remove("completed");
+                    setShowVideo(false);
+                    setFadeOutScan(false);
+                    setFadeInVideo(false);
                } else {
                     scanContainer.classList.add("active");
                     scanContainer.classList.remove("completed");
+                    setShowVideo(false);
+                    setFadeOutScan(false);
+                    setFadeInVideo(false);
                     scanTimeout = setTimeout(() => {
                          scanContainer.classList.remove("active");
                          scanContainer.classList.add("completed");
+                         setFadeOutScan(true);
+                         setTimeout(() => {
+                              setShowVideo(true);
+                              setFadeInVideo(true);
+                         }, 500); // fade out scan, then fade in video
                     }, 7000);
                }
           };
@@ -30,6 +46,14 @@ export default function HandScanPage() {
                if (scanTimeout) clearTimeout(scanTimeout);
           };
      }, []);
+
+     // Ensure video plays automatically after showVideo is set
+     useEffect(() => {
+          if (showVideo && videoRef.current) {
+               // Try to play video programmatically (for some browsers)
+               videoRef.current.play().catch(() => {});
+          }
+     }, [showVideo]);
 
      return (
           <div className="relative min-h-screen overflow-hidden bg-primary">
@@ -66,14 +90,34 @@ export default function HandScanPage() {
                          <Image src="/assets/hexagonal.png" alt="decorative" width={140} height={55} className="w-full h-auto" />
                     </div>
                </div>
-               {/* Hand Scan Animation */}
+               {/* Hand Scan Animation or Video */}
                <div className="relative z-content max-w-4xl mx-auto px-4 py-4 flex flex-col items-center justify-center h-full text-center overflow-hidden min-h-screen">
-                    <div ref={scanRef} className="scan" id="scanContainer">
-                         <div className="hand">
-                              <div className="lines"></div>
+                    {!showVideo ? (
+                         <div
+                              ref={scanRef}
+                              className={`scan transition-opacity duration-500 ${fadeOutScan ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+                              id="scanContainer"
+                         >
+                              <div className="hand">
+                                   <div className="lines"></div>
+                              </div>
+                              <h3>ORMIK EXPLORE 2025 - STARTING...</h3>
                          </div>
-                         <h3>ORMIK EXPLORE 2025 - STARTING...</h3>
-                    </div>
+                    ) : (
+                         <div className={`fixed inset-0 z-[100] flex items-center justify-center bg-black transition-opacity duration-500 ${fadeInVideo ? 'opacity-100' : 'opacity-0'}`}>
+                              <video
+                                   ref={videoRef}
+                                   src="/assets/handscan/video.mp4"
+                                   autoPlay
+                                   muted
+                                   playsInline
+                                   className="w-full h-full object-contain bg-black"
+                                   style={{ maxWidth: '100vw', maxHeight: '100vh' }}
+                              >
+                                   Your browser does not support the video tag.
+                              </video>
+                         </div>
+                    )}
                </div>
           </div>
      );
