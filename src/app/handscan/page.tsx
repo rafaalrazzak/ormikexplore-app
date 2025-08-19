@@ -112,7 +112,7 @@ export default function HandScanPage() {
                          <div className={`fixed inset-0 z-[100] flex items-center justify-center bg-black transition-opacity duration-500 ${fadeInVideo ? 'opacity-100' : 'opacity-0'}`}>
                               <video
                                    ref={videoRef}
-                                   src="/assets/handscan/video.mp4"
+                                   src="/assets/handscan/indihome.mp4"
                                    autoPlay
                                    playsInline
                                    onEnded={() => setVideoEnded(true)}
