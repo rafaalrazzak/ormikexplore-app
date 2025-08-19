@@ -12,7 +12,8 @@ const YT_VIDEO_ID = "dQw4w9WgXcQ";
 
 declare global {
      interface Window {
-          YT: any; // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          /* eslint-disable @typescript-eslint/no-explicit-any */
+          YT: any;
           onYouTubeIframeAPIReady?: () => void;
      }
 }
@@ -20,7 +21,8 @@ declare global {
 export default function HandScanPage() {
      const [phase, setPhase] = useState<Phase>("idle");
 
-     const playerRef = useRef<any>(null); // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     /* eslint-disable @typescript-eslint/no-explicit-any */
+     const playerRef = useRef<any>(null);
      const apiLoadedRef = useRef(false);
      const playerReadyRef = useRef(false);
      const primedRef = useRef(false);
@@ -82,7 +84,8 @@ export default function HandScanPage() {
                               }
                               playerReadyRef.current = true;
                          },
-                         onStateChange: (e: any) => { // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                         /* eslint-disable @typescript-eslint/no-explicit-any */
+                         onStateChange: (e: any) => {
                               if (e?.data === window.YT?.PlayerState?.ENDED) setPhase("ended");
                          }
                     }

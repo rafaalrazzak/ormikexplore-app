@@ -1,39 +1,32 @@
 "use client";
+
 import Image from "next/image";
+import { MouseEvent } from "react";
 import Countdown from "@/components/widgets/Countdown";
 import ScheduleCards from "@/components/widgets/ScheduleCards";
 
 export default function Hero() {
-     const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+     const handleSmoothScroll = (e: MouseEvent<HTMLAnchorElement>, targetId: string) => {
           e.preventDefault();
-          const targetElement = document.getElementById(targetId);
-          if (targetElement) {
-               const headerOffset = 0; // Adjust if you have a fixed header
-               const elementPosition = targetElement.getBoundingClientRect().top;
-               const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-               window.scrollTo({
-                    top: offsetPosition,
-                    behavior: 'smooth'
-               });
-          }
+          const el = document.getElementById(targetId);
+          if (!el) return;
+          const top = el.getBoundingClientRect().top + window.pageYOffset;
+          window.scrollTo({ top, behavior: "smooth" });
      };
+
      return (
-          <section className="relative min-h-screen text-center overflow-hidden bg-primary">
-               {/* Background Image */}
-               <div className="absolute inset-0 z-[background]">
+          <section className="relative min-h-screen bg-primary overflow-hidden">
+               <div className="absolute inset-0 -z-10">
                     <Image
                          src="/assets/background/bg-horizontal.png"
                          alt=""
                          fill
-                         className="object-cover object-top"
                          priority
+                         className="object-cover object-top"
                     />
                </div>
 
-               {/* Decorative Background Elements - Radar + Univ */}
-               <div className="absolute inset-0 pointer-events-none">
-                    {/* Radar SVG - Center, responsive width and positioning */}
+               <div className="pointer-events-none absolute inset-0">
                     <div className="absolute left-1/2 top-0 transform -translate-x-1/2 translate-y-70 md:translate-y-52 lg:translate-y-26 w-[80%] md:w-[70%] lg:w-[60%] z-[-2]">
                           <Image
                                 src="/assets/decorative/radar.png"
@@ -44,38 +37,28 @@ export default function Hero() {
                           />
                     </div>
 
-                    {/* Clouds - positioned and rotated as in the design */}
-                    {/* Top Left Cloud */}
-                    <div className="absolute top-[30%] md:top-[28%] lg:top-[28%] left-[15%] md:left-[25%] lg:left-[30%] w-[60px] md:w-[80px] lg:w-[110px] z-[4] opacity-90">
-                          <Image src="/assets/cloud-right.png" alt="cloud" width={220} height={80} className="w-full h-auto" />
+                    <div className="absolute top-[28%] left-[12%] md:left-[22%] lg:left-[28%] w-24 md:w-28 lg:w-36 opacity-90 z-10">
+                         <Image src="/assets/cloud-right.png" alt="cloud" width={220} height={80} className="w-full h-auto" />
                     </div>
-                    {/* Top Right Cloud */}
-                    <div className="absolute top-[18%] md:top-[16%] lg:top-[16%] right-[15%] md:right-[25%] lg:right-[29%] w-[50px] md:w-[80px] lg:w-[130px] z-[4] opacity-90">
-                          <Image src="/assets/cloud.png" alt="cloud" width={200} height={80} className="w-full h-auto" />
+                    <div className="absolute top-[16%] right-[12%] md:right-[22%] lg:right-[28%] w-20 md:w-28 lg:w-32 opacity-90 z-10">
+                         <Image src="/assets/cloud.png" alt="cloud" width={200} height={80} className="w-full h-auto" />
                     </div>
-                    {/* Center Left Cloud */}
-                    <div className="absolute top-[50%] md:top-[45%] lg:top-[45%] -left-[10%] md:-left-[8%] lg:-left-[5%] w-[80px] md:w-[150px] lg:w-[350px] z-[2] -rotate-6 md:-rotate-8 lg:-rotate-12 opacity-90">
-                          <Image src="/assets/cloud.png" alt="cloud" width={170} height={70} className="w-full h-auto" />
+                    <div className="absolute top-1/2 -left-6 md:-left-4 lg:left-0 w-24 md:w-40 lg:w-72 -rotate-6 opacity-90 z-10">
+                         <Image src="/assets/cloud.png" alt="cloud" width={170} height={70} className="w-full h-auto" />
                     </div>
-                    {/* Center Right Cloud */}
-                    <div className="absolute top-[55%] md:top-[50%] lg:top-[50%] -right-[12%] md:-right-[10%] lg:-right-[7%] w-[80px] md:w-[150px] lg:w-[350px] z-[2] -rotate-6 md:-rotate-8 lg:-rotate-12 opacity-100">
-                          <Image src="/assets/cloud.png" alt="cloud" width={160} height={70} className="w-full h-auto" />
+                    <div className="absolute top-[52%] -right-8 md:-right-6 lg:right-0 w-24 md:w-40 lg:w-72 -rotate-6 opacity-100 z-10">
+                         <Image src="/assets/cloud.png" alt="cloud" width={160} height={70} className="w-full h-auto" />
                     </div>
 
-                    {/* Hexagonal Left */}
-                    <div className="absolute top-[60%] md:top-[50%] lg:top-[15%] -left-[5%] md:-left-[12%] lg:-left-[9%] w-[80px] md:w-[150px] lg:w-[350px] z-[1] -rotate-6 md:-rotate-8 lg:-rotate-12 opacity-100">
-                            <Image src="/assets/hexagonal.png" alt="decorative" width={160} height={70} className="w-full h-auto" />
+                    <div className="absolute lg:top-[12%] top-[55%] left-0 w-24 md:w-40 lg:w-72 -rotate-12 opacity-60 z-0">
+                         <Image src="/assets/hexagonal.png" alt="decorative" width={160} height={70} className="w-full h-auto" />
+                    </div>
+                    <div className="absolute lg:top-[12%] top-[55%] right-0 w-24 md:w-40 lg:w-72 rotate-12 opacity-60 z-0">
+                         <Image src="/assets/hexagonal.png" alt="decorative" width={160} height={70} className="w-full h-auto" />
                     </div>
 
-                    {/* Hexagonal Right */}
-                    <div className="absolute top-[60%] md:top-[50%] lg:top-[15%] -right-[5%] md:-right-[12%] lg:-right-[9%] w-[80px] md:w-[150px] lg:w-[350px] z-[0] -rotate-6 md:-rotate-8 lg:-rotate-12 opacity-100">
-                            <Image src="/assets/hexagonal.png" alt="decorative" width={160} height={70} className="w-full h-auto" />
-                    </div>
-
-                    {/* University SVG - Positioned behind countdown area */}
                     <div className="absolute bottom-0 left-0 right-0 flex justify-center items-end h-[70%]">
                          <div className="flex justify-center items-end">
-                              {/* Left Building - Hidden on mobile, visible on tablet+ */}
                               <div className="hidden lg:block absolute -left-[45%] lg:-left-[36%] md:-left-[35%] w-full h-full z-[1]">
                                    <Image
                                         src="/assets/background/building/left.png"
@@ -86,7 +69,6 @@ export default function Hero() {
                                    />
                               </div>
 
-                              {/* Center Building - Always visible, responsive sizing */}
                               <div className="absolute bottom-5 w-full h-full z-[0] md:left-0 md:right-0 md:w-full lg:left-0 lg:right-0 lg:w-full">
                                    <Image
                                         src="/assets/background/building/center.png"
@@ -97,7 +79,6 @@ export default function Hero() {
                                    />
                               </div>
 
-                              {/* Right Building - Hidden on mobile, visible on tablet+ */}
                               <div className="hidden lg:block absolute -right-[45%] lg:-right-[36%] md:-right-[35%] w-full h-full z-[1]">
                                    <Image
                                         src="/assets/background/building/right.png"
@@ -109,7 +90,6 @@ export default function Hero() {
                               </div>
                          </div>
 
-                         {/* Shadow Overlay - Always visible, responsive */}
                          <div className="flex flex-col-reverse justify-center items-end">
                               <div className="absolute bottom-0 left-0 right-0 h-[150%] z-[2] pointer-events-none"
                                    style={{
@@ -118,7 +98,6 @@ export default function Hero() {
                               </div>
                          </div>
 
-                         {/* Road - Always visible, responsive sizing and positioning */}
                          <div className="absolute -bottom-24 md:-bottom-24 lg:-bottom-24 rotate-y-180 flex justify-center items-end h-[60%] w-[85%] md:w-[85%] lg:w-[85%] z-[1]">
                               <Image
                                    src="/assets/background/building/road.png"
@@ -131,98 +110,63 @@ export default function Hero() {
                     </div>
                </div>
 
-               {/* Content */}
-               <div className="relative z-content max-w-container mx-auto px-4 py-4 lg:py-6 z-[3]">
-                    <div className="flex flex-col items-center">
-                         {/* Logo */}
-                         <div className="mb-2 lg:mb-3">
+               <div className="relative z-20">
+                    <div className="mx-auto max-w-6xl px-4">
+                         <div className="min-h-screen flex flex-col items-center pt-32 sm:pt-12 text-center">
                               <Image
                                    src="/assets/logo-ormik.svg"
                                    alt="ORMIK 2025"
                                    width={181}
                                    height={181}
-                                   className="w-[60px] h-[60px] md:w-[80px] md:h-[80px] lg:w-[120px] lg:h-[120px] "
+                                   className="mb-3 w-16 h-16 md:w-20 md:h-20 lg:w-28 lg:h-28"
                               />
-                         </div>
 
-                         {/* Headline with Multiple Ready to Explore Assets */}
-                         <div className="relative mb-1 lg:mb-2 flex items-center justify-center">
-                              {/* Layered Ready to Explore Assets */}
-                              <div className="relative">
-                                   {/* Base Layer - Main Asset with Drop Shadow */}
-                                   <div className="relative">
-                                        <Image
-                                             src="/assets/READY TO EXPLORE.svg"
-                                             alt=""
-                                             width={814}
-                                             height={160}
-                                             className="w-[320px] md:w-[450px] lg:w-[580px] h-auto opacity-100"
-                                        />
-                                   </div>
-
-                                   {/* Second Layer - Inner Shadow Effect */}
-                                   <div className="absolute inset-0 flex items-center justify-center">
-                                        <Image
-                                             src="/assets/READY TO EXPLORE (1).svg"
-                                             alt=""
-                                             width={814}
-                                             height={150}
-                                             className="w-[320px] md:w-[450px] lg:w-[580px] h-auto opacity-90"
-                                        />
-                                   </div>
-
-                                   {/* Third Layer - Gold Fill Text */}
-                                   <div className="absolute inset-0 flex items-center justify-center">
-                                        <Image
-                                             src="/assets/READY TO EXPLORE (2).svg"
-                                             alt=""
-                                             width={755}
-                                             height={91}
-                                             className="w-[300px] md:w-[420px] lg:w-[530px] h-auto opacity-95"
-                                        />
-                                   </div>
+                              <div className="relative mb-4">
+                                   <Image
+                                        src="/assets/READY TO EXPLORE.svg"
+                                        alt="Ready to Explore"
+                                        width={814}
+                                        height={160}
+                                        className="w-[320px] md:w-[460px] lg:w-[600px] h-auto"
+                                   />
+                                   <Image
+                                        src="/assets/READY TO EXPLORE (1).svg"
+                                        alt=""
+                                        width={814}
+                                        height={150}
+                                        className="pointer-events-none absolute inset-0 w-[320px] md:w-[460px] lg:w-[600px] h-auto opacity-90 m-auto"
+                                   />
+                                   <Image
+                                        src="/assets/READY TO EXPLORE (2).svg"
+                                        alt=""
+                                        width={755}
+                                        height={91}
+                                        className="pointer-events-none absolute inset-0 w-[300px] md:w-[430px] lg:w-[560px] h-auto opacity-95 m-auto"
+                                   />
                               </div>
-                         </div>
 
-                         {/* CTA Button */}
-                         <div className="relative mb-8 lg:mb-20">
-                              <a 
-                                   href="#campus-explore" 
-                                   className="inline-block"
-                                   onClick={(e) => handleSmoothScroll(e, 'campus-explore')}
-                              >
-                                   <button className="w-44 h-11 bg-blue-950 rounded-[8px] flex items-center justify-center cursor-pointer select-none
-                                        hover:translate-y-2 hover:[box-shadow:0_0px_0_0_rgba(226,220,0,1.00),0_0px_0_0_rgba(226,220,0,0.4)]
-                                        hover:border-b-[0px]
-                                        active:translate-y-2 active:[box-shadow:0_0px_0_0_rgba(226,220,0,1.00),0_0px_0_0_rgba(226,220,0,0.4)]
-                                        active:border-b-[0px]
-                                        transition-all duration-150 [box-shadow:1px_3px_1px_1px_rgba(226,220,0,1.00),0_6px_0_0_rgba(226,220,0,0.4)]
-                                        border-b-[1px] border-yellow-400
-                                        touch-manipulation
-                                   ">
-                                        <span className="text-white text-sm font-semibold font-['Poppins'] transform transition-transform duration-200 
-                                             active:scale-95 group-active:scale-95">
-                                             CAMPUS EXPLORE
-                                        </span>
-                                        <Image
-                                             src="/icons/ri_arrow-up-line.svg"
-                                             alt="Arrow Up"
-                                             width={18}
-                                             height={18}
-                                             className="ml-2 transition-transform duration-200 active:scale-95"
-                                        />
-                                   </button>
-                              </a>
-                         </div>
+                              <div className="mb-10">
+                                   <a href="#campus-explore" onClick={(e) => handleSmoothScroll(e, "campus-explore")} className="inline-block">
+                                        <button
+                                             className="group inline-flex items-center justify-center gap-2 rounded-md border-b border-yellow-400
+                             bg-blue-950 px-6 py-2 text-white font-semibold transition
+                             [box-shadow:1px_3px_1px_1px_rgba(226,220,0,1),0_6px_0_0_rgba(226,220,0,0.4)]
+                             hover:translate-y-1 hover:[box-shadow:0_0_0_0_rgba(226,220,0,1),0_0_0_0_rgba(226,220,0,0.4)]
+                             active:translate-y-1"
+                                             aria-label="Go to Campus Explore"
+                                        >
+                                             <span className="text-sm md:text-base">CAMPUS EXPLORE</span>
+                                             <Image src="/icons/ri_arrow-up-line.svg" alt="" width={18} height={18} className="transition-transform group-active:scale-95" />
+                                        </button>
+                                   </a>
+                              </div>
+                              <div className="mb-6">
+                                   <Countdown />
+                              </div>
 
-                         {/* Countdown Component */}
-                         <div className="mb-3 lg:mb-6">
-                              <Countdown />
-                         </div>
-
-                         {/* Schedule Cards */}
-                         <div className="w-full">
-                              <ScheduleCards />
+                              <div className="w-full">
+                                   <ScheduleCards />
+                              </div>
                          </div>
                     </div>
                </div>
