@@ -12,6 +12,7 @@ const YT_VIDEO_ID = "dQw4w9WgXcQ";
 
 declare global {
      interface Window {
+          /* eslint-disable @typescript-eslint/no-explicit-any */
           YT: any;
           onYouTubeIframeAPIReady?: () => void;
      }
@@ -20,6 +21,7 @@ declare global {
 export default function HandScanPage() {
      const [phase, setPhase] = useState<Phase>("idle");
 
+     /* eslint-disable @typescript-eslint/no-explicit-any */
      const playerRef = useRef<any>(null);
      const apiLoadedRef = useRef(false);
      const playerReadyRef = useRef(false);
@@ -82,6 +84,7 @@ export default function HandScanPage() {
                               }
                               playerReadyRef.current = true;
                          },
+                         /* eslint-disable @typescript-eslint/no-explicit-any */
                          onStateChange: (e: any) => {
                               if (e?.data === window.YT?.PlayerState?.ENDED) setPhase("ended");
                          }
