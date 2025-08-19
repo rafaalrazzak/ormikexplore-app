@@ -77,6 +77,9 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="id">
+            <head>
+                <script defer src="https://cloud.umami.is/script.js" data-website-id="b977a5d1-bd2c-4ede-90b7-8ae0d5848754"></script>
+            </head>
             <body
                 className={`${inter.variable} ${poppins.variable} font-sans leading-normal m-0 antialiased`}
             >
