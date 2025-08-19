@@ -5,6 +5,7 @@ const BYPASS_PASSWORD = process.env.NEXT_PUBLIC_MAINTENANCE_BYPASS_PASSWORD;
 export function middleware(request: NextRequest) {
      const isMaintenanceMode = process.env.NEXT_PUBLIC_MAINTENANCE_MODE === 'true';
      const isMaintenancePage = request.nextUrl.pathname === '/maintenance';
+     const isHandscanPage = request.nextUrl.pathname === '/handscan';
      const isApiRoute = request.nextUrl.pathname.startsWith('/api');
      const isStaticAsset = request.nextUrl.pathname.startsWith('/_next') ||
           request.nextUrl.pathname.startsWith('/assets') ||
@@ -21,8 +22,8 @@ export function middleware(request: NextRequest) {
           return NextResponse.next();
      }
 
-     // If maintenance mode is enabled and user is not on maintenance page
-     if (isMaintenanceMode && !isMaintenancePage && !isApiRoute && !isStaticAsset) {
+     // If maintenance mode is enabled and user is not on maintenance page or handscan page
+     if (isMaintenanceMode && !isMaintenancePage && !isHandscanPage && !isApiRoute && !isStaticAsset) {
           const maintenanceUrl = new URL('/maintenance', request.url);
           return NextResponse.redirect(maintenanceUrl);
      }

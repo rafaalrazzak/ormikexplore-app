@@ -1,0 +1,164 @@
+/* Handscan animation styles, adapted for Next.js and Tailwind context */
+.scan {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+.scan .hand {
+  position: relative;
+  width: 500px;
+  height: 500px;
+  background: url("/assets/handscan/hand_02.png");
+  background-size: 500px;
+}
+.scan .hand::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0%;
+  background: url("/assets/handscan/hand_01.png");
+  background-size: 500px;
+}
+.scan.active .hand::before {
+  animation: animate 6s ease-in-out 1;
+}
+@keyframes animate {
+  0%,
+  100% {
+    height: 0%;
+  }
+  50% {
+    height: 100%;
+  }
+}
+.scan .hand::after {
+  content: "";
+  position: absolute;
+  top: 0%;
+  left: 0;
+  width: 100%;
+  height: 8px;
+  background: #3fefef;
+  border-radius: 8px;
+  filter: drop-shadow(0 0 20px #3fefef) drop-shadow(0 0 60px #3fefef);
+}
+.scan.active .hand::after {
+  animation: animateLines 6s ease-in-out 1;
+}
+@keyframes animateLines {
+  0%,
+  100% {
+    top: 0%;
+  }
+  50% {
+    top: 100%;
+  }
+}
+.scan h3 {
+  text-transform: uppercase;
+  font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+  font-size: 2.2em;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  margin-top: 28px;
+  color: #fff;
+  background: linear-gradient(90deg, #3fefef 60%, #ffd700 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+  text-shadow: 0 2px 16px #3fefef99, 0 0 2px #ffd700cc;
+  filter: drop-shadow(0 0 20px #3fefef) drop-shadow(0 0 60px #3fefef);
+  opacity: 0;
+  transition: color 0.2s, text-shadow 0.2s;
+}
+.scan.active h3 {
+  animation: animateText 0.5s steps(1) 12;
+}
+.scan:not(.active) h3 {
+  opacity: 1;
+  animation: none;
+}
+.scan:not(.active) h3::after {
+  content: "";
+  font-size: 0.5em;
+  display: block;
+  margin-top: 10px;
+}
+.scan.completed:not(.active) h3::after {
+  content: " - Scan Complete";
+  font-size: 0.7em;
+  display: block;
+  margin-top: 12px;
+  color: #ffd700;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-shadow: 0 0 8px #ffd70099, 0 0 2px #fff;
+}
+.scan:hover:not(.active) .hand {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+}
+@keyframes animateText {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.scan .hand .lines {
+  position: absolute;
+  inset: 0;
+}
+.scan .hand .lines::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 500px;
+  height: 0;
+  background: url("/assets/handscan/lines.png");
+  background-size: 500px;
+}
+.scan.active .hand .lines::before {
+  animation: handLines 6s ease-in-out 1;
+}
+@keyframes handLines {
+  0%,
+  25%,
+  100% {
+    height: 0;
+  }
+  50% {
+    height: 100%;
+  }
+}
+.scan .hand .lines::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 500px;
+  height: 0;
+  background: url("/assets/handscan/points.png");
+  background-size: 500px;
+}
+.scan.active .hand .lines::after {
+  animation: handPoints 6s ease-in-out 1;
+}
+@keyframes handPoints {
+  0%,
+  100% {
+    height: 0;
+  }
+  50% {
+    height: 100%;
+  }
+}
