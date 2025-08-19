@@ -9,6 +9,7 @@ export default function HandScanPage() {
      const [showVideo, setShowVideo] = useState(false);
      const [fadeOutScan, setFadeOutScan] = useState(false);
      const [fadeInVideo, setFadeInVideo] = useState(false);
+     const [videoEnded, setVideoEnded] = useState(false);
 
      useEffect(() => {
           // Handscan animation logic (from original, do not change)
@@ -23,7 +24,10 @@ export default function HandScanPage() {
                     setShowVideo(false);
                     setFadeOutScan(false);
                     setFadeInVideo(false);
+                    setVideoEnded(false);
                } else {
+                    // Jangan mulai handscan jika video sudah selesai dan tidak direset
+                    if (videoEnded) return;
                     scanContainer.classList.add("active");
                     scanContainer.classList.remove("completed");
                     setShowVideo(false);
@@ -45,12 +49,13 @@ export default function HandScanPage() {
                scanContainer.removeEventListener("click", handleClick);
                if (scanTimeout) clearTimeout(scanTimeout);
           };
-     }, []);
+     }, [videoEnded]);
 
      // Ensure video plays automatically after showVideo is set
      useEffect(() => {
           if (showVideo && videoRef.current) {
                // Try to play video programmatically (for some browsers)
+               videoRef.current.currentTime = 0;
                videoRef.current.play().catch(() => {});
           }
      }, [showVideo]);
@@ -109,8 +114,8 @@ export default function HandScanPage() {
                                    ref={videoRef}
                                    src="/assets/handscan/video.mp4"
                                    autoPlay
-                                   muted
                                    playsInline
+                                   onEnded={() => setVideoEnded(true)}
                                    className="w-full h-full object-contain bg-black"
                                    style={{ maxWidth: '100vw', maxHeight: '100vh' }}
                               >
