@@ -6,9 +6,9 @@ import "./handscan.css";
 
 type Phase = "idle" | "scanning" | "transition" | "playing" | "ended";
 
-const SCAN_MS = 2000;
+const SCAN_MS = 7000;
 const FADE_MS = 500;
-const YT_VIDEO_ID = "dQw4w9WgXcQ";
+const YT_VIDEO_ID = "3Rt6rLAl72I";
 
 declare global {
      interface Window {
