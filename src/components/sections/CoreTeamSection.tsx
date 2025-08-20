@@ -22,35 +22,35 @@ const coreTeamData: TeamMember[] = [
           name: "Project Officer",
           position: "PROJECT OFFICER",
           description: "Di balik geraknya seluruh tim, ada satu sosok sentral yang jadi penggerak. Dengan semangat dan kepemimpinan, ia memimpin semua bagian menuju satu tujuan besar suksesnya ORMIK Explore 2025.",
-          image: "https://placehold.co/1920x1080"
+          image: "/assets/members/po.png"
      },
      {
           id: 3,
           name: "Sekretaris ",
           position: "SEKRETARIS",
           description: "Catatan rapi, jadwal teratur, dan koordinasi dokumen yang presisi semua berkat mereka! Tim Sekretaris adalah otak administratif yang menjaga agar setiap detail terkelola dengan baik.",
-          image: "https://placehold.co/1920x1080"
+          image: "/assets/members/sekre.png"
      },
      {
           id: 4,
           name: "Bendahara",
           position: "BENDARAHA",
           description: "Mengelola keuangan bukan soal angka, tapi soal tanggung jawab. Tim ini memastikan setiap rupiah dikelola dengan bijak, demi keberlangsungan acara.",
-          image: "https://placehold.co/1920x1080"
+          image: "/assets/members/bendahara.png"
      },
      {
           id: 5,
           name: "Public Relations",
           position: "PUBLIC RELATIONS",
           description: "Public Relations bukan sekadar bicara, mereka adalah jembatan komunikasi, pencipta citra positif, dan penyambung pesan dari dalam ke luar. Tim Public Relations membangun relasi dan menghadirkan ORMIK Explore 2025 dengan wajah profesional dan ramah.",
-          image: "https://placehold.co/1920x1080"
+          image: "/assets/members/pr.png"
      },
      {
           id: 6,
           name: "Liaison Officer",
           position: "LIAISON OFFICER",
           description: "Komunikasi adalah kunci kelancaran. Tim LO siap menjadi penghubung antara narasumber dan Core team agar tidak ada informasi yang tertinggal.",
-          image: "https://placehold.co/1920x1080"
+          image: "/assets/members/lo.png"
      },
      {
           id: 7,
