@@ -77,7 +77,7 @@ export default function MaintenancePage() {
           }
      }
      return (
-          <div className="relative min-h-screen overflow-hidden bg-primary">
+          <div className="relative min-h-screen overflow-hidden bg-primary flex items-center">
                {/* Background Image */}
                <div className="absolute inset-0 z-[background]">
                     <Image

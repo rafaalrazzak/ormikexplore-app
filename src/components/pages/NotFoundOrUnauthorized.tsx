@@ -74,7 +74,7 @@ export default function NotFoundOrUnauthorized() {
 
                {/* Footer */}
                <motion.div
-                    className="mt-6 text-center z-1"
+                    className="mt-6 text-center z-1 mx-6"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.8, delay: 1.3 }}
