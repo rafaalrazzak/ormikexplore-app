@@ -48,7 +48,7 @@ export default function NotFoundOrUnauthorized() {
                </div>
                {/* Content */}
                <motion.div
-                    className="relative z-10 max-w-lg w-full px-6 py-10 bg-white/10 rounded-2xl border border-white/20 shadow-2xl flex flex-col items-center text-center"
+                    className="relative z-10 max-w-lg mx-6 px-6 py-10 bg-white/10 rounded-2xl border border-white/20 shadow-2xl flex flex-col items-center text-center"
                     initial={{ y: 50, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.8, delay: 0.3 }}
@@ -71,13 +71,18 @@ export default function NotFoundOrUnauthorized() {
                          @ormikxplore
                     </a>
                </motion.div>
-               
+
                {/* Footer */}
-               <div className="absolute bottom-4 left-0 right-0 text-center z-10">
+               <motion.div
+                    className="mt-6 text-center z-1"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.8, delay: 1.3 }}
+               >
                     <p className="text-white/60 text-xs md:text-sm font-['Poppins']">
                          © 2025 ORMIK EXPLORE - Sekolah Tinggi Teknologi Terpadu Nurul Fikri
                     </p>
-               </div>
+               </motion.div>
           </div>
      );
 }
