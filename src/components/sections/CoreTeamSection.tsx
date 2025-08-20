@@ -1,5 +1,7 @@
 "use client";
 import Image from "next/image";
+import { motion } from "framer-motion";
+import { useScrollAnimation, fadeInUp, slideInLeft, slideInRight, scaleIn } from "@/hooks/useScrollAnimation";
 
 interface TeamMember {
      id: number;
@@ -118,8 +120,17 @@ const coreTeamData: TeamMember[] = [
 ];
 
 export default function CoreTeamSection() {
+     const { ref, isInView } = useScrollAnimation();
+     
      return (
-          <section className="relative py-16 lg:py-24 overflow-hidden" id="core-team">
+          <motion.section 
+               className="relative py-16 lg:py-24 overflow-hidden" 
+               id="core-team"
+               ref={ref}
+               initial={{ opacity: 0 }}
+               animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+               transition={{ duration: 0.8 }}
+          >
 
                {/* Decorative clouds */}
                <div className="absolute inset-0 pointer-events-none">
@@ -140,12 +151,17 @@ export default function CoreTeamSection() {
 
                <div className="mx-auto px-4 sm:px-8 lg:px-12 relative z-10">
                     {/* Title */}
-                    <div className="text-center mb-16 lg:mb-20">
+                    <motion.div 
+                         className="text-center mb-16 lg:mb-20"
+                         initial={fadeInUp.initial}
+                         animate={isInView ? fadeInUp.animate : fadeInUp.initial}
+                         transition={{ duration: 0.8, delay: 0.2 }}
+                    >
                          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold font-['Poppins'] text-[gold] mb-6"
                          >
                               THE CORE TEAM IN HERE
                          </h2>
-                    </div>
+                    </motion.div>
 
                     {/* Team Grid */}
                     <div className="space-y-3">
@@ -239,6 +255,6 @@ export default function CoreTeamSection() {
                          </div>
                     </div>
                </div>
-          </section >
+          </motion.section>
      );
 }

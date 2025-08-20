@@ -1,6 +1,13 @@
+"use client";
+
 import Image from "next/image";
+import { motion } from "framer-motion";
+import { useScrollAnimation, slideInLeft, slideInRight, fadeInUp } from "@/hooks/useScrollAnimation";
 
 export default function AboutSection() {
+     const { ref: yellowSectionRef, isInView: yellowSectionInView } = useScrollAnimation();
+     const { ref: blueSectionRef, isInView: blueSectionInView } = useScrollAnimation();
+     
      return (
           <div className="relative" id="about">
                <div className="absolute inset-0 pointer-events-none">
@@ -23,7 +30,13 @@ export default function AboutSection() {
                </div>
 
                {/* Yellow Section */}
-               <section className="relative py-8 sm:px-10 sm:py-14 md:px-12 lg:py-16 overflow-hidden">
+               <motion.section 
+                    className="relative py-8 sm:px-10 sm:py-14 md:px-12 lg:py-16 overflow-hidden"
+                    ref={yellowSectionRef}
+                    initial={{ opacity: 0 }}
+                    animate={yellowSectionInView ? { opacity: 1 } : { opacity: 0 }}
+                    transition={{ duration: 0.8, staggerChildren: 0.2 }}
+               >
                     {/* Background Image */}
                     <div className="absolute inset-0 z-[1] m-4 lg:m-8 shadow-lg">
                          <Image
@@ -38,7 +51,12 @@ export default function AboutSection() {
                     <div className="relative container mx-auto px-12 sm:px-4 md:px-14 lg:px-18 xl:px-12 z-10">
                          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-18 items-center">
                               {/* Left Content - Explore Our Logo */}
-                              <div className="lg:col-span-3">
+                              <motion.div 
+                                   className="lg:col-span-3"
+                                   initial={slideInLeft.initial}
+                                   animate={yellowSectionInView ? slideInLeft.animate : slideInLeft.initial}
+                                   transition={{ duration: 0.8, delay: 0.2 }}
+                              >
                                    <div className="space-y-4 lg:space-y-6">
                                         {/* Heading Image */}
                                         <div className="flex justify-start">
@@ -59,10 +77,15 @@ export default function AboutSection() {
                                              </p>
                                         </div>
                                    </div>
-                              </div>
+                              </motion.div>
 
                               {/* Center Content - Logo Display */}
-                              <div className="lg:col-span-6 flex justify-center">
+                              <motion.div 
+                                   className="lg:col-span-6 flex justify-center"
+                                   initial={fadeInUp.initial}
+                                   animate={yellowSectionInView ? fadeInUp.animate : fadeInUp.initial}
+                                   transition={{ duration: 0.8, delay: 0.4 }}
+                              >
 
                                    <div className="absolute top-80 left-6 w-24 h-24 sm:top-[55%] sm:w-36 sm:-left-6 md:left-6 lg:left-[25%] xl:top-60 xl:left-[25%] xl:w-48 xl:h-48 opacity-100 z-[11]">
                                         <Image src="/assets/abouts-tags.svg" alt="tags" width={128} height={80} className="w-full h-auto" />
@@ -115,10 +138,15 @@ export default function AboutSection() {
 
                                         </div>
                                    </div>
-                              </div>
+                              </motion.div>
 
                               {/* Right Content - Description */}
-                              <div className="lg:col-span-3">
+                              <motion.div 
+                                   className="lg:col-span-3"
+                                   initial={slideInRight.initial}
+                                   animate={yellowSectionInView ? slideInRight.animate : slideInRight.initial}
+                                   transition={{ duration: 0.8, delay: 0.6 }}
+                              >
                                    <div className="space-y-0">
                                         {/* Description Text */}
                                         <div className="text-[midnightblue] text-xs sm:text-sm leading-snug sm:leading-relaxed md:leading-relaxed font-['Poppins'] text-justify break-words">
@@ -142,13 +170,19 @@ export default function AboutSection() {
                                              </div>
                                         </div>
                                    </div>
-                              </div>
+                              </motion.div>
                          </div>
                     </div>
-               </section>
+               </motion.section>
 
                {/* Blue Section */}
-               <section className="relative py-8 sm:px-10 sm:py-14 md:px-12 lg:py-24">
+               <motion.section 
+                    className="relative py-8 sm:px-10 sm:py-14 md:px-12 lg:py-24"
+                    ref={blueSectionRef}
+                    initial={{ opacity: 0 }}
+                    animate={blueSectionInView ? { opacity: 1 } : { opacity: 0 }}
+                    transition={{ duration: 0.8, staggerChildren: 0.2 }}
+               >
 
                     <div className="absolute inset-0 z-[1] m-4 lg:m-8 shadow-lg">
                          <Image
@@ -163,7 +197,12 @@ export default function AboutSection() {
                     <div className="relative container mx-auto px-12 sm:px-4 md:px-14 lg:px-18 xl:px-12 z-10">
                          <div className="relative flex flex-col lg:flex-row items-start gap-6 lg:gap-0">
                               {/* Left Content - Blue Section (Larger width) */}
-                              <div className="w-full lg:w-[58%] flex flex-col justify-start space-y-4 lg:space-y-6 lg:pr-6">
+                              <motion.div 
+                                   className="w-full lg:w-[58%] flex flex-col justify-start space-y-4 lg:space-y-6 lg:pr-6"
+                                   initial={slideInLeft.initial}
+                                   animate={blueSectionInView ? slideInLeft.animate : slideInLeft.initial}
+                                   transition={{ duration: 0.8, delay: 0.2 }}
+                              >
 
                                    <div className="flex flex-col gap-2">
                                         {/* Heading Images - Side by side with divider */}
@@ -206,7 +245,7 @@ export default function AboutSection() {
                                              Kegiatan yang bertujuan untuk <span className="font-bold text-gold">memperkenalkan mahasiswa baru</span> dengan sistem <span className="font-bold text-gold">perkuliahan</span> dan <span className="font-bold text-gold">lingkungan kampus</span>.
                                         </p>
                                    </div>
-                              </div>
+                              </motion.div>
 
                               {/* Vertical Divider (Desktop only) */}
                               <div className="hidden lg:flex absolute left-[58%] top-0 bottom-0 items-center justify-center">
@@ -214,7 +253,12 @@ export default function AboutSection() {
                               </div>
 
                               {/* Right Content - ORMIK EXPLORE (Smaller width) */}
-                              <div className="w-full lg:w-[42%] flex flex-col justify-start space-y-4 xl:ml-12  lg:space-y-6 lg:pl-6 text-white relative">
+                              <motion.div 
+                                   className="w-full lg:w-[42%] flex flex-col justify-start space-y-4 xl:ml-12  lg:space-y-6 lg:pl-6 text-white relative"
+                                   initial={slideInRight.initial}
+                                   animate={blueSectionInView ? slideInRight.animate : slideInRight.initial}
+                                   transition={{ duration: 0.8, delay: 0.4 }}
+                              >
                                    <div className="w-full max-w-[200px] sm:max-w-[300px] xl:max-w-[400px]">
                                         <Image
                                              src="/assets/heading/ormik-explore.svg"
@@ -229,10 +273,10 @@ export default function AboutSection() {
                                              <span className="font-bold">ORMIK EXPLORE 2025</span> <span className="text-white">memiliki visi menjadi titik mulai eksplorasi mahasiswa baru STT-NF dalam membangun semangat akademik, budaya positif, dan kesiapan diri di era modern.</span>
                                         </p>
                                    </div>
-                              </div>
+                              </motion.div>
                          </div>
                     </div>
-               </section>
+               </motion.section>
 
           </div>
      );

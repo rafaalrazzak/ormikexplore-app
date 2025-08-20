@@ -2,10 +2,14 @@
 
 import Image from "next/image";
 import { MouseEvent } from "react";
+import { motion } from "framer-motion";
+import { useScrollAnimation, fadeInUp, slideInLeft, slideInRight } from "@/hooks/useScrollAnimation";
 import Countdown from "@/components/widgets/Countdown";
 import ScheduleCards from "@/components/widgets/ScheduleCards";
 
 export default function Hero() {
+     const { ref, isInView } = useScrollAnimation();
+
      const handleSmoothScroll = (e: MouseEvent<HTMLAnchorElement>, targetId: string) => {
           e.preventDefault();
           const el = document.getElementById(targetId);
@@ -28,13 +32,13 @@ export default function Hero() {
 
                <div className="pointer-events-none absolute inset-0">
                     <div className="absolute left-1/2 top-0 transform -translate-x-1/2 translate-y-70 md:translate-y-52 lg:translate-y-26 w-[80%] md:w-[70%] lg:w-[60%] z-[-2]">
-                          <Image
-                                src="/assets/decorative/radar.png"
-                                alt="Radar"
-                                width={1000}
-                                height={1000}
-                                className="w-full h-auto opacity-100"
-                          />
+                         <Image
+                              src="/assets/decorative/radar.png"
+                              alt="Radar"
+                              width={1000}
+                              height={1000}
+                              className="w-full h-auto opacity-100"
+                         />
                     </div>
 
                     <div className="absolute top-[28%] left-[12%] md:left-[22%] lg:left-[28%] w-24 md:w-28 lg:w-36 opacity-90 z-10">
@@ -110,18 +114,35 @@ export default function Hero() {
                     </div>
                </div>
 
-               <div className="relative z-20">
+               <motion.div
+                    className="relative z-20"
+                    ref={ref}
+                    initial={{ opacity: 0 }}
+                    animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+                    transition={{ duration: 0.8, ease: "easeOut", staggerChildren: 0.2 }}
+               >
                     <div className="mx-auto max-w-6xl px-4">
                          <div className="min-h-screen flex flex-col items-center pt-32 sm:pt-12 text-center">
-                              <Image
-                                   src="/assets/logo-ormik.svg"
-                                   alt="ORMIK 2025"
-                                   width={181}
-                                   height={181}
-                                   className="mb-3 w-16 h-16 md:w-20 md:h-20 lg:w-28 lg:h-28"
-                              />
+                              <motion.div
+                                   initial={fadeInUp.initial}
+                                   animate={isInView ? fadeInUp.animate : fadeInUp.initial}
+                                   transition={{ duration: 0.7, delay: 0.2 }}
+                              >
+                                   <Image
+                                        src="/assets/logo-ormik.svg"
+                                        alt="ORMIK 2025"
+                                        width={181}
+                                        height={181}
+                                        className="mb-3 w-16 h-16 md:w-20 md:h-20 lg:w-28 lg:h-28"
+                                   />
+                              </motion.div>
 
-                              <div className="relative mb-4">
+                              <motion.div
+                                   className="relative mb-4"
+                                   initial={fadeInUp.initial}
+                                   animate={isInView ? fadeInUp.animate : fadeInUp.initial}
+                                   transition={{ duration: 0.7, delay: 0.4 }}
+                              >
                                    <Image
                                         src="/assets/READY TO EXPLORE.svg"
                                         alt="Ready to Explore"
@@ -143,9 +164,14 @@ export default function Hero() {
                                         height={91}
                                         className="pointer-events-none absolute inset-0 w-[300px] md:w-[430px] lg:w-[560px] h-auto opacity-95 m-auto"
                                    />
-                              </div>
+                              </motion.div>
 
-                              <div className="mb-10">
+                              <motion.div
+                                   className="mb-10"
+                                   initial={fadeInUp.initial}
+                                   animate={isInView ? fadeInUp.animate : fadeInUp.initial}
+                                   transition={{ duration: 0.7, delay: 0.6 }}
+                              >
                                    <a href="#campus-explore" onClick={(e) => handleSmoothScroll(e, "campus-explore")} className="inline-block">
                                         <button
                                              className="group inline-flex items-center justify-center gap-2 rounded-md border-b border-yellow-400
@@ -159,17 +185,28 @@ export default function Hero() {
                                              <Image src="/icons/ri_arrow-up-line.svg" alt="" width={18} height={18} className="transition-transform group-active:scale-95" />
                                         </button>
                                    </a>
-                              </div>
-                              <div className="mb-6">
-                                   <Countdown />
-                              </div>
+                              </motion.div>
 
-                              <div className="w-full">
+                              <motion.div
+                                   className="mb-6"
+                                   initial={fadeInUp.initial}
+                                   animate={isInView ? fadeInUp.animate : fadeInUp.initial}
+                                   transition={{ duration: 0.7, delay: 0.8 }}
+                              >
+                                   <Countdown />
+                              </motion.div>
+
+                              <motion.div
+                                   className="w-full"
+                                   initial={fadeInUp.initial}
+                                   animate={isInView ? fadeInUp.animate : fadeInUp.initial}
+                                   transition={{ duration: 0.7, delay: 1.0 }}
+                              >
                                    <ScheduleCards />
-                              </div>
+                              </motion.div>
                          </div>
                     </div>
-               </div>
+               </motion.div>
           </section>
      );
 }

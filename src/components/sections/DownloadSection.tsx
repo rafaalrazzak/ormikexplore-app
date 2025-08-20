@@ -1,12 +1,30 @@
+"use client";
+
 import Image from "next/image";
+import { motion } from "framer-motion";
+import { useScrollAnimation, fadeInUp, slideInLeft, slideInRight } from "@/hooks/useScrollAnimation";
 import Footer from "./Footer";
 
 export default function DownloadSection() {
+     const { ref, isInView } = useScrollAnimation();
+     
      return (
-          <section className="relative pt-24 lg:pt-26 pb-8 lg:pb-10 overflow-hidden" id="download">
+          <motion.section 
+               className="relative pt-24 lg:pt-26 pb-8 lg:pb-10 overflow-hidden" 
+               id="download"
+               ref={ref}
+               initial={{ opacity: 0 }}
+               animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+               transition={{ duration: 0.8 }}
+          >
 
                {/* Mascot positioned between download and footer with highest z-index */}
-               <div className="absolute left-4 sm:left-6 md:left-8 lg:left-14 bottom-28 sm:bottom-30 md:bottom-32 lg:bottom-40 xl:bottom-32 z-[15]">
+               <motion.div 
+                    className="absolute left-4 sm:left-6 md:left-8 lg:left-14 bottom-28 sm:bottom-30 md:bottom-32 lg:bottom-40 xl:bottom-32 z-[15]"
+                    initial={slideInLeft.initial}
+                    animate={isInView ? slideInLeft.animate : slideInLeft.initial}
+                    transition={{ duration: 0.8, delay: 0.2 }}
+               >
                     <div className="relative w-[100px] h-[100px] sm:w-[140px] sm:h-[140px] md:w-[180px] md:h-[180px] lg:h-[220px] lg:w-[220px] xl:w-[320px] xl:h-[320px]">
                          <Image
                               src="/assets/maskot.svg"
@@ -16,12 +34,17 @@ export default function DownloadSection() {
                               priority
                          />
                     </div>
-               </div>
+               </motion.div>
 
                <div className="space-y-6">
                     <div className="container mx-auto px-6 sm:px-8 md:px-20 lg:px-20 xl:px-12 relative z-10 space-y-6">
                          {/* Download Section Overlay */}
-                         <div className="relative bg-white/18 backdrop-blur-lg rounded-2xl sm:rounded-3xl px-4 pt-3 pb-2 sm:px-6 sm:pt-4 sm:pb-3 lg:px-4 lg:pt-4 lg:pb-3 border border-white/10 shadow-2xl">
+                         <motion.div 
+                              className="relative bg-white/18 backdrop-blur-lg rounded-2xl sm:rounded-3xl px-4 pt-3 pb-2 sm:px-6 sm:pt-4 sm:pb-3 lg:px-4 lg:pt-4 lg:pb-3 border border-white/10 shadow-2xl"
+                              initial={fadeInUp.initial}
+                              animate={isInView ? fadeInUp.animate : fadeInUp.initial}
+                              transition={{ duration: 0.8, delay: 0.4 }}
+                         >
                               <div className="flex flex-col lg:flex-row items-center justify-between gap-4 sm:gap-6 lg:gap-8">
                                    {/* Left Content - Greetings Text with margin for mascot */}
                                    <div className="flex-1 space-y-1 sm:space-y-2 text-center lg:text-left max-w-full lg:max-w-lg ml-0 lg:ml-40">
@@ -66,13 +89,13 @@ export default function DownloadSection() {
                                         </button>
                                    </div>
                               </div>
-                         </div>
+                         </motion.div>
                     </div>
 
                     {/* Footer Section */}
                     <Footer />
                </div>
 
-          </section>
+          </motion.section>
      );
 }

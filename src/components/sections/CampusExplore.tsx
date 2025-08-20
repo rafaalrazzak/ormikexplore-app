@@ -1,4 +1,8 @@
+"use client";
+
 import Image from "next/image";
+import { motion } from "framer-motion";
+import { useScrollAnimation, slideInLeft, slideInRight, fadeInUp } from "@/hooks/useScrollAnimation";
 
 interface CampusData {
      titleImage: string;
@@ -20,8 +24,17 @@ const campusData: CampusData[] = [
 ];
 
 export default function CampusExplore() {
+     const { ref, isInView } = useScrollAnimation();
+     
      return (
-          <section className="relative py-16 lg:py-32 overflow-hidden" id="campus-explore">
+          <motion.section 
+               className="relative py-16 lg:py-32 overflow-hidden" 
+               id="campus-explore"
+               ref={ref}
+               initial={{ opacity: 0 }}
+               animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+               transition={{ duration: 0.8, staggerChildren: 0.2 }}
+          >
 
                {/* Decorative clouds */}
                <div className="absolute inset-0 pointer-events-none">
@@ -50,12 +63,20 @@ export default function CampusExplore() {
                     {/* Campus Columns */}
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 max-w-7xl mx-auto">
                          {campusData.map((campus, index) => (
-                              <div
+                              <motion.div
                                    key={index}
                                    className="text-left lg:text-center"
+                                   initial={index === 0 ? slideInLeft.initial : slideInRight.initial}
+                                   animate={isInView ? (index === 0 ? slideInLeft.animate : slideInRight.animate) : (index === 0 ? slideInLeft.initial : slideInRight.initial)}
+                                   transition={{ duration: 0.8, delay: index * 0.2 + 0.2 }}
                               >
                                    {/* Campus Title Image */}
-                                   <div className="mb-6 flex justify-start lg:justify-center">
+                                   <motion.div 
+                                        className="mb-6 flex justify-start lg:justify-center"
+                                        initial={fadeInUp.initial}
+                                        animate={isInView ? fadeInUp.animate : fadeInUp.initial}
+                                        transition={{ duration: 0.7, delay: index * 0.2 + 0.4 }}
+                                   >
                                         <div className="relative h-16 w-auto">
                                              <Image
                                                   src={campus.titleImage}
@@ -66,17 +87,27 @@ export default function CampusExplore() {
                                                   priority={index === 0}
                                              />
                                         </div>
-                                   </div>
+                                   </motion.div>
 
                                    {/* Campus Address */}
-                                   <div className="mb-6 px-6 sm:px-2 lg:px-6">
+                                   <motion.div 
+                                        className="mb-6 px-6 sm:px-2 lg:px-6"
+                                        initial={fadeInUp.initial}
+                                        animate={isInView ? fadeInUp.animate : fadeInUp.initial}
+                                        transition={{ duration: 0.7, delay: index * 0.2 + 0.6 }}
+                                   >
                                         <p className="text-white italic text-sm lg:text-base leading-relaxed">
                                              {campus.address}
                                         </p>
-                                   </div>
+                                   </motion.div>
 
                                    {/* Campus Map */}
-                                   <div className="w-full">
+                                   <motion.div 
+                                        className="w-full"
+                                        initial={fadeInUp.initial}
+                                        animate={isInView ? fadeInUp.animate : fadeInUp.initial}
+                                        transition={{ duration: 0.7, delay: index * 0.2 + 0.8 }}
+                                   >
                                         <div className="relative w-full h-64 lg:h-80">
                                              <Image
                                                   src={campus.mapImage}
@@ -86,11 +117,11 @@ export default function CampusExplore() {
                                                   priority={index === 0}
                                              />
                                         </div>
-                                   </div>
-                              </div>
+                                   </motion.div>
+                              </motion.div>
                          ))}
                     </div>
                </div>
-          </section>
+          </motion.section>
      );
 }
