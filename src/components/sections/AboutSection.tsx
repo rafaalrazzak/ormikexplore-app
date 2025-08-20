@@ -64,8 +64,8 @@ export default function AboutSection() {
                               {/* Center Content - Logo Display */}
                               <div className="lg:col-span-6 flex justify-center">
 
-                                   <div className="absolute top-80 left-6 w-22 h-22 sm:top-[55%] sm:w-36 sm:-left-6 md:left-6 lg:left-[25%] xl:top-60 xl:left-[25%] xl:w-48 xl:h-48 opacity-100 z-[11]">
-                                        <Image src="/assets/abouts-tags.svg" alt="cloud" width={128} height={80} className="w-full h-auto" />
+                                   <div className="absolute top-80 left-6 w-24 h-24 sm:top-[55%] sm:w-36 sm:-left-6 md:left-6 lg:left-[25%] xl:top-60 xl:left-[25%] xl:w-48 xl:h-48 opacity-100 z-[11]">
+                                        <Image src="/assets/abouts-tags.svg" alt="tags" width={128} height={80} className="w-full h-auto" />
                                    </div>
 
                                    <div className="relative p-8 lg:p-12 flex flex-col items-center text-white overflow-hidden w-full max-w-lg aspect-[4/3]">
@@ -103,7 +103,7 @@ export default function AboutSection() {
                                         {/* Content - Above overlays */}
                                         <div className="relative z-[3] flex flex-col items-center justify-center h-full">
                                              {/* Ticket */}
-                                             <div className="absolute -top-2 -right-16 md:-top-3 w-[130px] sm:-right-34 sm:w-[270px] md:-right-40 md:w-[300px] lg:-right-30 lg:w-[240px] xl:-right-40 xl:w-[320px]">
+                                             <div className="absolute -top-2 -right-18 md:-top-3 w-[150px] sm:-right-34 sm:w-[270px] md:-right-40 md:w-[300px] lg:-right-30 lg:w-[240px] xl:-right-40 xl:w-[320px]">
                                                   <Image
                                                        src="/assets/ticket.svg"
                                                        alt="decorative"
