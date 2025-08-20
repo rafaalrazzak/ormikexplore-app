@@ -27,7 +27,7 @@ export default function AdminPage() {
                               animate={{ opacity: 1, y: 0 }}
                               transition={{ delay: 0.1 }}
                          >
-                              <Link href="/admin/robots">
+                              <Link href="/atmint/robots">
                                    <div className="bg-white/10 backdrop-blur-lg rounded-xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300 cursor-pointer group">
                                         <div className="text-center">
                                              <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-green-500/30 transition-colors">
