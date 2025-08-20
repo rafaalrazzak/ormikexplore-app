@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { useScrollAnimation, fadeInUp, slideInLeft, slideInRight } from "@/hooks/useScrollAnimation";
+import { useScrollAnimation, fadeInUp, slideInLeft } from "@/hooks/useScrollAnimation";
 import Footer from "./Footer";
 
 export default function DownloadSection() {

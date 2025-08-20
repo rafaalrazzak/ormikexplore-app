@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { MouseEvent } from "react";
 import { motion } from "framer-motion";
-import { useScrollAnimation, fadeInUp, slideInLeft, slideInRight } from "@/hooks/useScrollAnimation";
+import { useScrollAnimation, fadeInUp } from "@/hooks/useScrollAnimation";
 import Countdown from "@/components/widgets/Countdown";
 import ScheduleCards from "@/components/widgets/ScheduleCards";
 

@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { useScrollAnimation, fadeInUp, slideInLeft, slideInRight, scaleIn } from "@/hooks/useScrollAnimation";
+import { useScrollAnimation, fadeInUp } from "@/hooks/useScrollAnimation";
 
 interface TeamMember {
      id: number;

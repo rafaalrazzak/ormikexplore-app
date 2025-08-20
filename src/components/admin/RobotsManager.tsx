@@ -86,20 +86,20 @@ export default function RobotsManager() {
      };
 
      // Test robots.txt URL
-     const testUrl = async (url: string) => {
-          try {
-               const response = await fetch('/api/robots/test', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ url, content: robotsContent })
-               });
-               const result = await response.json();
-               return result;
-          } catch (error) {
-               console.error('Error testing URL:', error);
-               return null;
-          }
-     };
+     // const testUrl = async (url: string) => {
+     //      try {
+     //           const response = await fetch('/api/robots/test', {
+     //                method: 'POST',
+     //                headers: { 'Content-Type': 'application/json' },
+     //                body: JSON.stringify({ url, content: robotsContent })
+     //           });
+     //           const result = await response.json();
+     //           return result;
+     //      } catch (error) {
+     //           console.error('Error testing URL:', error);
+     //           return null;
+     //      }
+     // };
 
      useEffect(() => {
           fetchRobotsContent();
