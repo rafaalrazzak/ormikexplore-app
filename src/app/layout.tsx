@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { inter, poppins } from "./fonts";
 import { fetchMaintenanceConfig } from "@/utils/maintenance";
+import FontPreloader from "@/components/ui/FontPreloader";
 
 async function getMaintenanceMeta() {
     try {
@@ -95,6 +96,7 @@ export default function RootLayout({
             <body
                 className={`${inter.variable} ${poppins.variable} font-sans leading-normal m-0 antialiased`}
             >
+                <FontPreloader />
                 {children}
             </body>
         </html>
