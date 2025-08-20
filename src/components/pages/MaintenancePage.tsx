@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
-import { getMaintenanceConfig, getMaintenanceTimeRemaining, getMaintenanceEndTime } from "@/utils/maintenance";
+import { fetchMaintenanceConfig, getMaintenanceTimeRemaining } from "@/utils/maintenance";
 import { useRouter, useSearchParams } from "next/navigation";
 
 
@@ -12,11 +12,10 @@ interface TimeRemaining {
      minutes: number;
      seconds: number;
 }
-const bypassPassword = process.env.NEXT_PUBLIC_MAINTENANCE_BYPASS_PASSWORD;
 
 export default function MaintenancePage() {
      const [timeRemaining, setTimeRemaining] = useState<TimeRemaining | null>(null);
-     const [maintenanceMessage, setMaintenanceMessage] = useState<string>(getMaintenanceConfig().message || "");
+     const [maintenanceMessage, setMaintenanceMessage] = useState<string>("");
      const [showBypass, setShowBypass] = useState(false);
      const [bypassInput, setBypassInput] = useState("");
      const [bypassError, setBypassError] = useState("");
@@ -24,18 +23,20 @@ export default function MaintenancePage() {
      const searchParams = useSearchParams();
 
      useEffect(() => {
-          // Initial calculation
-          setTimeRemaining(getMaintenanceTimeRemaining());
-          setMaintenanceMessage(getMaintenanceConfig().message || "");
+          async function fetchData() {
+               const config = await fetchMaintenanceConfig();
+               setMaintenanceMessage(config.message || "");
+               const remainingTime = await getMaintenanceTimeRemaining();
+               setTimeRemaining(remainingTime);
+               setShowBypass(!!config.password);
+          }
 
-          // Show bypass form if password env is set
-          setShowBypass(!!bypassPassword);
+          fetchData();
 
           // Bypass via URL param
-          if (typeof window !== "undefined" && !!bypassPassword) {
+          if (typeof window !== "undefined") {
                const passParam = searchParams?.get("pass");
-               if (passParam && passParam === bypassPassword) {
-                    // Call API to set bypass cookie
+               if (passParam) {
                     fetch("/api/maintenance-bypass", {
                          method: "POST",
                          headers: { "Content-Type": "application/json" },
@@ -51,26 +52,12 @@ export default function MaintenancePage() {
                }
           }
 
-          // Cari waktu mulai maintenance (dari localStorage, atau asumsikan waktu sekarang jika belum ada)
-          let initialStart = null;
-          if (typeof window !== "undefined") {
-               const stored = window.localStorage.getItem("maintenanceStartTime");
-               if (stored) initialStart = new Date(stored);
-          }
-          if (!initialStart && getMaintenanceEndTime()) {
-               initialStart = new Date();
-               if (typeof window !== "undefined") {
-                    window.localStorage.setItem("maintenanceStartTime", initialStart.toISOString());
-               }
-          }
-
-
           // Set up interval for real-time countdown
-          const interval = setInterval(() => {
-               setTimeRemaining(getMaintenanceTimeRemaining());
+          const interval = setInterval(async () => {
+               const remainingTime = await getMaintenanceTimeRemaining();
+               setTimeRemaining(remainingTime);
           }, 1000);
           return () => clearInterval(interval);
-          // Add 'router' to dependencies to fix exhaustive-deps warning
      }, [searchParams, router]);
 
      // Handle bypass form submit

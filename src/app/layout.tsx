@@ -1,21 +1,31 @@
-
 import type { Metadata } from "next";
 import "./globals.css";
 import { inter, poppins } from "./fonts";
+import { fetchMaintenanceConfig } from "@/utils/maintenance";
 
-function getMaintenanceMeta() {
-    if (typeof process !== "undefined" && process.env.NEXT_PUBLIC_MAINTENANCE_MODE === "true") {
+async function getMaintenanceMeta() {
+    try {
+        const config = await fetchMaintenanceConfig();
+
+        if (config.isEnabled) {
+            return {
+                title: "Maintenance - ORMIK EXPLORE 2025",
+                description: config.message || "Website sedang dalam proses maintenance. Kami akan segera kembali!",
+            };
+        }
+        return null;
+    } catch (error) {
+        console.warn("generateMetadata fail", error);
         return {
-            title: "Maintenance - ORMIK EXPLORE 2025",
-            description: process.env.NEXT_PUBLIC_MAINTENANCE_MESSAGE || "Website sedang dalam proses maintenance. Kami akan segera kembali!",
+            title: "ORMIK Explore 2025",
+            description: "Website sedang dalam proses maintenance. Kami akan segera kembali!",
         };
     }
-    return null;
 }
 
-export const metadata: Metadata = (() => {
-    const maintenance = getMaintenanceMeta();
-    const base = {
+export async function generateMetadata(): Promise<Metadata> {
+    const maintenance = await getMaintenanceMeta();
+    const base: Metadata = {
         title: "ORMIK EXPLORE 2025 | STTNF",
         description: "ORMIK EXPLORE 2025 memiliki visi menjadi titik mulai eksplorasi mahasiswa baru STT-NF dalam membangun semangat akademik, budaya positif, dan kesiapan diri di era modern.",
         icons: { icon: "/icons/logo.png", apple: "/icons/logo.png" },
@@ -68,7 +78,9 @@ export const metadata: Metadata = (() => {
         };
     }
     return base;
-})();
+}
+
+export const dynamic = "force-dynamic";
 
 export default function RootLayout({
     children,

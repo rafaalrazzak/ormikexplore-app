@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { fetchMaintenanceConfig } from "@/utils/maintenance";
 
 export async function POST(req: NextRequest) {
      const { password } = await req.json();
-     const bypassPassword = process.env.NEXT_PUBLIC_MAINTENANCE_BYPASS_PASSWORD;
+     const config = await fetchMaintenanceConfig();
+     const bypassPassword = config.password;
      if (password && bypassPassword && password === bypassPassword) {
           // Set cookie for 1 day
           const res = NextResponse.json({ success: true });
