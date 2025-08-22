@@ -149,6 +149,7 @@ export default function CoreTeamSection() {
           bottomSwiperRef.current?.swiper?.autoplay?.start();
      };
 
+     /* eslint-disable @typescript-eslint/no-unused-vars */
      const TeamMemberCard = ({ member, keyPrefix }: { member: TeamMember; keyPrefix: string }) => {
           const isActive = activeCard === member.id;
           
