@@ -62,29 +62,29 @@ export default function DownloadSection() {
                                         </div>
                                    </div>
 
-                                   {/* Right Content - Download Center Button */}
-                                   <div className="w-full lg:w-auto flex justify-center lg:justify-end lg:flex-shrink-0">
+                                   {/* Right Content - Download Buttons */}
+                                   <div className="w-full lg:w-auto flex flex-col lg:flex-row gap-2 justify-center lg:justify-end lg:flex-shrink-0">
+                                        {/* Guide Book Button */}
                                         <button className="relative group transition-all duration-300 ease-out hover:scale-[1.02] active:scale-[0.98] w-full lg:w-auto">
-                                             {/* Button Background */}
-                                             <div className="relative w-[200px] h-[50px] sm:w-[320px] sm:h-[60px] lg:w-[330px] lg:h-[70px] xl:w-[400px] xl:h-[75px] mx-auto lg:mx-0 rounded-xl sm:rounded-2xl overflow-hidden shadow-lg group-hover:shadow-2xl group-hover:shadow-blue-500/20 transition-all duration-300">
+                                             <div className="relative w-full h-[40px] sm:w-full sm:h-[45px] md:w-[180px] md:h-[50px] lg:w-[180px] lg:h-[80px] xl:w-[200px] xl:h-[100px] mx-auto lg:mx-0 rounded-lg overflow-hidden transition-all duration-300">
                                                   <Image
-                                                       src="/assets/background/bg-yellow.png"
-                                                       alt=""
+                                                       src="/assets/button/guide-book.svg"
+                                                       alt="Guide Book"
                                                        fill
-                                                       className="object-fill group-hover:brightness-110 transition-all duration-300"
+                                                       className="object-contain group-hover:brightness-110 transition-all duration-300"
                                                   />
+                                             </div>
+                                        </button>
 
-                                                  {/* Download Text Overlay */}
-                                                  <div className="absolute inset-0 flex items-center justify-center z-10">
-                                                       <div className="relative w-[180px] h-[22px] sm:w-[200px] sm:h-[25px] lg:w-[240px] lg:h-[30px] xl:w-[260px] xl:h-[32px] group-hover:scale-105 transition-transform duration-300 ease-out">
-                                                            <Image
-                                                                 src="/assets/heading/download.svg"
-                                                                 alt="Download Center"
-                                                                 fill
-                                                                 className="object-contain drop-shadow-sm"
-                                                            />
-                                                       </div>
-                                                  </div>
+                                        {/* Twibbon Explorers Button */}
+                                        <button className="relative group transition-all duration-300 ease-out hover:scale-[1.02] active:scale-[0.98] w-full lg:w-auto">
+                                             <div className="relative w-full h-[40px] sm:w-full sm:h-[45px] md:w-[180px] md:h-[50px] lg:w-[180px] lg:h-[60px] xl:w-[200px] xl:h-[70px] mx-auto lg:mx-0 rounded-lg overflow-hidden transition-all duration-300">
+                                                  <Image
+                                                       src="/assets/button/twibbon.svg"
+                                                       alt="Twibbon Explorers"
+                                                       fill
+                                                       className="object-contain group-hover:brightness-110 transition-all duration-300"
+                                                  />
                                              </div>
                                         </button>
                                    </div>
