@@ -127,7 +127,9 @@ const coreTeamData: TeamMember[] = [
 export default function CoreTeamSection() {
      const { ref, isInView } = useScrollAnimation();
      const [activeCard, setActiveCard] = useState<number | null>(null);
-     const topSwiperRef = useRef<any>(null);
+     /* eslint-disable @typescript-eslint/no-explicit-any */
+     const topSwiperRef = useRef<any>(null); 
+     /* eslint-disable @typescript-eslint/no-explicit-any */
      const bottomSwiperRef = useRef<any>(null);
 
      const topRowData = coreTeamData.slice(0, Math.ceil(coreTeamData.length / 2));
