@@ -42,37 +42,6 @@ body {
   }
 }
 
-@keyframes scroll-left {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-100%);
-  }
-}
-
-@keyframes scroll-right {
-  0% {
-    transform: translateX(-50%);
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
-
-.animate-scroll-left {
-  animation: scroll-left 60s linear infinite;
-}
-
-.animate-scroll-right {
-  animation: scroll-right 60s linear infinite;
-}
-
-.animate-scroll-left:hover,
-.animate-scroll-right:hover {
-  animation-play-state: paused;
-}
-
 .text-gold-custom {
   color: #ffd700;
 }
@@ -90,4 +59,13 @@ body {
   -webkit-text-stroke: 12px var(--midnightblue-custom, #ffd700);
   text-shadow: -2px -2px 0 var(--gold-custom, #ffd700),
     2px -2px 0 var(--gold-custom, #ffd700);
+}
+
+/* Swiper Core Team Styles */
+.swiper-wrapper {
+  transition-timing-function: linear !important;
+}
+
+.swiper-slide {
+  width: auto !important;
 }
