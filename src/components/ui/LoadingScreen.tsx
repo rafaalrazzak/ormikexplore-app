@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
+import AssetCache from '@/utils/assetCache';
 
 interface LoadingScreenProps {
      onLoadingComplete: () => void;
@@ -11,8 +12,35 @@ interface LoadingScreenProps {
 const LoadingScreen = ({ onLoadingComplete }: LoadingScreenProps) => {
      const [progress, setProgress] = useState(0);
      const [loadingText, setLoadingText] = useState('Memuat Assets...');
-     const [isVisible, setIsVisible] = useState(true); useEffect(() => {
-          let loadedCount = 0;
+     const [isVisible, setIsVisible] = useState(true);
+     const [isCacheValid, setIsCacheValid] = useState(false);
+
+     useEffect(() => {
+          // Debug cache info
+          console.log('Asset Cache Info:', AssetCache.getInfo());
+          
+          // Check if assets are already cached
+          const cacheValid = AssetCache.isValid();
+          setIsCacheValid(cacheValid);
+
+          if (cacheValid) {
+               // If cache is valid, skip loading and show quick success animation
+               setLoadingText('Memuat dari Cache...');
+               setProgress(90);
+               
+               setTimeout(() => {
+                    setProgress(100);
+                    setLoadingText('Siap Untuk Explore!');
+                    
+                    setTimeout(() => {
+                         setIsVisible(false);
+                         setTimeout(onLoadingComplete, 300); // Faster completion
+                    }, 800);
+               }, 500);
+               
+               return;
+          }
+
           let messageIndex = 0;
 
           // Critical assets to preload - moved inside useEffect to satisfy dependency array
@@ -27,12 +55,21 @@ const LoadingScreen = ({ onLoadingComplete }: LoadingScreenProps) => {
                '/assets/background/building/left.png',
                '/assets/background/building/right.png',
                '/assets/background/building/road.png',
+               '/assets/background/logo/border.png',
+               '/assets/background/logo/center.png',
+               '/assets/background/logo/left.png',
+               '/assets/background/logo/right.png',
                '/assets/decorative/radar.png',
+               '/assets/decorative/iconxplore.svg',
                '/assets/cloud.png',
                '/assets/cloud-right.png',
                '/assets/hexagonal.png',
                '/assets/maskot.svg',
                '/assets/kerumunan.png',
+               '/assets/hole.svg',
+               '/assets/logo-nobg.png',
+               '/assets/oval-overlay.svg',
+               '/assets/ticket.svg',
                '/assets/heading/ourlogo.svg',
                '/assets/heading/ormik.svg',
                '/assets/heading/orientasi-akademik.svg',
@@ -41,7 +78,28 @@ const LoadingScreen = ({ onLoadingComplete }: LoadingScreenProps) => {
                '/assets/heading/campus-b.svg',
                '/assets/heading/download.svg',
                '/assets/campus/campus-b.svg',
-               '/assets/members/sc.png'
+               '/assets/list-logo/center.svg',
+               '/assets/list-logo/left.svg',
+               '/assets/list-logo/right.svg',
+               '/assets/button/guide-book.svg',
+               '/assets/button/twibbon.svg',
+               '/assets/icons/arrow-right.svg',
+               '/assets/icons/ri_arrow-up-line.svg',
+               '/assets/members/SC.png',
+               '/assets/members/PO.png',
+               '/assets/members/SEKRE.png',
+               '/assets/members/BENDAHARA.png',
+               '/assets/members/PR.png',
+               '/assets/members/LO.png',
+               '/assets/members/EVENT.png',
+               '/assets/members/MEDIA.png',
+               '/assets/members/KREATIF.png',
+               '/assets/members/KEDIS.png',
+               '/assets/members/MENTOR.png',
+               '/assets/members/LOGISTIK.png',
+               '/assets/members/KONSUM.png',
+               '/assets/members/MEDIS.png',
+               '/assets/members/IT_SUPPORT.png'
           ];
 
           const loadingMessages = [
@@ -50,6 +108,10 @@ const LoadingScreen = ({ onLoadingComplete }: LoadingScreenProps) => {
                'Mengatur Background...',
                'Memuat Logo ORMIK...',
                'Persiapan Campus Explore...',
+               'Memuat Core Team...',
+               'Menyiapkan Download Center...',
+               'Mengatur Tombol Interface...',
+               'Menyimpan ke Cache...',
                'Hampir Selesai...'
           ];
 
@@ -59,27 +121,16 @@ const LoadingScreen = ({ onLoadingComplete }: LoadingScreenProps) => {
                setLoadingText(loadingMessages[messageIndex]);
           }, 800);
 
-          // Preload images
-          const preloadImage = (src: string): Promise<void> => {
-               return new Promise((resolve) => {
-                    const img = new window.Image();
-                    img.onload = () => {
-                         loadedCount++;
-                         const progressValue = Math.min((loadedCount / criticalAssets.length) * 100, 95);
-                         setProgress(progressValue);
-                         resolve();
-                    };
-                    img.onerror = () => {
-                         loadedCount++;
-                         const progressValue = Math.min((loadedCount / criticalAssets.length) * 100, 95);
-                         setProgress(progressValue);
-                         resolve(); // Continue even if some images fail
-                    };
-                    img.src = src;
-               });
-          };          // Start preloading
-          Promise.all(criticalAssets.map(preloadImage))
-               .then(() => {
+          // Start preloading with AssetCache utility
+          AssetCache.preloadAssets(criticalAssets, (progressValue) => {
+               setProgress(Math.min(progressValue, 95));
+          })
+               .then((success) => {
+                    if (success) {
+                         // Save successful load to cache
+                         AssetCache.save(criticalAssets);
+                    }
+                    
                     setProgress(100);
                     setLoadingText('Siap Untuk Explore!');
 
@@ -219,6 +270,20 @@ const LoadingScreen = ({ onLoadingComplete }: LoadingScreenProps) => {
                                    >
                                         {loadingText}
                                    </motion.p>
+                                   {/* Cache indicator */}
+                                   {isCacheValid && (
+                                        <motion.div
+                                             initial={{ opacity: 0, scale: 0.8 }}
+                                             animate={{ opacity: 1, scale: 1 }}
+                                             transition={{ duration: 0.5, delay: 0.2 }}
+                                             className="mt-2 flex items-center justify-center gap-2"
+                                        >
+                                             {/* <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                                             <span className="text-xs text-green-300 font-['Poppins']">
+                                                  Assets Tersimpan
+                                             </span> */}
+                                        </motion.div>
+                                   )}
                               </motion.div>
 
                               {/* Progress Bar */}
