@@ -110,7 +110,7 @@ export class AssetCache {
      // Get current localStorage usage
      private static getStorageSize(): number {
           let total = 0;
-          for (let key in localStorage) {
+          for (const key in localStorage) {
                if (localStorage.hasOwnProperty(key)) {
                     total += localStorage[key].length + key.length;
                }
