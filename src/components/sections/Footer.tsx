@@ -15,7 +15,7 @@ export default function Footer() {
                     </div>
 
                     {/* Content */}
-                    <div className="relative z-10 p-6 sm:p-8 lg:p-10">
+                    <div className="relative z-10 my-4 sm:my-6 lg:my-10">
                          <div className="flex flex-col items-center justify-center gap-4 text-center">
                               {/* Instagram Section */}
                               <div className="flex items-center gap-3">
@@ -35,7 +35,7 @@ export default function Footer() {
                               </div>
 
                               {/* Divider */}
-                              <div className="w-12 h-0.5 bg-[midnightblue] opacity-50 rounded-full"></div>
+                              <div className="w-12 h-0.5 bg-[midnightblue] opacity-100 rounded-full"></div>
 
                               {/* Copyright Section */}
                               <div className="flex items-center gap-3">

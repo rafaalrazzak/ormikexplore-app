@@ -18,9 +18,9 @@ export default function DownloadSection() {
                transition={{ duration: 0.8 }}
           >
 
-               {/* Mascot positioned between download and footer with highest z-index */}
+          {/* Mascot positioned betwee1n download and footer with highest z-index */}
                <motion.div 
-                    className="absolute left-4 sm:left-6 md:left-8 lg:left-14 bottom-28 sm:bottom-30 md:bottom-32 lg:bottom-40 xl:bottom-32 z-[15]"
+                    className="absolute left-4 sm:left-6 md:left-8 lg:left-14 bottom-18 sm:bottom-30 md:bottom-32 lg:bottom-40 xl:bottom-32 z-[15]"
                     initial={slideInLeft.initial}
                     animate={isInView ? slideInLeft.animate : slideInLeft.initial}
                     transition={{ duration: 0.8, delay: 0.2 }}
@@ -47,26 +47,36 @@ export default function DownloadSection() {
                          >
                               <div className="flex flex-col lg:flex-row items-center justify-between gap-4 sm:gap-6 lg:gap-8">
                                    {/* Left Content - Greetings Text with margin for mascot */}
-                                   <div className="flex-1 space-y-1 sm:space-y-2 text-center lg:text-left max-w-full lg:max-w-lg ml-0 lg:ml-40">
+                                   <div className="flex-1 space-y-1 sm:space-y-2 text-center lg:text-left max-w-full lg:max-w-lg ml-0 lg:ml-40 xl:ml-56">
                                         <h2 className="text-lg sm:text-xl lg:text-xl xl:text-2xl font-bold text-white font-['Poppins'] drop-shadow-lg leading-tight text-left lg:text-left">
                                              Hai, Explorers!!
                                         </h2>
 
                                         <div className="space-y-1 sm:space-y-0">
-                                             <p className="text-xs sm:text-sm lg:text-sm xl:text-base font-light text-white font-['Poppins'] leading-relaxed drop-shadow-md text-left lg:text-left">
+                                             <p
+                                                  className="text-xs sm:text-sm lg:text-sm xl:text-base font-light text-white font-['Poppins'] leading-relaxed text-left lg:text-left"
+                                                  style={{
+                                                       textShadow: "0 2px 8px rgba(0,0,0,0.35), 0 1px 1px rgba(0,0,0,0.15)"
+                                                  }}
+                                             >
                                                   Kamu bisa download Guide Book, Twibbon Explorer di dalam yaaa!!!
                                              </p>
-                                             <p className="text-xs sm:text-sm lg:text-sm xl:text-base font-medium text-white font-['Poppins'] drop-shadow-md text-left lg:text-left">
+                                             <p
+                                                  className="text-xs sm:text-sm lg:text-sm xl:text-base font-medium text-white font-['Poppins'] text-left lg:text-left"
+                                                  style={{
+                                                       textShadow: "0 2px 8px rgba(0,0,0,0.35), 0 1px 1px rgba(0,0,0,0.15)"
+                                                  }}
+                                             >
                                                   Klik download →
                                              </p>
                                         </div>
                                    </div>
 
                                    {/* Right Content - Download Buttons */}
-                                   <div className="w-full lg:w-auto flex flex-col lg:flex-row gap-2 justify-center lg:justify-end lg:flex-shrink-0">
+                                   <div className="flex flex-row gap-1 sm:gap-4 justify-center items-center flex-shrink-0 w-60 lg:w-auto">
                                         {/* Guide Book Button */}
-                                        <button className="relative group transition-all duration-300 ease-out hover:scale-[1.02] active:scale-[0.98] w-full lg:w-auto">
-                                             <div className="relative w-full h-[40px] sm:w-full sm:h-[45px] md:w-[180px] md:h-[50px] lg:w-[180px] lg:h-[80px] xl:w-[200px] xl:h-[100px] mx-auto lg:mx-0 rounded-lg overflow-hidden transition-all duration-300">
+                                        <button className="relative group transition-all duration-300 ease-out hover:scale-[1.02] active:scale-[0.98] w-full sm:w-auto">
+                                             <div className="relative w-full sm:w-[160px] md:w-[180px] lg:w-[170px] xl:w-[190px] h-[45px] sm:h-[50px] md:h-[55px] lg:h-[70px] xl:h-[85px] rounded-lg overflow-hidden transition-all duration-300">
                                                   <Image
                                                        src="/assets/button/guide-book.svg"
                                                        alt="Guide Book"
@@ -77,8 +87,8 @@ export default function DownloadSection() {
                                         </button>
 
                                         {/* Twibbon Explorers Button */}
-                                        <button className="relative group transition-all duration-300 ease-out hover:scale-[1.02] active:scale-[0.98] w-full lg:w-auto">
-                                             <div className="relative w-full h-[40px] sm:w-full sm:h-[45px] md:w-[180px] md:h-[50px] lg:w-[180px] lg:h-[60px] xl:w-[200px] xl:h-[70px] mx-auto lg:mx-0 rounded-lg overflow-hidden transition-all duration-300">
+                                        <button className="relative group transition-all duration-300 ease-out hover:scale-[1.02] active:scale-[0.98] w-full sm:w-auto">
+                                             <div className="relative w-full sm:w-[160px] md:w-[180px] lg:w-[170px] xl:w-[190px] h-[45px] sm:h-[50px] md:h-[55px] lg:h-[60px] xl:h-[70px] rounded-lg overflow-hidden transition-all duration-300">
                                                   <Image
                                                        src="/assets/button/twibbon.svg"
                                                        alt="Twibbon Explorers"
