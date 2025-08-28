@@ -11,33 +11,33 @@ interface LoadingScreenProps {
 
 const LoadingScreen = ({ onLoadingComplete }: LoadingScreenProps) => {
      const [progress, setProgress] = useState(0);
-     const [loadingText, setLoadingText] = useState('Memuat Assets...');
+     const [loadingText, setLoadingText] = useState('Preparing Exploration System...');
      const [isVisible, setIsVisible] = useState(true);
      const [isCacheValid, setIsCacheValid] = useState(false);
 
      useEffect(() => {
           // Debug cache info
           console.log('Asset Cache Info:', AssetCache.getInfo());
-          
+
           // Check if assets are already cached
           const cacheValid = AssetCache.isValid();
           setIsCacheValid(cacheValid);
 
           if (cacheValid) {
                // If cache is valid, skip loading and show quick success animation
-               setLoadingText('Memuat dari Cache...');
+               setLoadingText('Preparing Exploration System...');
                setProgress(90);
-               
+
                setTimeout(() => {
                     setProgress(100);
-                    setLoadingText('Siap Untuk Explore!');
-                    
+                    setLoadingText('Ready to Explore!');
+
                     setTimeout(() => {
                          setIsVisible(false);
-                         setTimeout(onLoadingComplete, 300); // Faster completion
+                         setTimeout(onLoadingComplete, 300); // Finish faster
                     }, 800);
                }, 500);
-               
+
                return;
           }
 
@@ -59,7 +59,7 @@ const LoadingScreen = ({ onLoadingComplete }: LoadingScreenProps) => {
                '/assets/background/logo/center.png',
                '/assets/background/logo/left.png',
                '/assets/background/logo/right.png',
-               '/assets/decorative/radar.png',
+               '/assets/decorative/radar.svg',
                '/assets/decorative/iconexplore.svg',
                '/assets/cloud.png',
                '/assets/cloud-right.png',
@@ -77,13 +77,10 @@ const LoadingScreen = ({ onLoadingComplete }: LoadingScreenProps) => {
                '/assets/heading/campus-b.svg',
                '/assets/heading/download.svg',
                '/assets/campus/campus-b.svg',
-               '/assets/list-logo/center.svg',
-               '/assets/list-logo/left.svg',
-               '/assets/list-logo/right.svg',
+               '/assets/logo-variations.svg',
                '/assets/button/guide-book.svg',
                '/assets/button/twibbon.svg',
-               '/assets/icons/arrow-right.svg',
-               '/assets/icons/ri_arrow-up-line.svg',
+               '/icons/ri_arrow-up-line.svg',
                '/assets/members/SC.png',
                '/assets/members/PO.png',
                '/assets/members/SEKRE.png',
@@ -102,16 +99,16 @@ const LoadingScreen = ({ onLoadingComplete }: LoadingScreenProps) => {
           ];
 
           const loadingMessages = [
-               'Memuat Assets...',
-               'Menyiapkan Maskot...',
-               'Mengatur Background...',
-               'Memuat Logo ORMIK...',
-               'Persiapan Campus Explore...',
-               'Memuat Core Team...',
-               'Menyiapkan Download Center...',
-               'Mengatur Tombol Interface...',
-               'Menyimpan ke Cache...',
-               'Hampir Selesai...'
+               'Initializing Orientation Protocol...',
+               'Welcome, New Explorer!',
+               'Calibrating Navigation Systems...',
+               'Syncing ORMIK Mainframe...',
+               'Preparing Virtual Runway...',
+               'Loading Crew Manifest...',
+               'Activating Download Terminal...',
+               'Configuring Interface Controls...',
+               'Storing Assets in Memory Bank...',
+               'Final Systems Check...'
           ];
 
           // Change loading message periodically
@@ -129,9 +126,9 @@ const LoadingScreen = ({ onLoadingComplete }: LoadingScreenProps) => {
                          // Save successful load to cache
                          AssetCache.save(criticalAssets);
                     }
-                    
+
                     setProgress(100);
-                    setLoadingText('Siap Untuk Explore!');
+                    setLoadingText('Runway Ready, Happy Exploring!');
 
                     // Small delay before hiding
                     setTimeout(() => {
@@ -142,7 +139,7 @@ const LoadingScreen = ({ onLoadingComplete }: LoadingScreenProps) => {
                .catch(() => {
                     // Even if some assets fail, continue
                     setProgress(100);
-                    setLoadingText('Siap Untuk Explore!');
+                    setLoadingText('Runway Ready, Happy Exploring!');
                     setTimeout(() => {
                          setIsVisible(false);
                          setTimeout(onLoadingComplete, 800);
@@ -188,7 +185,7 @@ const LoadingScreen = ({ onLoadingComplete }: LoadingScreenProps) => {
                                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                               >
                                    <Image
-                                        src="/assets/decorative/radar.png"
+                                        src="/assets/decorative/radar.svg"
                                         alt=""
                                         width={800}
                                         height={800}

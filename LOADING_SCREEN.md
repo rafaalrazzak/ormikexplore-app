@@ -109,7 +109,7 @@ export default function RootLayout({ children }) {
 
 4. **Decorative Elements**
 
-   - `/assets/decorative/radar.png`
+   - `/assets/decorative/radar.svg`
    - `/assets/cloud.png`
    - `/assets/cloud-right.png`
    - `/assets/hexagonal.png`

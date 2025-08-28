@@ -31,39 +31,39 @@ export default function Hero() {
                </div>
 
                <div className="pointer-events-none absolute inset-0">
-                    <div className="absolute left-1/2 top-0 transform -translate-x-1/2 translate-y-70 md:translate-y-52 lg:translate-y-26 w-[80%] md:w-[70%] lg:w-[60%] z-[-2]">
+                    <div className="absolute left-1/2 transform -translate-x-1/2 top-40 sm:top-20 md:-top-50 lg:-top-24 w-[80%] md:w-[70%] lg:w-[60%] z-[-2]">
                          <Image
-                              src="/assets/decorative/radar.png"
+                              src="/assets/decorative/radar.svg"
                               alt="Radar"
                               width={1000}
                               height={1000}
-                              className="w-full h-auto opacity-100"
+                              className="w-full h-auto"
                          />
                     </div>
 
-                    <div className="absolute top-[28%] left-[12%] md:left-[22%] lg:left-[28%] w-24 md:w-28 lg:w-36 opacity-90 z-10">
+                    <div className="absolute top-[28%] left-[12%] md:left-[22%] lg:left-[28%] w-24 md:w-28 lg:w-36 opacity-90 z-12">
                          <Image src="/assets/cloud-right.png" alt="cloud" width={220} height={80} className="w-full h-auto" />
                     </div>
                     <div className="absolute top-[16%] right-[12%] md:right-[22%] lg:right-[28%] w-20 md:w-28 lg:w-32 opacity-90 z-10">
                          <Image src="/assets/cloud.png" alt="cloud" width={200} height={80} className="w-full h-auto" />
                     </div>
-                    <div className="absolute top-1/2 -left-6 md:-left-4 lg:left-0 w-24 md:w-40 lg:w-72 -rotate-6 opacity-90 z-10">
+                    <div className="absolute top-1/2 -left-6 md:-left-4 lg:left-0 xl:-left-20 w-24 md:w-40 lg:w-72 -rotate-6 opacity-90 z-10">
                          <Image src="/assets/cloud.png" alt="cloud" width={170} height={70} className="w-full h-auto" />
                     </div>
-                    <div className="absolute top-[52%] -right-8 md:-right-6 lg:right-0 w-24 md:w-40 lg:w-72 -rotate-6 opacity-100 z-10">
+                    <div className="absolute top-[52%] -right-8 md:-right-6 lg:right-12 xl:-right-20 w-24 md:w-40 lg:w-72 -rotate-6 opacity-100 z-10">
                          <Image src="/assets/cloud.png" alt="cloud" width={160} height={70} className="w-full h-auto" />
                     </div>
 
-                    <div className="absolute lg:top-[12%] top-[55%] left-0 w-24 md:w-40 lg:w-72 -rotate-12 opacity-60 z-0">
+                    <div className="absolute bottom-[18%] sm:top-[45%] md:top-[23%] lg:top-[12%] -left-6 md:-left-10 lg:-left-16 w-24 md:w-40 lg:w-72 -rotate-12 opacity-60 z-0">
                          <Image src="/assets/hexagonal.png" alt="decorative" width={160} height={70} className="w-full h-auto" />
                     </div>
-                    <div className="absolute lg:top-[12%] top-[55%] right-0 w-24 md:w-40 lg:w-72 rotate-12 opacity-60 z-0">
+                    <div className="absolute bottom-[18%] sm:top-[45%] md:top-[23%] lg:top-[12%] -right-6 md:-right-10 lg:-right-16 w-24 md:w-40 lg:w-72 rotate-12 opacity-60 z-0">
                          <Image src="/assets/hexagonal.png" alt="decorative" width={160} height={70} className="w-full h-auto" />
                     </div>
 
                     <div className="absolute bottom-0 left-0 right-0 flex justify-center items-end h-[70%]">
                          <div className="flex justify-center items-end">
-                              <div className="hidden lg:block absolute -left-[45%] lg:-left-[36%] md:-left-[35%] w-full h-full z-[1]">
+                              <div className="hidden md:block absolute -left-[45%] lg:-left-[36%] md:-left-[35%] w-full h-full z-[1]">
                                    <Image
                                         src="/assets/background/building/left.png"
                                         alt=""
@@ -73,7 +73,7 @@ export default function Hero() {
                                    />
                               </div>
 
-                              <div className="absolute bottom-5 w-full h-full z-[0] md:left-0 md:right-0 md:w-full lg:left-0 lg:right-0 lg:w-full">
+                              <div className="absolute bottom-0 w-full h-full z-[0] md:left-0 md:right-0 md:w-full lg:left-0 lg:right-0 lg:w-full">
                                    <Image
                                         src="/assets/background/building/center.png"
                                         alt=""
@@ -83,7 +83,7 @@ export default function Hero() {
                                    />
                               </div>
 
-                              <div className="hidden lg:block absolute -right-[45%] lg:-right-[36%] md:-right-[35%] w-full h-full z-[1]">
+                              <div className="hidden md:block absolute -right-[45%] lg:-right-[36%] md:-right-[35%] w-full h-full z-[1]">
                                    <Image
                                         src="/assets/background/building/right.png"
                                         alt=""
@@ -102,7 +102,7 @@ export default function Hero() {
                               </div>
                          </div>
 
-                         <div className="absolute -bottom-24 md:-bottom-24 lg:-bottom-24 rotate-y-180 flex justify-center items-end h-[60%] w-[85%] md:w-[85%] lg:w-[85%] z-[1]">
+                         <div className="absolute -bottom-6 md:-bottom-10 lg:-bottom-24 rotate-y-180 flex justify-center items-end h-[60%] w-[85%] md:w-[85%] lg:w-[85%] z-[1]">
                               <Image
                                    src="/assets/background/building/road.png"
                                    alt=""

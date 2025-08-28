@@ -94,7 +94,7 @@ export default function MaintenancePage() {
                     {/* Radar SVG - Center */}
                     <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[60%] md:w-[50%] lg:w-[40%] z-[-1]">
                          <Image
-                              src="/assets/decorative/radar.png"
+                              src="/assets/decorative/radar.svg"
                               alt="Radar"
                               width={800}
                               height={800}
