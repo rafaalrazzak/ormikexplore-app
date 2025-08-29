@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { MouseEvent } from "react";
+import type { MouseEvent } from "react";
 import { motion } from "framer-motion";
 import { useScrollAnimation, fadeInUp } from "@/hooks/useScrollAnimation";
 import Countdown from "@/components/widgets/Countdown";
@@ -14,12 +14,13 @@ export default function Hero() {
           e.preventDefault();
           const el = document.getElementById(targetId);
           if (!el) return;
-          const top = el.getBoundingClientRect().top + window.pageYOffset;
+          const top = el.getBoundingClientRect().top + window.scrollY;
           window.scrollTo({ top, behavior: "smooth" });
      };
 
      return (
-          <section className="relative min-h-screen bg-primary overflow-hidden">
+          <section className="relative min-h-screen overflow-hidden bg-primary">
+               {/* Background */}
                <div className="absolute inset-0 -z-10">
                     <Image
                          src="/assets/background/bg-horizontal.png"
@@ -30,6 +31,7 @@ export default function Hero() {
                     />
                </div>
 
+               {/* Decorations */}
                <div className="pointer-events-none absolute inset-0">
                     <div className="absolute left-1/2 transform -translate-x-1/2 top-40 sm:top-20 md:-top-50 lg:top-20 w-[80%] md:w-[70%] lg:w-[60%] z-[-2]">
                          <Image
@@ -115,62 +117,51 @@ export default function Hero() {
                </div>
 
                <motion.div
-                    className="relative z-20"
                     ref={ref}
+                    className="relative z-20"
                     initial={{ opacity: 0 }}
                     animate={isInView ? { opacity: 1 } : { opacity: 0 }}
                     transition={{ duration: 0.8, ease: "easeOut", staggerChildren: 0.2 }}
                >
                     <div className="mx-auto max-w-6xl px-4">
-                         <div className="min-h-screen flex flex-col items-center pt-32 sm:pt-12 text-center">
-                              <motion.div
-                                   initial={fadeInUp.initial}
-                                   animate={isInView ? fadeInUp.animate : fadeInUp.initial}
-                                   transition={{ duration: 0.7, delay: 0.2 }}
-                              >
-                                   <Image
-                                        src="/assets/logo-ormik.svg"
-                                        alt="ORMIK 2025"
-                                        width={181}
-                                        height={181}
-                                        className="mb-3 w-16 h-16 md:w-20 md:h-20 lg:w-28 lg:h-28"
-                                   />
-                              </motion.div>
-
+                         <div className="flex min-h-screen flex-col items-center pt-[18vh] sm:pt-[20vh] md:pt-[22vh] lg:pt-[24vh] text-center">
+                              {/* Headline */}
                               <motion.div
                                    className="relative mb-4"
                                    initial={fadeInUp.initial}
                                    animate={isInView ? fadeInUp.animate : fadeInUp.initial}
-                                   transition={{ duration: 0.7, delay: 0.4 }}
+                                   transition={{ duration: 0.7, delay: 0.2 }}
                               >
                                    <Image
                                         src="/assets/READY TO EXPLORE.svg"
                                         alt="Ready to Explore"
                                         width={814}
                                         height={160}
-                                        className="w-[320px] md:w-[460px] lg:w-[600px] h-auto"
+                                        className="h-auto w-[320px] md:w-[460px] lg:w-[600px]"
+                                        priority={false}
                                    />
                                    <Image
                                         src="/assets/READY TO EXPLORE (1).svg"
                                         alt=""
                                         width={814}
                                         height={150}
-                                        className="pointer-events-none absolute inset-0 w-[320px] md:w-[460px] lg:w-[600px] h-auto opacity-90 m-auto"
+                                        className="pointer-events-none absolute inset-0 m-auto h-auto w-[320px] opacity-90 md:w-[460px] lg:w-[600px]"
                                    />
                                    <Image
                                         src="/assets/READY TO EXPLORE (2).svg"
                                         alt=""
                                         width={755}
                                         height={91}
-                                        className="pointer-events-none absolute inset-0 w-[300px] md:w-[430px] lg:w-[560px] h-auto opacity-95 m-auto"
+                                        className="pointer-events-none absolute inset-0 m-auto h-auto w-[300px] opacity-95 md:w-[430px] lg:w-[560px]"
                                    />
                               </motion.div>
 
+                              {/* CTA */}
                               <motion.div
                                    className="mb-10"
                                    initial={fadeInUp.initial}
                                    animate={isInView ? fadeInUp.animate : fadeInUp.initial}
-                                   transition={{ duration: 0.7, delay: 0.6 }}
+                                   transition={{ duration: 0.7, delay: 0.4 }}
                               >
                                    <a
                                         href="https://tour.nurulfikri.ac.id/"
@@ -180,32 +171,40 @@ export default function Hero() {
                                    >
                                         <button
                                              className="group inline-flex items-center justify-center gap-2 rounded-md border-b border-yellow-400
-                                                 bg-blue-950 px-6 py-2 text-white font-semibold transition
-                                                 [box-shadow:1px_3px_1px_1px_rgba(226,220,0,1),0_6px_0_0_rgba(226,220,0,0.4)]
-                                                 hover:translate-y-1 hover:[box-shadow:0_0_0_0_rgba(226,220,0,1),0_0_0_0_rgba(226,220,0,0.4)]
-                                                 active:translate-y-1"
+                             bg-blue-950 px-6 py-2 font-semibold text-white transition
+                             [box-shadow:1px_3px_1px_1px_rgba(226,220,0,1),0_6px_0_0_rgba(226,220,0,0.4)]
+                             hover:translate-y-1 hover:[box-shadow:0_0_0_0_rgba(226,220,0,1),0_0_0_0_rgba(226,220,0,0.4)]
+                             active:translate-y-1"
                                              aria-label="Go to Campus Explore"
                                         >
                                              <span className="text-sm md:text-base">CAMPUS EXPLORE</span>
-                                             <Image src="/icons/ri_arrow-up-line.svg" alt="" width={18} height={18} className="transition-transform group-active:scale-95" />
+                                             <Image
+                                                  src="/icons/ri_arrow-up-line.svg"
+                                                  alt=""
+                                                  width={18}
+                                                  height={18}
+                                                  className="transition-transform group-active:scale-95"
+                                             />
                                         </button>
                                    </a>
                               </motion.div>
 
+                              {/* Countdown */}
                               <motion.div
                                    className="mb-6"
                                    initial={fadeInUp.initial}
                                    animate={isInView ? fadeInUp.animate : fadeInUp.initial}
-                                   transition={{ duration: 0.7, delay: 0.8 }}
+                                   transition={{ duration: 0.7, delay: 0.6 }}
                               >
                                    <Countdown />
                               </motion.div>
 
+                              {/* Schedules */}
                               <motion.div
                                    className="w-full"
                                    initial={fadeInUp.initial}
                                    animate={isInView ? fadeInUp.animate : fadeInUp.initial}
-                                   transition={{ duration: 0.7, delay: 1.0 }}
+                                   transition={{ duration: 0.7, delay: 0.8 }}
                               >
                                    <ScheduleCards />
                               </motion.div>
