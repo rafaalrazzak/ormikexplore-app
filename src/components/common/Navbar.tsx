@@ -122,7 +122,7 @@ export default function Navbar() {
      const logoX = useTransform(
           progress,
           [0, CONFIG.mobile.LOGO_SLIDE, 1],
-          [0, 0, isMobile ? -140 : 0]
+          [0, 0, isMobile ? -190 : 0]
      );
 
      const navOpacity = useTransform(progress, [0.3, 1], [0, 1]);
