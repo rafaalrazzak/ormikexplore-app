@@ -31,12 +31,12 @@ export default function Hero() {
                </div>
 
                <div className="pointer-events-none absolute inset-0">
-                    <div className="absolute left-1/2 transform -translate-x-1/2 top-40 sm:top-20 md:-top-50 lg:-top-24 w-[80%] md:w-[70%] lg:w-[60%] z-[-2]">
+                    <div className="absolute left-1/2 transform -translate-x-1/2 top-40 sm:top-20 md:-top-50 lg:top-20 w-[80%] md:w-[70%] lg:w-[60%] z-[-2]">
                          <Image
                               src="/assets/decorative/radar.svg"
                               alt="Radar"
-                              width={1000}
-                              height={1000}
+                              width={500}
+                              height={500}
                               className="w-full h-auto"
                          />
                     </div>
@@ -63,7 +63,7 @@ export default function Hero() {
 
                     <div className="absolute bottom-0 left-0 right-0 flex justify-center items-end h-[70%]">
                          <div className="flex justify-center items-end">
-                              <div className="hidden md:block absolute -left-[45%] lg:-left-[36%] md:-left-[35%] w-full h-full z-[1]">
+                              <div className="hidden md:block absolute top-4 -left-[45%] lg:-left-[36%] md:-left-[35%] w-full h-full z-[1]">
                                    <Image
                                         src="/assets/background/building/left.png"
                                         alt=""
@@ -83,7 +83,7 @@ export default function Hero() {
                                    />
                               </div>
 
-                              <div className="hidden md:block absolute -right-[45%] lg:-right-[36%] md:-right-[35%] w-full h-full z-[1]">
+                              <div className="hidden md:block absolute top-4 -right-[45%] lg:-right-[36%] md:-right-[35%] w-full h-full z-[1]">
                                    <Image
                                         src="/assets/background/building/right.png"
                                         alt=""
@@ -172,13 +172,18 @@ export default function Hero() {
                                    animate={isInView ? fadeInUp.animate : fadeInUp.initial}
                                    transition={{ duration: 0.7, delay: 0.6 }}
                               >
-                                   <a href="#campus-explore" onClick={(e) => handleSmoothScroll(e, "campus-explore")} className="inline-block">
+                                   <a
+                                        href="https://tour.nurulfikri.ac.id/"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-block"
+                                   >
                                         <button
                                              className="group inline-flex items-center justify-center gap-2 rounded-md border-b border-yellow-400
-                             bg-blue-950 px-6 py-2 text-white font-semibold transition
-                             [box-shadow:1px_3px_1px_1px_rgba(226,220,0,1),0_6px_0_0_rgba(226,220,0,0.4)]
-                             hover:translate-y-1 hover:[box-shadow:0_0_0_0_rgba(226,220,0,1),0_0_0_0_rgba(226,220,0,0.4)]
-                             active:translate-y-1"
+                                                 bg-blue-950 px-6 py-2 text-white font-semibold transition
+                                                 [box-shadow:1px_3px_1px_1px_rgba(226,220,0,1),0_6px_0_0_rgba(226,220,0,0.4)]
+                                                 hover:translate-y-1 hover:[box-shadow:0_0_0_0_rgba(226,220,0,1),0_0_0_0_rgba(226,220,0,0.4)]
+                                                 active:translate-y-1"
                                              aria-label="Go to Campus Explore"
                                         >
                                              <span className="text-sm md:text-base">CAMPUS EXPLORE</span>

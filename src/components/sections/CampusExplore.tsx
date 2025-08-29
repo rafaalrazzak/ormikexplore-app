@@ -39,7 +39,7 @@ export default function CampusExplore() {
                {/* Decorative clouds */}
                <div className="absolute inset-0 pointer-events-none">
 
-                    <div className="absolute top-10 left-10 w-32 h-20 z-[12]">
+                    <div className="absolute top-10 -left-14 w-24 h-20 lg:w-32 lg:h-20 z-[12]">
                          <Image src="/assets/decorative/iconexplore.svg" alt="cloud" width={128} height={80} className="w-full h-auto" />
                     </div>
 
