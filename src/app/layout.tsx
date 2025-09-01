@@ -97,7 +97,6 @@ export default function RootLayout({
             <body
                 className={`${inter.variable} ${poppins.variable} font-sans leading-normal m-0 antialiased`}
             >
-                <Navbar/>
                 <FontPreloader />
                 {children}
             </body>

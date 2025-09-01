@@ -5,6 +5,7 @@ import DownloadSection from '@/components/sections/DownloadSection';
 import CoreTeamSection from '@/components/sections/CoreTeamSection';
 import AssetLoader from '@/components/ui/AssetLoader';
 import Image from 'next/image';
+import Navbar from '@/components/common/Navbar';
 
 export const dynamic = "force-dynamic";
 
@@ -12,6 +13,7 @@ export default function Home() {
     return (
         <AssetLoader>
             <main className="min-h-screen">
+                <Navbar />
                 <Hero />
 
                 <div className="relative">

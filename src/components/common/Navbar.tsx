@@ -104,7 +104,7 @@ export default function Navbar() {
      const backgroundColor = useTransform(
           progress,
           [0, 1],
-          ["rgba(0,0,0,0)", "rgba(12,12,20,1)"]
+          ["rgba(0,0,0,0)", "rgba(0,14,97,0.95)"]
      );
 
      const logoScale = useTransform(
@@ -122,7 +122,7 @@ export default function Navbar() {
      const logoX = useTransform(
           progress,
           [0, CONFIG.mobile.LOGO_SLIDE, 1],
-          [0, 0, isMobile ? -190 : 0]
+          [0, 0, isMobile ? -150 : 0]
      );
 
      const navOpacity = useTransform(progress, [0.3, 1], [0, 1]);
@@ -265,30 +265,46 @@ const LogoComponent = () => (
      </Link>
 );
 
-const NavLink = ({ item }: { item: NavItem }) => (
-     <motion.a
-          href={item.href}
-          className="group relative text-white/90 hover:text-white text-sm font-medium focus:outline-none focus:text-amber-400"
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          transition={CONFIG.transitions.quick}
-     >
-          {item.label}
-          <motion.span
-               className="absolute -bottom-1 left-0 h-0.5 bg-amber-400 origin-left"
-               initial={{ scaleX: 0 }}
-               whileHover={{ scaleX: 1 }}
-               transition={CONFIG.transitions.smooth}
-          />
-     </motion.a>
-);
+const NavLink = ({ item }: { item: NavItem }) => {
+     const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+          e.preventDefault();
+          const targetId = item.href.substring(1); // Remove the '#' from href
+          const targetElement = document.getElementById(targetId);
+          
+          if (targetElement) {
+               targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+               });
+          }
+     };
+
+     return (
+          <motion.a
+               href={item.href}
+               onClick={handleClick}
+               className="group relative text-white/90 hover:text-white text-sm font-medium focus:outline-none focus:text-[gold] cursor-pointer"
+               whileHover={{ scale: 1.02 }}
+               whileTap={{ scale: 0.98 }}
+               transition={CONFIG.transitions.quick}
+          >
+               {item.label}
+               <motion.span
+                    className="absolute -bottom-1 left-0 h-0.5 bg-[gold] origin-left"
+                    initial={{ scaleX: 0 }}
+                    whileHover={{ scaleX: 1 }}
+                    transition={CONFIG.transitions.smooth}
+               />
+          </motion.a>
+     );
+};
 
 const MenuButton = ({ isOpen, onClick }: { isOpen: boolean; onClick: () => void }) => (
      <motion.button
           onClick={onClick}
           aria-label={isOpen ? "Close menu" : "Open menu"}
           aria-expanded={isOpen}
-          className="p-2 text-white/90 hover:text-white focus:outline-none focus:ring-2 focus:ring-amber-400/50 rounded"
+          className="p-2 text-white/90 hover:text-white focus:outline-none focus:ring-2 focus:ring-[gold]/50 rounded"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           transition={CONFIG.transitions.quick}
@@ -314,51 +330,67 @@ const MenuButton = ({ isOpen, onClick }: { isOpen: boolean; onClick: () => void 
      </motion.button>
 );
 
-const MobileMenu = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => (
-     <AnimatePresence mode="wait">
-          {isOpen && (
-               <>
+const MobileMenu = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
+     const handleMobileNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+          e.preventDefault();
+          const targetId = href.substring(1); // Remove the '#' from href
+          const targetElement = document.getElementById(targetId);
+          
+          if (targetElement) {
+               targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+               });
+          }
+          onClose(); // Close menu after navigation
+     };
 
-                    {/* Menu content */}
-                    <motion.div
-                         initial={{ height: 0, opacity: 0 }}
-                         animate={{ height: "auto", opacity: 1 }}
-                         exit={{ height: 0, opacity: 0 }}
-                         transition={CONFIG.transitions.menu}
-                         className="md:hidden overflow-hidden bg-black/95 border-t border-white/10 relative"
-                    >
+     return (
+          <AnimatePresence mode="wait">
+               {isOpen && (
+                    <>
+
+                         {/* Menu content */}
                          <motion.div
-                              initial={{ y: -20 }}
-                              animate={{ y: 0 }}
-                              exit={{ y: -10 }}
-                              transition={{
-                                   delay: 0.1,
-                                   ...CONFIG.transitions.smooth
-                              }}
-                              className="px-6 py-8 space-y-1"
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: "auto", opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={CONFIG.transitions.menu}
+                              className="md:hidden overflow-hidden bg-[#000E61]/95 backdrop-blur-md border-t border-[gold]/20 relative"
                          >
-                              {NAV_ITEMS.map((item, index) => (
-                                   <motion.a
-                                        key={item.href}
-                                        href={item.href}
-                                        onClick={onClose}
-                                        initial={{ opacity: 0, x: -20 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                        exit={{ opacity: 0, x: -10 }}
-                                        transition={{
-                                             delay: index * 0.05 + 0.15,
-                                             ...CONFIG.transitions.smooth
-                                        }}
-                                        whileHover={{ x: 8, scale: 1.02 }}
-                                        whileTap={{ scale: 0.98 }}
-                                        className="block text-white/95 hover:text-amber-400 text-lg font-medium py-4 px-4 -mx-4 rounded-lg hover:bg-white/5 border-b border-white/5 last:border-0 will-change-transform"
-                                   >
-                                        {item.label}
-                                   </motion.a>
-                              ))}
+                              <motion.div
+                                   initial={{ y: -20 }}
+                                   animate={{ y: 0 }}
+                                   exit={{ y: -10 }}
+                                   transition={{
+                                        delay: 0.1,
+                                        ...CONFIG.transitions.smooth
+                                   }}
+                                   className="px-6 py-8 space-y-1"
+                              >
+                                   {NAV_ITEMS.map((item, index) => (
+                                        <motion.a
+                                             key={item.href}
+                                             href={item.href}
+                                             onClick={(e) => handleMobileNavClick(e, item.href)}
+                                             initial={{ opacity: 0, x: -20 }}
+                                             animate={{ opacity: 1, x: 0 }}
+                                             exit={{ opacity: 0, x: -10 }}
+                                             transition={{
+                                                  delay: index * 0.05 + 0.15,
+                                                  ...CONFIG.transitions.smooth
+                                             }}
+                                             whileHover={{ x: 8, scale: 1.02 }}
+                                             whileTap={{ scale: 0.98 }}
+                                             className="block text-white/95 hover:text-[gold] text-lg font-medium py-4 px-4 -mx-4 rounded-lg hover:bg-white/5 border-b border-white/5 last:border-0 will-change-transform cursor-pointer"
+                                        >
+                                             {item.label}
+                                        </motion.a>
+                                   ))}
+                              </motion.div>
                          </motion.div>
-                    </motion.div>
-               </>
-          )}
-     </AnimatePresence>
-);
+                    </>
+               )}
+          </AnimatePresence>
+     );
+};
