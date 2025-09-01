@@ -10,6 +10,7 @@ import {
      useSpring,
      useTransform,
 } from "framer-motion";
+import { useSpring as useReactSpring, animated, config } from "@react-spring/web";
 
 const CONFIG = {
      scroll: {
@@ -56,7 +57,7 @@ const NAV_ITEMS = [
      { label: "Tentang", href: "#about" },
      { label: "Core Team", href: "#core-team" },
      { label: "Campus Explore", href: "#campus-explore" },
-     { label: "Explorer Kit", href: "#download" },
+     { label: "Explorer Kit", href: "#explore-kit" },
 ] as const;
 
 type NavItem = (typeof NAV_ITEMS)[number];
@@ -266,9 +267,11 @@ const LogoComponent = () => (
 );
 
 const NavLink = ({ item }: { item: NavItem }) => {
+     const [isHovered, setIsHovered] = useState(false);
+     
      const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
           e.preventDefault();
-          const targetId = item.href.substring(1); // Remove the '#' from href
+          const targetId = item.href.substring(1);
           const targetElement = document.getElementById(targetId);
           
           if (targetElement) {
@@ -279,27 +282,54 @@ const NavLink = ({ item }: { item: NavItem }) => {
           }
      };
 
+     // Simple, clean spring animations
+     const linkSpring = useReactSpring({
+          y: isHovered ? -1 : 0,
+          scale: isHovered ? 1.02 : 1,
+          config: config.gentle,
+     });
+
+     const underlineSpring = useReactSpring({
+          width: isHovered ? "100%" : "0%",
+          opacity: isHovered ? 1 : 0,
+          config: config.gentle,
+     });
+
      return (
-          <motion.a
+          <animated.a
                href={item.href}
                onClick={handleClick}
-               className="group relative text-white/90 hover:text-white text-sm font-medium focus:outline-none focus:text-[gold] cursor-pointer"
-               whileHover={{ scale: 1.02 }}
-               whileTap={{ scale: 0.98 }}
-               transition={CONFIG.transitions.quick}
+               onMouseEnter={() => setIsHovered(true)}
+               onMouseLeave={() => setIsHovered(false)}
+               style={{
+                    transform: linkSpring.y.to(y => `translateY(${y}px) scale(${linkSpring.scale.get()})`),
+               }}
+               className="relative px-4 py-2 text-white/85 hover:text-white text-sm font-medium focus:outline-none focus:text-[gold] cursor-pointer transition-colors duration-300"
           >
-               {item.label}
-               <motion.span
-                    className="absolute -bottom-1 left-0 h-0.5 bg-[gold] origin-left"
-                    initial={{ scaleX: 0 }}
-                    whileHover={{ scaleX: 1 }}
-                    transition={CONFIG.transitions.smooth}
+               {/* Clean background on hover */}
+               <motion.div
+                    className="absolute inset-0 bg-white/5 rounded-lg"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: isHovered ? 1 : 0 }}
+                    transition={{ duration: 0.2 }}
                />
-          </motion.a>
+               
+               {/* Text */}
+               <span className="relative z-10 transition-colors duration-300">
+                    {item.label}
+               </span>
+               
+               {/* Minimalist underline */}
+               <animated.div
+                    style={{
+                         width: underlineSpring.width,
+                         opacity: underlineSpring.opacity,
+                    }}
+                    className="absolute bottom-0 left-1/2 h-0.5 bg-[gold] transform -translate-x-1/2"
+               />
+          </animated.a>
      );
-};
-
-const MenuButton = ({ isOpen, onClick }: { isOpen: boolean; onClick: () => void }) => (
+};const MenuButton = ({ isOpen, onClick }: { isOpen: boolean; onClick: () => void }) => (
      <motion.button
           onClick={onClick}
           aria-label={isOpen ? "Close menu" : "Open menu"}
@@ -330,26 +360,104 @@ const MenuButton = ({ isOpen, onClick }: { isOpen: boolean; onClick: () => void 
      </motion.button>
 );
 
+const MobileNavItem = ({ item, index, onClick }: { item: NavItem; index: number; onClick: (e: React.MouseEvent<HTMLAnchorElement>, href: string) => void }) => {
+     const [isPressed, setIsPressed] = useState(false);
+
+     // Clean, minimal spring animations for mobile
+     const itemSpring = useReactSpring({
+          x: isPressed ? 6 : 0,
+          scale: isPressed ? 0.98 : 1,
+          config: config.gentle,
+     });
+
+     const backgroundSpring = useReactSpring({
+          opacity: isPressed ? 1 : 0,
+          config: config.gentle,
+     });
+
+     const handleTouchStart = () => setIsPressed(true);
+     const handleTouchEnd = () => setIsPressed(false);
+     const handleMouseDown = () => setIsPressed(true);
+     const handleMouseUp = () => setIsPressed(false);
+     const handleMouseLeave = () => setIsPressed(false);
+
+     return (
+          <animated.a
+               href={item.href}
+               onClick={(e) => {
+                    e.preventDefault();
+                    onClick(e, item.href);
+               }}
+               onTouchStart={handleTouchStart}
+               onTouchEnd={handleTouchEnd}
+               onMouseDown={handleMouseDown}
+               onMouseUp={handleMouseUp}
+               onMouseLeave={handleMouseLeave}
+               style={{
+                    transform: itemSpring.x.to(x => `translateX(${x}px) scale(${itemSpring.scale.get()})`),
+               }}
+               className="relative block text-white/90 active:text-white text-lg font-medium py-5 px-4 rounded-lg will-change-transform cursor-pointer transition-colors duration-200 select-none"
+          >
+               {/* Simple background highlight */}
+               <animated.div
+                    style={{ opacity: backgroundSpring.opacity }}
+                    className="absolute inset-0 bg-white/8 rounded-lg"
+               />
+               
+               {/* Minimal side indicator */}
+               <motion.div
+                    className="absolute left-0 top-1/2 w-1 h-8 bg-[gold] rounded-r-full transform -translate-y-1/2"
+                    initial={{ scaleY: 0 }}
+                    animate={{ scaleY: isPressed ? 1 : 0 }}
+                    transition={{ duration: 0.2 }}
+               />
+               
+               {/* Text */}
+               <span className="relative z-10 ml-4 transition-colors duration-200">
+                    {item.label}
+               </span>
+               
+               {/* Simple bottom line */}
+               <motion.div
+                    className="absolute bottom-0 left-4 right-4 h-px bg-[gold]/20"
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: isPressed ? 1 : 0 }}
+                    transition={{ duration: 0.25 }}
+               />
+          </animated.a>
+     );
+};
 const MobileMenu = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
      const handleMobileNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
           e.preventDefault();
-          const targetId = href.substring(1); // Remove the '#' from href
+          e.stopPropagation();
+          
+          console.log('Mobile nav clicked:', href); // Debug log
+          
+          const targetId = href.substring(1);
           const targetElement = document.getElementById(targetId);
           
           if (targetElement) {
-               targetElement.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-               });
+               // Close menu first
+               onClose();
+               
+               // Small delay to let menu close animation start
+               setTimeout(() => {
+                    targetElement.scrollIntoView({
+                         behavior: 'smooth',
+                         block: 'start'
+                    });
+               }, 100);
+          } else {
+               console.warn('Target element not found:', targetId);
+               onClose(); // Still close menu even if target not found
           }
-          onClose(); // Close menu after navigation
      };
 
      return (
           <AnimatePresence mode="wait">
                {isOpen && (
                     <>
-
                          {/* Menu content */}
                          <motion.div
                               initial={{ height: 0, opacity: 0 }}
@@ -366,13 +474,11 @@ const MobileMenu = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
                                         delay: 0.1,
                                         ...CONFIG.transitions.smooth
                                    }}
-                                   className="px-6 py-8 space-y-1"
+                                   className="px-6 py-6 space-y-2"
                               >
                                    {NAV_ITEMS.map((item, index) => (
-                                        <motion.a
+                                        <motion.div
                                              key={item.href}
-                                             href={item.href}
-                                             onClick={(e) => handleMobileNavClick(e, item.href)}
                                              initial={{ opacity: 0, x: -20 }}
                                              animate={{ opacity: 1, x: 0 }}
                                              exit={{ opacity: 0, x: -10 }}
@@ -380,12 +486,13 @@ const MobileMenu = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
                                                   delay: index * 0.05 + 0.15,
                                                   ...CONFIG.transitions.smooth
                                              }}
-                                             whileHover={{ x: 8, scale: 1.02 }}
-                                             whileTap={{ scale: 0.98 }}
-                                             className="block text-white/95 hover:text-[gold] text-lg font-medium py-4 px-4 -mx-4 rounded-lg hover:bg-white/5 border-b border-white/5 last:border-0 will-change-transform cursor-pointer"
                                         >
-                                             {item.label}
-                                        </motion.a>
+                                             <MobileNavItem 
+                                                  item={item} 
+                                                  index={index} 
+                                                  onClick={handleMobileNavClick} 
+                                             />
+                                        </motion.div>
                                    ))}
                               </motion.div>
                          </motion.div>
