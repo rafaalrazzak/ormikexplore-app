@@ -56,7 +56,7 @@ const NAV_ITEMS = [
      { label: "Tentang", href: "#about" },
      { label: "Core Team", href: "#core-team" },
      { label: "Campus Explore", href: "#campus-explore" },
-     { label: "Download", href: "#download" },
+     { label: "Explorer Kit", href: "#download" },
 ] as const;
 
 type NavItem = (typeof NAV_ITEMS)[number];
