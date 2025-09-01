@@ -45,7 +45,7 @@ export default function DownloadSection() {
      return (
           <motion.section
                className="relative pt-24 lg:pt-26 pb-8 lg:pb-10 overflow-hidden"
-               id="download"
+               id="explore-kit"
                ref={ref}
                initial={{ opacity: 0 }}
                animate={isInView ? { opacity: 1 } : { opacity: 0 }}
