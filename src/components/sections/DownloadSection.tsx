@@ -210,7 +210,7 @@ export default function DownloadSection() {
                                    <div className="relative flex-1 w-full bg-gray-100 rounded-none sm:rounded-xl overflow-hidden">
                                         <div className="aspect-[4/3] w-full h-screen sm:h-auto">
                                              <iframe
-                                                  src="https://drive.google.com/file/d/1y5WUYJdsrkPgOx8Qe6P5LiGcGXa2s5CQ/preview"
+                                                  src="https://drive.google.com/file/d/1_gHNxnkDlZop5JjLgeQGt3qqe_tPncnv/preview"
                                                   className="w-full h-full border-0"
                                                   allow="autoplay"
                                                   title="Guide Book ORMIK Explore 2025"

@@ -45,42 +45,49 @@ const LoadingScreen = ({ onLoadingComplete }: LoadingScreenProps) => {
 
           // Critical assets to preload - moved inside useEffect to satisfy dependency array
           const criticalAssets = [
+               // Core/Essential Assets
                '/assets/logo-ormik.svg',
-               '/assets/READY TO EXPLORE.svg',
+               '/assets/maskot.svg',
+               
+               // Background Assets (High Priority)
                '/assets/background/bg-horizontal.png',
-               '/assets/background/bg-vertical.png',
                '/assets/background/bg-yellow.png',
-               '/assets/background/bg-road-vertical.svg',
                '/assets/background/building/center.png',
                '/assets/background/building/left.png',
                '/assets/background/building/right.png',
                '/assets/background/building/road.png',
-               '/assets/background/logo/border.png',
-               '/assets/background/logo/center.png',
-               '/assets/background/logo/left.png',
-               '/assets/background/logo/right.png',
+               
+               // Decorative Elements (Medium Priority)
                '/assets/decorative/radar.svg',
                '/assets/decorative/iconexplore.svg',
                '/assets/cloud.png',
                '/assets/cloud-right.png',
                '/assets/hexagonal.png',
-               '/assets/maskot.svg',
-               '/assets/kerumunan.png',
-               '/assets/logo-nobg.png',
-               '/assets/oval-overlay.svg',
-               '/assets/ticket.svg',
+               
+               // Hero Section Assets
+               '/assets/heading/ready-to-explore.svg',
+               '/icons/ri_arrow-up-line.svg',
+               
+               // About Section Assets
                '/assets/heading/ourlogo.svg',
                '/assets/heading/ormik.svg',
                '/assets/heading/orientasi-akademik.svg',
                '/assets/heading/ormik-explore.svg',
+               '/assets/abouts-tags.svg',
+               '/assets/kerumunan.png',
+               '/assets/ticket.svg',
+               '/assets/logo-variations.svg',
+               
+               // Campus Explore Assets
                '/assets/heading/campus-a.svg',
                '/assets/heading/campus-b.svg',
-               '/assets/heading/download.svg',
                '/assets/campus/campus-b.svg',
-               '/assets/logo-variations.svg',
+               
+               // Download Section Assets
                '/assets/button/guide-book.svg',
                '/assets/button/twibbon.svg',
-               '/icons/ri_arrow-up-line.svg',
+               
+               // Core Team Assets (Essential Members Only)
                '/assets/members/SC.png',
                '/assets/members/PO.png',
                '/assets/members/SEKRE.png',
@@ -180,7 +187,7 @@ const LoadingScreen = ({ onLoadingComplete }: LoadingScreenProps) => {
                          >
                               {/* Rotating radar in background */}
                               <motion.div
-                                   className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[60%] md:w-[50%] lg:w-[40%] opacity-20"
+                                   className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[60%] md:w-[50%] lg:w-[40%] opacity-80"
                                    animate={{ rotate: 360 }}
                                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                               >
@@ -343,7 +350,7 @@ const LoadingScreen = ({ onLoadingComplete }: LoadingScreenProps) => {
                          </div>
 
                          {/* Success Animation */}
-                         {progress === 100 && (
+                         {/* {progress === 100 && (
                               <motion.div
                                    initial={{ scale: 0, opacity: 0 }}
                                    animate={{ scale: 1, opacity: 1 }}
@@ -369,7 +376,7 @@ const LoadingScreen = ({ onLoadingComplete }: LoadingScreenProps) => {
                                         </motion.svg>
                                    </motion.div>
                               </motion.div>
-                         )}
+                         )} */}
                     </motion.div>
                )}
           </AnimatePresence>

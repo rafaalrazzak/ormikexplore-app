@@ -3,7 +3,6 @@ import "./globals.css";
 import { inter, poppins } from "./fonts";
 import { fetchMaintenanceConfig } from "@/utils/maintenance";
 import FontPreloader from "@/components/ui/FontPreloader";
-import Navbar from "@/components/common/Navbar";
 
 async function getMaintenanceMeta() {
     try {

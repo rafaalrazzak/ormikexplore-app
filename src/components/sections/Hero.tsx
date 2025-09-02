@@ -124,41 +124,27 @@ export default function Hero() {
                     transition={{ duration: 0.8, ease: "easeOut", staggerChildren: 0.2 }}
                >
                     <div className="mx-auto max-w-6xl px-4">
-                         <div className="flex min-h-screen flex-col items-center pt-[18vh] sm:pt-[20vh] md:pt-[22vh] lg:pt-[24vh] text-center">
+                         <div className="flex min-h-screen flex-col items-center pt-[18vh] sm:pt-[20vh] md:pt-[22vh] lg:pt-[20vh] text-center">
                               {/* Headline */}
                               <motion.div
-                                   className="relative mb-4"
+                                   className="relative mb-8"
                                    initial={fadeInUp.initial}
                                    animate={isInView ? fadeInUp.animate : fadeInUp.initial}
                                    transition={{ duration: 0.7, delay: 0.2 }}
                               >
                                    <Image
-                                        src="/assets/READY TO EXPLORE.svg"
+                                        src="/assets/heading/ready-to-explore.svg"
                                         alt="Ready to Explore"
                                         width={814}
                                         height={160}
-                                        className="h-auto w-[320px] md:w-[460px] lg:w-[600px]"
+                                        className="h-auto m-auto w-[320px] opacity-90 md:w-[460px] lg:w-[600px]"
                                         priority={false}
-                                   />
-                                   <Image
-                                        src="/assets/READY TO EXPLORE (1).svg"
-                                        alt=""
-                                        width={814}
-                                        height={150}
-                                        className="pointer-events-none absolute inset-0 m-auto h-auto w-[320px] opacity-90 md:w-[460px] lg:w-[600px]"
-                                   />
-                                   <Image
-                                        src="/assets/READY TO EXPLORE (2).svg"
-                                        alt=""
-                                        width={755}
-                                        height={91}
-                                        className="pointer-events-none absolute inset-0 m-auto h-auto w-[300px] opacity-95 md:w-[430px] lg:w-[560px]"
                                    />
                               </motion.div>
 
                               {/* CTA */}
                               <motion.div
-                                   className="mb-10"
+                                   className="mb-20"
                                    initial={fadeInUp.initial}
                                    animate={isInView ? fadeInUp.animate : fadeInUp.initial}
                                    transition={{ duration: 0.7, delay: 0.4 }}
@@ -171,10 +157,10 @@ export default function Hero() {
                                    >
                                         <button
                                              className="group inline-flex items-center justify-center gap-2 rounded-md border-b border-yellow-400
-                             bg-blue-950 px-6 py-2 font-semibold text-white transition
-                             [box-shadow:1px_3px_1px_1px_rgba(226,220,0,1),0_6px_0_0_rgba(226,220,0,0.4)]
-                             hover:translate-y-1 hover:[box-shadow:0_0_0_0_rgba(226,220,0,1),0_0_0_0_rgba(226,220,0,0.4)]
-                             active:translate-y-1"
+                               bg-blue-950 px-6 py-2 font-semibold text-white transition
+                               [box-shadow:1px_3px_1px_1px_rgba(226,220,0,1),0_6px_0_0_rgba(226,220,0,0.4)]
+                               hover:translate-y-1 hover:[box-shadow:0_0_0_0_rgba(226,220,0,1),0_0_0_0_rgba(226,220,0,0.4)]
+                               active:translate-y-1 hover:cursor-pointer"
                                              aria-label="Go to Campus Explore"
                                         >
                                              <span className="text-sm md:text-base">CAMPUS EXPLORE</span>
