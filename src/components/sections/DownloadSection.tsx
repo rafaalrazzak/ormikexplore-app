@@ -167,14 +167,6 @@ export default function DownloadSection() {
                                    {/* Header */}
                                    <div className="flex items-center justify-between mb-2 sm:mb-4 md:mb-6 px-4 pt-4 sm:px-0 sm:pt-0">
                                         <div className="flex items-center gap-3">
-                                             <div className="relative w-8 h-8 sm:w-10 sm:h-10">
-                                                  <Image
-                                                       src="/assets/logo-ormik.svg"
-                                                       alt="ORMIK Logo"
-                                                       fill
-                                                       className="object-contain"
-                                                  />
-                                             </div>
                                              <div>
                                                   <h3 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-white font-['Poppins']">
                                                        Guide Book ORMIK

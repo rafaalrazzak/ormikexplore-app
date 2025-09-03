@@ -43,16 +43,16 @@ export default function Hero() {
                          />
                     </div>
 
-                    <div className="absolute top-[28%] left-[12%] md:left-[22%] lg:left-[28%] w-24 md:w-28 lg:w-36 opacity-90 z-12">
+                    <div className="absolute top-[22%] sm:top-[28%] left-[8%] sm:left-[18%] md:left-[20%] lg:left-[20%] xl:left-[28%] w-24 md:w-28 lg:w-36 opacity-90 z-50">
                          <Image src="/assets/cloud-right.png" alt="cloud" width={220} height={80} className="w-full h-auto" />
                     </div>
-                    <div className="absolute top-[16%] right-[12%] md:right-[22%] lg:right-[28%] w-20 md:w-28 lg:w-32 opacity-90 z-10">
+                    <div className="absolute top-[17%] sm:top-[19%] right-[8%] sm:right-[18%] md:right-[18%] lg:right-[20%] xl:right-[30%] w-20 md:w-28 lg:w-32 opacity-90 z-50">
                          <Image src="/assets/cloud.png" alt="cloud" width={200} height={80} className="w-full h-auto" />
                     </div>
-                    <div className="absolute top-1/2 -left-6 md:-left-4 lg:left-0 xl:-left-20 w-24 md:w-40 lg:w-72 -rotate-6 opacity-90 z-10">
+                    <div className="hidden md:block absolute top-1/2 -left-6 md:-left-4 lg:left-0 xl:-left-20 w-24 md:w-40 lg:w-72 -rotate-6 opacity-90 z-10">
                          <Image src="/assets/cloud.png" alt="cloud" width={170} height={70} className="w-full h-auto" />
                     </div>
-                    <div className="absolute top-[52%] -right-8 md:-right-6 lg:right-12 xl:-right-20 w-24 md:w-40 lg:w-72 -rotate-6 opacity-100 z-10">
+                    <div className="hidden md:block absolute top-[52%] -right-8 md:-right-6 lg:right-12 xl:-right-20 w-24 md:w-40 lg:w-72 -rotate-6 opacity-100 z-10">
                          <Image src="/assets/cloud.png" alt="cloud" width={160} height={70} className="w-full h-auto" />
                     </div>
 
@@ -137,7 +137,7 @@ export default function Hero() {
                                         alt="Ready to Explore"
                                         width={814}
                                         height={160}
-                                        className="h-auto m-auto w-[320px] opacity-90 md:w-[460px] lg:w-[600px]"
+                                        className="h-auto m-auto w-[320px] sm:w-[420px] md:w-[460px] lg:w-[600px]"
                                         priority={false}
                                    />
                               </motion.div>
