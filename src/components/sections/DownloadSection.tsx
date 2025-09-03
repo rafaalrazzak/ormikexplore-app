@@ -158,7 +158,7 @@ export default function DownloadSection() {
                                    animate={{ scale: 1, opacity: 1, y: 0 }}
                                    exit={{ scale: 0.98, opacity: 0, y: 20 }}
                                    transition={{ duration: 0.3, ease: "easeOut" }}
-                                   className="relative bg-white/18 backdrop-blur-sm border border-white/20 shadow-2xl max-w-6xl w-full rounded 2xl p-4 flex flex-col h-[calc(100%-3rem)] sm:h-[calc(100%-4rem)]"
+                                   className="relative bg-white/18 backdrop-blur-sm border border-white/20 shadow-2xl max-w-6xl w-full rounded 2xl p-4 flex flex-col px-4 h-[calc(100%-3rem)] sm:h-[calc(100%-4rem)]"
                                    style={{
                                         maxHeight: "100vh",
                                    }}
