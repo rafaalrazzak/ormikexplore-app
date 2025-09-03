@@ -14,12 +14,12 @@ const campusData: CampusData[] = [
      {
           titleImage: "/assets/heading/campus-a.svg",
           address: "Jl. Setu Indah No.116, Tugu, Kec. Cimanggis, Kota Depok, Jawa Barat 16451",
-          mapImage: "/assets/campus/campus-b.svg"
+          mapImage: "/assets/campus/campus-a.png"
      },
      {
           titleImage: "/assets/heading/campus-b.svg",
           address: "Jl. Lenteng Agung Raya No.20 RT.5/RW.1 Lenteng Agung, Srengseng Sawah, Kec. Jagakarsa, Kota Jakarta Selatan, 12640",
-          mapImage: "/assets/campus/campus-b.svg"
+          mapImage: "/assets/campus/campus-b.png"
      }
 ];
 
