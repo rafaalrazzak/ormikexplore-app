@@ -120,7 +120,10 @@ export default function DownloadSection() {
                                         </button>
 
                                         {/* Twibbon Explorers Button */}
-                                        <button className="relative group transition-all duration-300 ease-out hover:scale-[1.02] active:scale-[0.98] w-full sm:w-auto">
+                                        <button 
+                                             className="relative group transition-all duration-300 ease-out hover:scale-[1.02] active:scale-[0.98] w-full sm:w-auto"
+                                             onClick={() => window.open('https://www.twibbonize.com/explorers-oe25', '_blank')}
+                                        >
                                              <div className="relative w-full sm:w-[160px] md:w-[180px] lg:w-[170px] xl:w-[190px] h-[45px] sm:h-[50px] md:h-[55px] lg:h-[60px] xl:h-[70px] rounded-lg overflow-hidden transition-all duration-300">
                                                   <Image
                                                        src="/assets/button/twibbon.svg"
