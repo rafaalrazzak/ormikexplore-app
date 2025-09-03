@@ -29,14 +29,28 @@ export async function generateMetadata(): Promise<Metadata> {
     const base: Metadata = {
         title: "ORMIK EXPLORE 2025 | STTNF",
         description: "ORMIK EXPLORE 2025 memiliki visi menjadi titik mulai eksplorasi mahasiswa baru STT-NF dalam membangun semangat akademik, budaya positif, dan kesiapan diri di era modern.",
-        icons: { icon: "/icons/logo.png", apple: "/icons/logo.png" },
+        icons: {
+            icon: [
+                { url: "/icon/favicon.ico", sizes: "any" },
+                { url: "/icon/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+                { url: "/icon/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+            ],
+            apple: [
+                { url: "/icon/favicon-180x180.png", sizes: "180x180", type: "image/png" },
+            ],
+            other: [
+                { rel: "android-chrome", url: "/icon/favicon-192x192.png", sizes: "192x192" },
+                { rel: "android-chrome", url: "/icon/favicon-512x512.png", sizes: "512x512" },
+            ]
+        },
+        manifest: "/manifest.json",
         metadataBase: new URL("https://ormik.nurulfikri.ac.id"),
         openGraph: {
             title: "ORMIK EXPLORE 2025 | STTNF",
             description: "ORMIK EXPLORE 2025 memiliki visi menjadi titik mulai eksplorasi mahasiswa baru STT-NF dalam membangun semangat akademik, budaya positif, dan kesiapan diri di era modern.",
             url: "https://ormik.nurulfikri.ac.id",
             siteName: "ORMIK EXPLORE 2025 | STTNF",
-            images: [{ url: "/icons/logo.png", width: 1200, height: 630 }],
+            images: [{ url: "/icons/android-chrome-512x512.png", width: 512, height: 512 }],
             locale: "id_ID",
             type: "website",
         },
@@ -46,7 +60,7 @@ export async function generateMetadata(): Promise<Metadata> {
             title: "ORMIK EXPLORE 2025 | STTNF",
             description: "ORMIK EXPLORE 2025 memiliki visi menjadi titik mulai eksplorasi mahasiswa baru STT-NF dalam membangun semangat akademik, budaya positif, dan kesiapan diri di era modern.",
             creator: "@ormiksttnf",
-            images: ["/icons/logo.png"],
+            images: ["/icons/android-chrome-512x512.png"],
         },
         keywords: [
             "ormik",

@@ -81,7 +81,8 @@ const LoadingScreen = ({ onLoadingComplete }: LoadingScreenProps) => {
                // Campus Explore Assets
                '/assets/heading/campus-a.svg',
                '/assets/heading/campus-b.svg',
-               '/assets/campus/campus-b.svg',
+               '/assets/campus/campus-a.png',
+               '/assets/campus/campus-b.png',
                
                // Download Section Assets
                '/assets/button/guide-book.svg',

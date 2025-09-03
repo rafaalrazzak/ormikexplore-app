@@ -1,0 +1,85 @@
+{
+     "name": "ORMIK EXPLORE 2025 | STTNF",
+     "short_name": "ORMIK 2025",
+     "description": "ORMIK EXPLORE 2025 memiliki visi menjadi titik mulai eksplorasi mahasiswa baru STT-NF dalam membangun semangat akademik, budaya positif, dan kesiapan diri di era modern.",
+     "start_url": "/",
+     "display": "standalone",
+     "background_color": "#000E61",
+     "theme_color": "#000E61",
+     "orientation": "portrait-primary",
+     "scope": "/",
+     "lang": "id",
+     "categories": [
+          "education",
+          "university",
+          "orientation"
+     ],
+     "icons": [
+          {
+               "src": "/icon/favicon-16x16.png",
+               "sizes": "16x16",
+               "type": "image/png"
+          },
+          {
+               "src": "/icon/favicon-32x32.png",
+               "sizes": "32x32",
+               "type": "image/png"
+          },
+          {
+               "src": "/icon/favicon-180x180.png",
+               "sizes": "180x180",
+               "type": "image/png",
+               "purpose": "any maskable"
+          },
+          {
+               "src": "/icon/favicon-192x192.png",
+               "sizes": "192x192",
+               "type": "image/png",
+               "purpose": "any maskable"
+          },
+          {
+               "src": "/icon/favicon-512x512.png",
+               "sizes": "512x512",
+               "type": "image/png",
+               "purpose": "any maskable"
+          }
+     ],
+     "shortcuts": [
+          {
+               "name": "Campus Explore",
+               "short_name": "Campus",
+               "url": "/#campus-explore",
+               "icons": [
+                    {
+                         "src": "/icon/favicon-192x192.png",
+                         "sizes": "192x192",
+                         "type": "image/png"
+                    }
+               ]
+          },
+          {
+               "name": "Core Team",
+               "short_name": "Team",
+               "url": "/#core-team",
+               "icons": [
+                    {
+                         "src": "/icon/favicon-192x192.png",
+                         "sizes": "192x192",
+                         "type": "image/png"
+                    }
+               ]
+          },
+          {
+               "name": "Download Guide",
+               "short_name": "Download",
+               "url": "/#download",
+               "icons": [
+                    {
+                         "src": "/icon/favicon-192x192.png",
+                         "sizes": "192x192",
+                         "type": "image/png"
+                    }
+               ]
+          }
+     ]
+}
