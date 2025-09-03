@@ -19,7 +19,7 @@ export default function Hero() {
      };
 
      return (
-          <section className="relative min-h-screen overflow-hidden bg-primary">
+          <section className="relative min-h-screen portrait:min-h-[75vh] landscape:min-h-screen sm:landscape:min-h-screen md:min-h-screen overflow-hidden bg-primary">
                {/* Background */}
                <div className="absolute inset-0 -z-10">
                     <Image
@@ -43,10 +43,16 @@ export default function Hero() {
                          />
                     </div>
 
-                    <div className="absolute top-[22%] sm:top-[28%] left-[8%] sm:left-[18%] md:left-[20%] lg:left-[20%] xl:left-[28%] w-24 md:w-28 lg:w-36 opacity-90 z-50">
+                    <div className="absolute top-[31%] sm:top-[28%] left-[8%] sm:left-[18%] md:left-[20%] lg:left-[20%] xl:left-[28%] w-24 md:w-28 lg:w-36 opacity-90 z-50">
                          <Image src="/assets/cloud-right.png" alt="cloud" width={220} height={80} className="w-full h-auto" />
                     </div>
-                    <div className="absolute top-[17%] sm:top-[19%] right-[8%] sm:right-[18%] md:right-[18%] lg:right-[20%] xl:right-[30%] w-20 md:w-28 lg:w-32 opacity-90 z-50">
+                    <div className="absolute top-[25%] sm:top-[19%] right-[8%] sm:right-[18%] md:right-[18%] lg:right-[20%] xl:right-[30%] w-20 md:w-28 lg:w-32 opacity-90 z-50">
+                         <Image src="/assets/cloud.png" alt="cloud" width={200} height={80} className="w-full h-auto" />
+                    </div>
+                    <div className="absolute top-[6%] sm:top-[28%] -left-[5%] sm:left-[18%] md:left-[20%] lg:left-[20%] xl:left-[28%] w-32 md:w-28 lg:w-36 opacity-90 z-50">
+                         <Image src="/assets/cloud-right.png" alt="cloud" width={220} height={80} className="w-full h-auto" />
+                    </div>
+                    <div className="absolute top-[8%] sm:top-[19%] -right-[12%] sm:right-[18%] md:right-[18%] lg:right-[20%] xl:right-[30%] w-36 md:w-28 lg:w-32 opacity-90 z-50 -rotate-12">
                          <Image src="/assets/cloud.png" alt="cloud" width={200} height={80} className="w-full h-auto" />
                     </div>
                     <div className="hidden md:block absolute top-1/2 -left-6 md:-left-4 lg:left-0 xl:-left-20 w-24 md:w-40 lg:w-72 -rotate-6 opacity-90 z-10">
@@ -56,16 +62,16 @@ export default function Hero() {
                          <Image src="/assets/cloud.png" alt="cloud" width={160} height={70} className="w-full h-auto" />
                     </div>
 
-                    <div className="absolute bottom-[18%] sm:top-[45%] md:top-[23%] lg:top-[12%] -left-6 md:-left-10 lg:-left-16 w-24 md:w-40 lg:w-72 -rotate-12 opacity-60 z-0">
+                    <div className="absolute bottom-[20%] sm:top-[45%] md:top-[23%] lg:top-[12%] -left-6 md:-left-10 lg:-left-16 w-24 md:w-40 lg:w-72 -rotate-12 opacity-60 z-0">
                          <Image src="/assets/hexagonal.png" alt="decorative" width={160} height={70} className="w-full h-auto" />
                     </div>
-                    <div className="absolute bottom-[18%] sm:top-[45%] md:top-[23%] lg:top-[12%] -right-6 md:-right-10 lg:-right-16 w-24 md:w-40 lg:w-72 rotate-12 opacity-60 z-0">
+                    <div className="absolute bottom-[20%] sm:top-[45%] md:top-[23%] lg:top-[12%] -right-6 md:-right-10 lg:-right-16 w-24 md:w-40 lg:w-72 rotate-12 opacity-60 z-0">
                          <Image src="/assets/hexagonal.png" alt="decorative" width={160} height={70} className="w-full h-auto" />
                     </div>
 
                     <div className="absolute bottom-0 left-0 right-0 flex justify-center items-end h-[70%]">
                          <div className="flex justify-center items-end">
-                              <div className="hidden md:block absolute top-4 -left-[45%] lg:-left-[36%] md:-left-[35%] w-full h-full z-[1]">
+                              <div className="hidden sm:block absolute top-4 -left-[45%] lg:-left-[36%] md:-left-[35%] w-full h-full z-[1]">
                                    <Image
                                         src="/assets/background/building/left.png"
                                         alt=""
@@ -85,7 +91,7 @@ export default function Hero() {
                                    />
                               </div>
 
-                              <div className="hidden md:block absolute top-4 -right-[45%] lg:-right-[36%] md:-right-[35%] w-full h-full z-[1]">
+                              <div className="hidden sm:block absolute top-4 -right-[45%] lg:-right-[36%] md:-right-[35%] w-full h-full z-[1]">
                                    <Image
                                         src="/assets/background/building/right.png"
                                         alt=""
@@ -124,10 +130,10 @@ export default function Hero() {
                     transition={{ duration: 0.8, ease: "easeOut", staggerChildren: 0.2 }}
                >
                     <div className="mx-auto max-w-6xl px-4">
-                         <div className="flex min-h-screen flex-col items-center pt-[18vh] sm:pt-[20vh] md:pt-[22vh] lg:pt-[20vh] text-center">
+                         <div className="flex flex-col items-center pt-[20vh] sm:pt-[20vh] md:pt-[22vh] lg:pt-[20vh] pb-8 portrait:pb-6 landscape:pb-4 text-center">
                               {/* Headline */}
                               <motion.div
-                                   className="relative mb-8"
+                                   className="relative mb-8 portrait:mb-6 landscape:mb-8"
                                    initial={fadeInUp.initial}
                                    animate={isInView ? fadeInUp.animate : fadeInUp.initial}
                                    transition={{ duration: 0.7, delay: 0.2 }}
@@ -144,7 +150,7 @@ export default function Hero() {
 
                               {/* CTA */}
                               <motion.div
-                                   className="mb-20"
+                                   className="mb-8 md:mb-16"
                                    initial={fadeInUp.initial}
                                    animate={isInView ? fadeInUp.animate : fadeInUp.initial}
                                    transition={{ duration: 0.7, delay: 0.4 }}
@@ -177,7 +183,7 @@ export default function Hero() {
 
                               {/* Countdown */}
                               <motion.div
-                                   className="mb-6"
+                                   className="mb-6 portrait:mb-4 landscape:mb-6 md:mb-6"
                                    initial={fadeInUp.initial}
                                    animate={isInView ? fadeInUp.animate : fadeInUp.initial}
                                    transition={{ duration: 0.7, delay: 0.6 }}
@@ -187,7 +193,7 @@ export default function Hero() {
 
                               {/* Schedules */}
                               <motion.div
-                                   className="w-full"
+                                   className="w-full mb-8 portrait:mb-4 landscape:mb-8"
                                    initial={fadeInUp.initial}
                                    animate={isInView ? fadeInUp.animate : fadeInUp.initial}
                                    transition={{ duration: 0.7, delay: 0.8 }}
