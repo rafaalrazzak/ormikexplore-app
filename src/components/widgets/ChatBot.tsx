@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaRobot } from "react-icons/fa";
-import { FiSend, FiX, FiUser, FiMessageSquare } from "react-icons/fi";
+import { FiSend, FiX, FiUser, FiMessageSquare, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import Image from 'next/image';
 import { ormikAI } from '@/services/ormikAI'
 
@@ -13,6 +13,56 @@ interface Message {
      sender: 'user' | 'bot'
      timestamp: Date
 }
+
+// Custom styles for better scrollbar support across browsers
+const scrollbarStyles = `
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #d1d5db #f3f4f6;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar {
+    height: 4px;
+    width: 4px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #f3f4f6;
+    border-radius: 2px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 2px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af;
+  }
+  
+  .custom-scrollbar-y {
+    scrollbar-width: thin;
+    scrollbar-color: #d1d5db #f3f4f6;
+  }
+  
+  .custom-scrollbar-y::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .custom-scrollbar-y::-webkit-scrollbar-track {
+    background: #f3f4f6;
+    border-radius: 3px;
+  }
+  
+  .custom-scrollbar-y::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 3px;
+  }
+  
+  .custom-scrollbar-y::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af;
+  }
+`
 
 export default function ChatBot() {
      const [isOpen, setIsOpen] = useState(false)
@@ -27,8 +77,22 @@ export default function ChatBot() {
      ])
      const [inputValue, setInputValue] = useState('')
      const [isTyping, setIsTyping] = useState(false)
+     const [showSuggestions, setShowSuggestions] = useState(true)
      const messagesEndRef = useRef<HTMLDivElement>(null)
      const inputRef = useRef<HTMLInputElement>(null)
+     const scrollContainerRef = useRef<HTMLDivElement>(null)
+
+     // Suggestion options for quick questions
+     const suggestions = [
+          { label: '📅 Jadwal ORMIK', query: 'jadwal kegiatan ORMIK' },
+          { label: '👔 Dress Code', query: 'dress code ORMIK' },
+          { label: '📋 Tata Tertib', query: 'tata tertib ORMIK' },
+          { label: '🎒 Atribut', query: 'atribut yang harus dibawa' },
+          { label: '📝 Tugas', query: 'tugas ORMIK' },
+          { label: '📍 Lokasi', query: 'lokasi kampus' },
+          { label: '📞 Kontak', query: 'kontak panitia' },
+          { label: '💡 Tips', query: 'tips sukses ORMIK' }
+     ]
 
      const scrollToBottom = () => {
           messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -43,7 +107,11 @@ export default function ChatBot() {
                inputRef.current.focus()
                setHasUnreadMessage(false)
           }
-     }, [isOpen])
+          // Reset suggestions when reopening chat if it's back to initial state
+          if (isOpen && messages.length === 1) {
+               setShowSuggestions(true)
+          }
+     }, [isOpen, messages.length])
 
      const handleSendMessage = async () => {
           if (!inputValue.trim()) return
@@ -58,6 +126,7 @@ export default function ChatBot() {
           setMessages(prev => [...prev, userMessage])
           setInputValue('')
           setIsTyping(true)
+          setShowSuggestions(false) // Hide suggestions after first user message
 
           try {
                const response = await getAIResponse(userMessage.content)
@@ -94,6 +163,52 @@ export default function ChatBot() {
           }
      }
 
+     const handleSuggestionClick = (query: string) => {
+          setInputValue(query)
+          // Automatically send the suggestion
+          setTimeout(() => {
+               const userMessage: Message = {
+                    id: Date.now().toString(),
+                    content: query,
+                    sender: 'user',
+                    timestamp: new Date()
+               }
+
+               setMessages(prev => [...prev, userMessage])
+               setInputValue('')
+               setIsTyping(true)
+               setShowSuggestions(false)
+
+               getAIResponse(query).then(response => {
+                    setTimeout(() => {
+                         const botMessage: Message = {
+                              id: (Date.now() + 1).toString(),
+                              content: response,
+                              sender: 'bot',
+                              timestamp: new Date()
+                         }
+                         setMessages(prev => [...prev, botMessage])
+                         setIsTyping(false)
+                    }, 1000 + Math.random() * 1500)
+               })
+          }, 100)
+     }
+
+     const scrollSuggestions = (direction: 'left' | 'right') => {
+          if (scrollContainerRef.current) {
+               const scrollAmount = 150
+               const currentScroll = scrollContainerRef.current.scrollLeft
+               const newScroll = direction === 'left' 
+                    ? currentScroll - scrollAmount 
+                    : currentScroll + scrollAmount
+               
+               scrollContainerRef.current.scrollTo({
+                    left: newScroll,
+                    behavior: 'smooth'
+               })
+          }
+     }
+
      const getAIResponse = async (userInput: string): Promise<string> => {
           try {
                return await ormikAI.generateResponse(userInput)
@@ -124,6 +239,9 @@ export default function ChatBot() {
 
      return (
           <>
+               {/* Custom Scrollbar Styles */}
+               <style jsx global>{scrollbarStyles}</style>
+               
                {/* Chat Message Box - Separate from button */}
                <AnimatePresence>
                     {isOpen && (
@@ -168,6 +286,40 @@ export default function ChatBot() {
 
                               {/* Messages */}
                               <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50">
+                                   {/* Suggestion Chips */}
+                                   {showSuggestions && messages.length === 1 && (
+                                        <motion.div
+                                             initial={{ opacity: 0, y: 10 }}
+                                             animate={{ opacity: 1, y: 0 }}
+                                             exit={{ opacity: 0, y: -10 }}
+                                             className="mb-4"
+                                        >
+                                             <div className="text-xs text-gray-500 mb-2 px-1">💡 Pertanyaan Cepat:</div>
+                                             <div 
+                                                  className="flex flex-wrap gap-2 max-h-32 overflow-y-auto custom-scrollbar-y pr-2"
+                                             >
+                                                  {suggestions.map((suggestion, index) => (
+                                                       <motion.button
+                                                            key={suggestion.label}
+                                                            initial={{ opacity: 0, scale: 0.8 }}
+                                                            animate={{ opacity: 1, scale: 1 }}
+                                                            transition={{ delay: index * 0.1 }}
+                                                            onClick={() => handleSuggestionClick(suggestion.query)}
+                                                            className="bg-white hover:bg-blue-50 border border-gray-200 hover:border-blue-300 rounded-full px-3 py-2 text-xs text-gray-700 hover:text-blue-600 transition-all duration-200 shadow-sm hover:shadow-md whitespace-nowrap"
+                                                            whileHover={{ scale: 1.05 }}
+                                                            whileTap={{ scale: 0.95 }}
+                                                       >
+                                                            {suggestion.label}
+                                                       </motion.button>
+                                                  ))}
+                                             </div>
+                                             {/* Scroll hint for desktop when many suggestions */}
+                                             <div className="text-xs text-gray-400 text-center mt-2 hidden sm:block">
+                                                  Klik pertanyaan di atas atau scroll untuk melihat semua opsi
+                                             </div>
+                                        </motion.div>
+                                   )}
+
                                    {messages.map((message) => (
                                         <div
                                              key={message.id}
@@ -250,6 +402,51 @@ export default function ChatBot() {
 
                               {/* Input */}
                               <div className="p-4 border-t border-gray-200 bg-white">
+                                   {/* Quick Suggestions Row */}
+                                   {!showSuggestions && messages.length > 1 && !isTyping && (
+                                        <div className="mb-3">
+                                             <div className="relative">
+                                                  {/* Scroll Left Button */}
+                                                  <button
+                                                       onClick={() => scrollSuggestions('left')}
+                                                       className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white shadow-md rounded-full p-1 hover:bg-gray-50 transition-colors hidden sm:block"
+                                                  >
+                                                       <FiChevronLeft className="w-4 h-4 text-gray-600" />
+                                                  </button>
+
+                                                  {/* Suggestions Container */}
+                                                  <div 
+                                                       ref={scrollContainerRef}
+                                                       className="flex gap-2 overflow-x-auto pb-2 custom-scrollbar px-8 sm:px-8"
+                                                  >
+                                                       {suggestions.slice(0, 6).map((suggestion) => (
+                                                            <button
+                                                                 key={suggestion.label}
+                                                                 onClick={() => handleSuggestionClick(suggestion.query)}
+                                                                 className="flex-shrink-0 bg-gray-100 hover:bg-blue-100 border border-gray-200 hover:border-blue-300 rounded-full px-3 py-1 text-xs text-gray-600 hover:text-blue-600 transition-all duration-200 whitespace-nowrap"
+                                                            >
+                                                                 {suggestion.label}
+                                                            </button>
+                                                       ))}
+                                                  </div>
+
+                                                  {/* Scroll Right Button */}
+                                                  <button
+                                                       onClick={() => scrollSuggestions('right')}
+                                                       className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white shadow-md rounded-full p-1 hover:bg-gray-50 transition-colors hidden sm:block"
+                                                  >
+                                                       <FiChevronRight className="w-4 h-4 text-gray-600" />
+                                                  </button>
+                                             </div>
+
+                                             {/* Scroll hint */}
+                                             <div className="text-xs text-gray-400 text-center mt-1">
+                                                  <span className="sm:hidden">← Geser untuk melihat lebih banyak →</span>
+                                                  <span className="hidden sm:inline">Gunakan tombol panah atau scroll mouse</span>
+                                             </div>
+                                        </div>
+                                   )}
+
                                    <div className="flex gap-3">
                                         <input
                                              ref={inputRef}
