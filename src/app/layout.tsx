@@ -3,6 +3,7 @@ import "./globals.css";
 import { inter, poppins } from "./fonts";
 import { fetchMaintenanceConfig } from "@/utils/maintenance";
 import FontPreloader from "@/components/ui/FontPreloader";
+import ChatBot from "@/components/widgets/ChatBot";
 
 async function getMaintenanceMeta() {
     try {
@@ -112,6 +113,7 @@ export default function RootLayout({
             >
                 <FontPreloader />
                 {children}
+                <ChatBot />
             </body>
         </html>
     );
