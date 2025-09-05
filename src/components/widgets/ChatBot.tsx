@@ -20,7 +20,7 @@ export default function ChatBot() {
      const [messages, setMessages] = useState<Message[]>([
           {
                id: '1',
-               content: 'Halo! Saya Asisten AI ORMIK 🤖\n\nSaya siap membantu menjawab pertanyaan tentang:\n• Jadwal kegiatan ORMIK\n• Divisi dan struktur organisasi\n• Panduan dan tata tertib\n• Lokasi dan fasilitas kampus\n• Tips mengikuti orientasi\n\nAda yang ingin ditanyakan?',
+               content: 'Halo! Saya ZEERO 🤖\n\nSaya siap membantu menjawab pertanyaan tentang:\n• Jadwal kegiatan ORMIK\n• Divisi dan struktur organisasi\n• Panduan dan tata tertib\n• Lokasi dan fasilitas kampus\n• Tips mengikuti orientasi\n\nAda yang ingin ditanyakan?',
                sender: 'bot',
                timestamp: new Date()
           }
@@ -140,7 +140,7 @@ export default function ChatBot() {
                                         <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center overflow-hidden">
                                              <Image
                                                   src="/assets/maskot.svg"
-                                                  alt="ORMIK Maskot"
+                                                  alt="ZEERO Maskot"
                                                   width={24}
                                                   height={24}
                                                   className="w-6 h-6 object-contain"
@@ -154,7 +154,7 @@ export default function ChatBot() {
                                              <FaRobot className="w-5 h-5 hidden" />
                                         </div>
                                         <div>
-                                             <h3 className="font-semibold text-sm">Asisten ORMIK</h3>
+                                             <h3 className="font-semibold text-sm">ZEERO</h3>
                                              <p className="text-xs opacity-90">AI Helper 🤖</p>
                                         </div>
                                    </div>
@@ -184,7 +184,7 @@ export default function ChatBot() {
                                                             <>
                                                                  <Image
                                                                       src="/assets/maskot.svg"
-                                                                      alt="ORMIK"
+                                                                      alt="ZEERO"
                                                                       width={16}
                                                                       height={16}
                                                                       className="w-4 h-4 object-contain"
@@ -223,7 +223,7 @@ export default function ChatBot() {
                                                   <div className="w-6 h-6 rounded-full bg-white shadow-sm flex items-center justify-center flex-shrink-0 overflow-hidden">
                                                        <Image
                                                             src="/assets/maskot.svg"
-                                                            alt="ORMIK"
+                                                            alt="ZEERO"
                                                             width={16}
                                                             height={16}
                                                             className="w-4 h-4 object-contain"
@@ -302,24 +302,6 @@ export default function ChatBot() {
                                    className="flex items-center justify-center w-full h-full"
                               >
                                    <FiMessageSquare className="w-6 h-6" />
-                              </motion.div>
-                         )}
-                    </AnimatePresence>
-
-                    {/* Smart Notification Dot */}
-                    <AnimatePresence>
-                         {hasUnreadMessage && !isOpen && (
-                              <motion.div
-                                   initial={{ scale: 0, opacity: 0 }}
-                                   animate={{ scale: 1, opacity: 1 }}
-                                   exit={{ scale: 0, opacity: 0 }}
-                                   className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full flex items-center justify-center"
-                              >
-                                   <motion.div
-                                        animate={{ scale: [1, 1.2, 1] }}
-                                        transition={{ duration: 2, repeat: Infinity }}
-                                        className="w-2 h-2 bg-white rounded-full"
-                                   />
                               </motion.div>
                          )}
                     </AnimatePresence>
