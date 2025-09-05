@@ -120,7 +120,7 @@ export default function DownloadSection() {
                                         </button>
 
                                         {/* Twibbon Explorers Button */}
-                                        <button 
+                                        <button
                                              className="relative group transition-all duration-300 ease-out hover:scale-[1.02] active:scale-[0.98] w-full sm:w-auto"
                                              onClick={() => window.open('https://www.twibbonize.com/explorers-oe25', '_blank')}
                                         >
@@ -205,7 +205,7 @@ export default function DownloadSection() {
                                    <div className="relative flex-1 w-full bg-gray-100 rounded-none sm:rounded-xl overflow-hidden">
                                         <div className="aspect-[4/3] w-full h-screen sm:h-auto">
                                              <iframe
-                                                  src="https://drive.google.com/file/d/1_gHNxnkDlZop5JjLgeQGt3qqe_tPncnv/preview"
+                                                  src="https://drive.google.com/file/d/1dicryzEqjhbPcSGXx02x9t2ULLRTb7oT/preview"
                                                   className="w-full h-full border-0"
                                                   allow="autoplay"
                                                   title="Guide Book ORMIK Explore 2025"
