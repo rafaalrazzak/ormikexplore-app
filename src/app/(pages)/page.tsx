@@ -6,6 +6,7 @@ import CoreTeamSection from '@/components/sections/CoreTeamSection';
 import AssetLoader from '@/components/ui/AssetLoader';
 import Image from 'next/image';
 import Navbar from '@/components/common/Navbar';
+import ChatBot from '@/components/widgets/ChatBot';
 
 export const dynamic = "force-dynamic";
 
@@ -15,6 +16,7 @@ export default function Home() {
             <main className="min-h-screen">
                 <Navbar />
                 <Hero />
+                <ChatBot />
 
                 <div className="relative">
                     <div className="absolute inset-0 z-[background]">
