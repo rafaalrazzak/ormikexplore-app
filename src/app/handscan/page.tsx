@@ -112,7 +112,7 @@ export default function HandScanPage() {
                          <div className={`fixed inset-0 z-[100] flex items-center justify-center bg-black transition-opacity duration-500 ${fadeInVideo ? 'opacity-100' : 'opacity-0'}`}>
                               <video
                                    ref={videoRef}
-                                   src="/assets/handscan/openingceremony.mp4"
+                                   src="https://cdn2.oktaa.my.id/%5BEVENT%5D%20VID%20OPENING%20CEREMONY%20_%20OE25.mp4"
                                    autoPlay
                                    playsInline
                                    onEnded={() => setVideoEnded(true)}
