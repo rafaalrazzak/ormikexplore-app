@@ -1,12 +1,6 @@
-// AI Service for ORMIK ChatBot using Ollama
-// This service handles AI responses and document retrieval
-
-interface OllamaResponse {
-     model: string
-     created_at: string
-     response: string
-     done: boolean
-}
+// ZEERO AI Service for ORMIK ChatBot
+// This service handles intelligent keyword-based responses for ORMIK 2025
+// Integrated with complete guidebook data
 
 interface ChatContext {
      ormikData: {
@@ -22,6 +16,36 @@ interface ChatContext {
                description: string
           }>
           guidelines: string[]
+          dresscode: {
+               putra: string[]
+               putri: string[]
+          }
+          tatatertib: string[]
+          punishment: {
+               ringan: string[]
+               sedang: string[]
+               berat: string[]
+               khusus: string[]
+          }
+          atribut: {
+               day1: string[]
+               lastday: string[]
+               perkompi: string[]
+          }
+          tugas: {
+               praormik: {
+                    individu: string[]
+                    kompi: string[]
+               }
+               day1: {
+                    individu: string[]
+                    kompi: string[]
+               }
+               lastday: {
+                    individu: string[]
+                    kompi: string[]
+               }
+          }
           contact: {
                phone: string
                email: string
@@ -30,14 +54,10 @@ interface ChatContext {
      }
 }
 
-class OrmikAIService {
-     private baseUrl: string
-     private model: string
+class ZeeroAIService {
      private context: ChatContext
 
      constructor() {
-          this.baseUrl = process.env.NEXT_PUBLIC_OLLAMA_URL || 'http://localhost:11434'
-          this.model = process.env.NEXT_PUBLIC_OLLAMA_MODEL || 'llama3.2:3b'
           this.context = this.initializeContext()
      }
 
@@ -67,20 +87,81 @@ class OrmikAIService {
                          { name: "IT Support", position: "IT SUPPORT", description: "Mengelola sistem teknologi dan live streaming" }
                     ],
                     guidelines: [
-                         "Datang tepat waktu sesuai jadwal yang ditentukan",
-                         "Berpakaian sesuai dress code yang telah ditetapkan",
-                         "Membawa perlengkapan yang diperlukan",
-                         "Mengikuti arahan dari mentor dan panitia",
-                         "Menjaga kebersihan dan ketertiban lingkungan",
-                         "Berpartisipasi aktif dalam setiap kegiatan",
-                         "Menjalin hubungan baik dengan sesama peserta",
-                         "Menjaga nama baik almamater dan diri sendiri"
+                         "Datang tepat waktu pada pukul 06.30 WIB",
+                         "Mengikuti seluruh rangkaian ORMIK dan wajib izin jika tidak bisa mengikuti",
+                         "Menghormati dan menghargai panitia maupun sesama peserta ORMIK",
+                         "Menjaga sikap, perilaku, dan tidak boleh gaduh selama acara berlangsung",
+                         "Menerapkan 6S (Senyum, Salam, Sapa, Sopan, Santun, dan Semangat)",
+                         "Menggunakan pakaian yang telah ditentukan panitia",
+                         "Tidak meninggalkan ruang kelas tanpa seizin Tim Kedisiplinan dan Mentor",
+                         "Memakai atribut yang sesuai dengan yang sudah ditentukan"
                     ],
+                    dresscode: {
+                         putra: [
+                              "Kemeja putih bersih, rapi, dan sopan (baju dimasukkan)",
+                              "Celana panjang hitam/biru dongker (tidak ketat)",
+                              "Menggunakan ikat pinggang hitam",
+                              "Kaos kaki putih di atas mata kaki",
+                              "Sepatu dominan hitam",
+                              "Rambut tidak dicat, rapi, disisir, tidak menutupi mata",
+                              "Kuku bersih dan tidak panjang",
+                              "Dilarang aksesori berlebihan (gelang, kalung, topi)"
+                         ],
+                         putri: [
+                              "Kemeja putih bersih, rapi, sopan (baju dikeluarkan/tidak dimasukkan)",
+                              "Pakaian longgar, tidak transparan, tidak memperlihatkan lekuk tubuh",
+                              "Rok bahan (bukan span) panjang hingga mata kaki",
+                              "Kaos kaki putih di atas mata kaki",
+                              "Sepatu dominan hitam",
+                              "Rambut tidak dicat - Muslim wajib jilbab segiempat + ciput",
+                              "Kuku bersih, tidak panjang, tidak diwarnai",
+                              "Dilarang make up berlebihan dan softlens berwarna"
+                         ]
+                    },
+                    tatatertib: [
+                         "Wajib menjaga nama baik Almamater STT Terpadu Nurul Fikri",
+                         "Datang tepat waktu pada pukul 06.30 WIB",
+                         "Mengikuti seluruh rangkaian ORMIK dan wajib izin jika tidak bisa",
+                         "Menghormati dan menghargai panitia maupun sesama peserta",
+                         "Menjaga sikap, perilaku, dan tidak gaduh selama acara",
+                         "Menerapkan 6S kepada siapapun",
+                         "Mengisi semua presensi yang disediakan panitia",
+                         "Dilarang membawa senjata tajam dan senjata api",
+                         "Dilarang rokok, vape, obat terlarang, minuman keras, pornografi",
+                         "Dilarang kontak fisik dengan lawan jenis",
+                         "Dilarang smartphone kecuali seizin Mentor/Tim Kedisiplinan",
+                         "Dilarang perhiasan berlebihan, tindik, tato, rambut berwarna"
+                    ],
+                    punishment: {
+                         ringan: ["Memungut 10 sampah di area kampus", "Untuk 1x pelanggaran aturan"],
+                         sedang: ["Menyanyikan Lagu Mars STT Nurul Fikri", "Membuat surat maaf ditandatangani 15 Panitia", "Untuk 2x pelanggaran aturan"],
+                         berat: ["Evaluasi langsung dari Project Officer/Steering Committee", "Untuk pelanggaran berulang setelah punishment sedang"],
+                         khusus: ["Dilaporkan langsung ke pihak kampus", "Untuk pelanggaran berat: narkoba, alkohol, pelecehan seksual"]
+                    },
+                    atribut: {
+                         day1: ["ATK", "Topi rimba navy", "Name tag", "Buku passport", "Kantung kresek sepatu", "Sandal", "Alat salat", "BPJS", "Tumbler", "Makanan (snack level up, zero panggang, air pegunungan, putih salju, bola kuning, kotak garing ayam)"],
+                         lastday: ["ATK", "Topi rimba navy", "Name tag", "Buku passport", "Kantung kresek sepatu", "Sandal", "Alat salat", "BPJS", "Tumbler", "Makanan (kernel kuning box, pixel puffs, coolant drive, power juice)"],
+                         perkompi: ["Trash bag"]
+                    },
+                    tugas: {
+                         praormik: {
+                              individu: ["Membuat name tag berbentuk siluet ZEERO", "Upload twibbon ke Instagram + tag @ormikxplore", "Membuat video perkenalan + upload reels IG", "Menghafalkan Hymne dan Mars STT NF"],
+                              kompi: ["Membuat akun Instagram kompi", "Membuat logo kompi", "Membuat yel-yel", "Mempersiapkan bakat untuk last day", "Membuat passport kompi"]
+                         },
+                         day1: {
+                              individu: ["Membuat resume materi day 1"],
+                              kompi: ["Upload video yel-yel di IG kompi", "Dokumentasi setelah ORMIK day 1", "Membuat konten video edukasi tema Teknologi"]
+                         },
+                         lastday: {
+                              individu: ["Memberikan mini gift ke Mentor", "Membuat 2 surat bentuk pesawat untuk Mentor dan panitia"],
+                              kompi: ["Unjuk bakat kolaborasi 2 kompi yang dibimbing 1 Mentor"]
+                         }
+                    },
                     contact: {
                          phone: "0812-3456-7890",
                          email: "info@ormik.stttnf.ac.id",
                          social: {
-                              instagram: "@ormik.stttnf",
+                              instagram: "@ormikxplore",
                               tiktok: "@ormikstttnf",
                               telegram: "@ormik2025"
                          }
@@ -89,134 +170,74 @@ class OrmikAIService {
           }
      }
 
+     // Main method to generate responses
      async generateResponse(userInput: string): Promise<string> {
-          try {
-               // Check if Ollama is available
-               if (!await this.isOllamaAvailable()) {
-                    return this.getFallbackResponse(userInput)
-               }
-
-               const prompt = this.buildPrompt(userInput)
-               const response = await this.callOllama(prompt)
-
-               return response || this.getFallbackResponse(userInput)
-          } catch (error) {
-               console.error('Error generating AI response:', error)
-               return this.getFallbackResponse(userInput)
-          }
+          return this.getKeywordBasedResponse(userInput)
      }
 
-     private async isOllamaAvailable(): Promise<boolean> {
-          try {
-               const response = await fetch(`${this.baseUrl}/api/tags`, {
-                    method: 'GET',
-                    headers: { 'Content-Type': 'application/json' }
-               })
-               return response.ok
-          } catch {
-               return false
-          }
-     }
-
-     private buildPrompt(userInput: string): string {
-          const systemPrompt = `Kamu adalah Asisten AI untuk ORMIK Explore 2025 di STT Terpadu Nurul Fikri. 
-    
-CONTEXT ORMIK 2025:
-- ORMIK (Orientasi Mahasiswa Baru) adalah program pengenalan kampus
-- Berlokasi di STT Terpadu Nurul Fikri, Jakarta Selatan
-- Dimulai dari tanggal 8 September 2025
-
-JADWAL KEGIATAN:
-${this.context.ormikData.schedule.map(s => `- ${s.title}: ${s.date}`).join('\n')}
-
-STRUKTUR ORGANISASI:
-${this.context.ormikData.divisions.map(d => `- ${d.position}: ${d.description}`).join('\n')}
-
-PANDUAN UMUM:
-${this.context.ormikData.guidelines.map(g => `- ${g}`).join('\n')}
-
-KONTAK:
-- WhatsApp: ${this.context.ormikData.contact.phone}
-- Email: ${this.context.ormikData.contact.email}
-- Instagram: ${this.context.ormikData.contact.social.instagram}
-
-INSTRUKSI:
-1. Jawab dalam bahasa Indonesia yang ramah dan informatif
-2. Gunakan emoji yang relevan untuk membuat jawaban lebih menarik
-3. Fokus pada informasi yang akurat tentang ORMIK 2025
-4. Jika ditanya di luar topik ORMIK, arahkan kembali ke topik ORMIK
-5. Berikan jawaban yang praktis dan membantu
-6. Gunakan format yang mudah dibaca (bullet points, spasi, dll)
-
-PERTANYAAN PENGGUNA: ${userInput}`
-
-          return systemPrompt
-     }
-
-     private async callOllama(prompt: string): Promise<string | null> {
-          try {
-               const response = await fetch(`${this.baseUrl}/api/generate`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                         model: this.model,
-                         prompt: prompt,
-                         stream: false,
-                         options: {
-                              temperature: 0.7,
-                              top_p: 0.9,
-                              max_tokens: 500
-                         }
-                    })
-               })
-
-               if (!response.ok) {
-                    throw new Error(`Ollama API error: ${response.status}`)
-               }
-
-               const data: OllamaResponse = await response.json()
-               return data.response?.trim() || null
-          } catch (error) {
-               console.error('Ollama API call failed:', error)
-               return null
-          }
-     }
-
-     private getFallbackResponse(userInput: string): string {
+     // Enhanced keyword-based response system
+     private getKeywordBasedResponse(userInput: string): string {
           const lowerInput = userInput.toLowerCase()
 
-          // Keyword-based fallback responses
-          if (lowerInput.includes('jadwal') || lowerInput.includes('schedule')) {
+          // ZEERO introduction and greetings
+          if (lowerInput.includes('halo') || lowerInput.includes('hai') || lowerInput.includes('hello') ||
+               lowerInput.includes('zeero') || lowerInput.includes('siapa')) {
+               return `Halo! Saya **ZEERO** 🤖, Asisten AI untuk ORMIK Explore 2025!
+
+Saya siap membantu Anda dengan informasi tentang:
+• 📅 **Jadwal** kegiatan ORMIK
+• 👥 **Struktur organisasi** dan divisi
+• 📍 **Lokasi** dan fasilitas kampus
+• 📞 **Kontak** informasi
+• 💡 **Tips** dan panduan
+• 👔 **Dress code** dan persiapan
+
+Ada yang ingin ditanyakan? Ketik kata kunci seperti "jadwal", "divisi", "lokasi", atau "tips"! 😊`
+          }
+
+          // Schedule information
+          if (lowerInput.includes('jadwal') || lowerInput.includes('schedule') || lowerInput.includes('tanggal') || lowerInput.includes('waktu')) {
                return `📅 **Jadwal ORMIK Explore 2025:**
 
 ${this.context.ormikData.schedule.map(s => `• **${s.title}** - ${s.date}`).join('\n')}
 
-Setiap hari dimulai pukul 06:30 WIB. Pastikan datang tepat waktu ya! ⏰
+⏰ **Waktu:**
+• Setiap hari dimulai pukul **06:30 WIB**
+• Registrasi ulang 30 menit sebelumnya
+• Pastikan datang tepat waktu ya!
 
-Untuk detail kegiatan setiap hari, silakan cek guidebook di bagian Download. 📖`
+📖 **Info Detail:**
+Untuk rundown lengkap setiap hari, silakan download guidebook di bagian Download.`
           }
 
-          if (lowerInput.includes('divisi') || lowerInput.includes('struktur') || lowerInput.includes('organisasi')) {
+          // Division and organizational structure
+          if (lowerInput.includes('divisi') || lowerInput.includes('struktur') || lowerInput.includes('organisasi') ||
+               lowerInput.includes('panitia') || lowerInput.includes('tim')) {
                return `👥 **Struktur Organisasi ORMIK 2025:**
 
-**Core Team:**
-• Project Officer (PO)
-• Sekretaris  
-• Bendahara
-• Liaison Officer (LO)
+**🏆 Core Team:**
+• **Project Officer (PO)** - Penanggung jawab penuh
+• **Sekretaris** - Administrasi & dokumentasi  
+• **Bendahara** - Keuangan & anggaran
+• **Liaison Officer (LO)** - Komunikasi
 
-**Divisi Operasional:**
-• Event • Media • Kreatif
-• Kedisiplinan • Mentor  
-• Logistik • Konsumsi
-• Medis • IT Support
+**⚡ Divisi Operasional:**
+• **Event** - Koordinasi acara
+• **Media** - Dokumentasi visual
+• **Kreatif** - Suasana interaktif
+• **Kedisiplinan** - Ketertiban
+• **Mentor** - Pembimbingan peserta
+• **Logistik** - Perlengkapan
+• **Konsumsi** - Makanan & minuman
+• **Medis** - Kesehatan & keselamatan
+• **IT Support** - Teknologi & streaming
 
-Setiap divisi memiliki peran penting dalam kesuksesan ORMIK! 🌟
-
-Ingin tahu detail tugas divisi tertentu? Tanya aja! 😊`
+Setiap divisi punya peran penting! Ingin tahu detail divisi tertentu? Tanya aja! 🌟`
           }
 
-          if (lowerInput.includes('lokasi') || lowerInput.includes('kampus') || lowerInput.includes('tempat')) {
+          // Campus location and facilities
+          if (lowerInput.includes('lokasi') || lowerInput.includes('kampus') || lowerInput.includes('tempat') ||
+               lowerInput.includes('alamat') || lowerInput.includes('fasilitas')) {
                return `🏫 **Lokasi Kegiatan ORMIK:**
 
 **STT Terpadu Nurul Fikri**
@@ -224,84 +245,287 @@ Ingin tahu detail tugas divisi tertentu? Tanya aja! 😊`
 Jagakarsa, Jakarta Selatan 12610
 
 🗺️ **Fasilitas yang tersedia:**
-• Auditorium utama
-• Ruang kelas ber-AC  
-• Laboratorium komputer
-• Masjid Al-Hikmah
-• Kantin dan area istirahat
-• Parkir luas
+• 🎭 Auditorium utama
+• 🏢 Ruang kelas ber-AC  
+• 💻 Laboratorium komputer
+• 🕌 Masjid Al-Hikmah
+• 🍽️ Kantin dan area istirahat
+• 🚗 Parkir luas dan aman
 
-🚌 Akses mudah dengan TransJakarta dan KRL!
+🚌 **Akses Transportasi:**
+• **TransJakarta:** Halte Lenteng Agung
+• **KRL:** Stasiun Lenteng Agung
+• **Angkot:** Jurusan Pasar Minggu - Bogor
 
-📍 **Google Maps:** STT Terpadu Nurul Fikri`
+📍 **Google Maps:** "STT Terpadu Nurul Fikri"`
           }
 
-          if (lowerInput.includes('kontak') || lowerInput.includes('contact') || lowerInput.includes('hubungi')) {
+          // Contact information
+          if (lowerInput.includes('kontak') || lowerInput.includes('contact') || lowerInput.includes('hubungi') ||
+               lowerInput.includes('telepon') || lowerInput.includes('whatsapp') || lowerInput.includes('email')) {
                return `📞 **Kontak Informasi ORMIK 2025:**
 
-**Hotline ORMIK:**
-• WhatsApp: ${this.context.ormikData.contact.phone}
-• Telegram: ${this.context.ormikData.contact.social.telegram}
+**📱 Hotline ORMIK:**
+• **WhatsApp:** ${this.context.ormikData.contact.phone}
+• **Telegram:** ${this.context.ormikData.contact.social.telegram}
 
-**Media Sosial:**
-• Instagram: ${this.context.ormikData.contact.social.instagram}
-• TikTok: ${this.context.ormikData.contact.social.tiktok}
+**📱 Media Sosial:**
+• **Instagram:** ${this.context.ormikData.contact.social.instagram}
+• **TikTok:** ${this.context.ormikData.contact.social.tiktok}
 
-**Email:**
+**📧 Email:**
 • ${this.context.ormikData.contact.email}
 
-Jangan ragu untuk bertanya kapan saja! 😊`
+**⏰ Jam Operasional:**
+• Senin - Jumat: 08:00 - 17:00 WIB
+• Sabtu: 08:00 - 12:00 WIB
+
+Jangan ragu untuk bertanya kapan saja! Tim kami siap membantu 😊`
           }
 
-          if (lowerInput.includes('tips') || lowerInput.includes('saran') || lowerInput.includes('persiapan')) {
+          // Tips and guidelines
+          if (lowerInput.includes('tips') || lowerInput.includes('saran') || lowerInput.includes('persiapan') ||
+               lowerInput.includes('panduan') || lowerInput.includes('aturan')) {
                return `💡 **Tips Sukses Mengikuti ORMIK 2025:**
 
-✅ **Persiapan:**
-• Baca guidebook dengan teliti
-• Siapkan perlengkapan sesuai dress code  
-• Istirahat cukup sebelum hari-H
-• Download app dan periksa jadwal
+✅ **Persiapan Sebelum:**
+• 📖 Baca guidebook dengan teliti
+• 👔 Siapkan pakaian sesuai dress code  
+• 💤 Istirahat cukup sebelum hari-H
+• 📱 Download aplikasi dan cek jadwal
+• 🎒 Siapkan tas dengan perlengkapan
 
 ✅ **Selama Kegiatan:**
-• Datang tepat waktu (06:30 WIB)
-• Aktif berpartisipasi
-• Jalin pertemanan dengan sesama peserta
-• Ikuti arahan mentor dan panitia
-• Jaga kebersihan dan ketertiban
+• ⏰ Datang tepat waktu (06:30 WIB)
+• 🙋‍♀️ Berpartisipasi aktif di setiap sesi
+• 🤝 Jalin pertemanan dengan peserta lain
+• 👂 Dengarkan arahan mentor dan panitia
+• 🧹 Jaga kebersihan dan ketertiban
 
-✅ **Mental:**
-• Bersikap positif dan terbuka
-• Jangan malu bertanya
-• Nikmati setiap momen!
-• Jadilah diri sendiri yang terbaik
+✅ **Mindset Positif:**
+• 😊 Bersikap terbuka dan ramah
+• ❓ Jangan malu bertanya
+• 🎉 Nikmati setiap momen berharga
+• 🌟 Jadilah versi terbaik dari diri Anda
 
-Semangat! ORMIK akan jadi pengalaman tak terlupakan! 💪🔥`
+**Ingat:** ORMIK adalah awal petualangan kuliah yang menakjubkan! 💪🔥`
           }
 
-          // Default response
-          return `Halo! Terima kasih sudah bertanya tentang ORMIK 2025! 😊
+          // Dress code information - Enhanced with official guidebook data
+          if (lowerInput.includes('dress') || lowerInput.includes('pakaian') || lowerInput.includes('baju') ||
+               lowerInput.includes('seragam') || lowerInput.includes('kostum')) {
+               return `👔 **Dress Code ORMIK 2025 (Official Guidebook):**
 
-Saya adalah Asisten AI yang siap membantu dengan informasi tentang:
-• 📅 Jadwal kegiatan ORMIK
-• 👥 Struktur organisasi dan divisi
-• 📍 Lokasi dan fasilitas kampus
-• 📞 Kontak informasi
-• 💡 Tips dan panduan
-• 👔 Dress code dan persiapan
+**�‍🎓 PUTRA:**
+• Kemeja putih bersih, rapi, sopan (baju **dimasukkan**)
+• Celana panjang hitam/biru dongker (tidak ketat)
+• Ikat pinggang hitam + kaos kaki putih
+• Sepatu dominan hitam
+• Rambut tidak dicat, rapi, tidak menutupi mata
+• Kuku bersih, tidak panjang
+• **Dilarang:** gelang, kalung, topi (kecuali jam tangan)
 
-Untuk informasi lengkap, jangan lupa download guidebook di bagian Download ya! 📖
+**👩‍🎓 PUTRI:**
+• Kemeja putih bersih, rapi, sopan (baju **dikeluarkan**)
+• Pakaian longgar, tidak transparan
+• Rok bahan (bukan span) hingga mata kaki
+• Kaos kaki putih + sepatu dominan hitam
+• **Muslim:** Wajib jilbab segiempat + ciput
+• **Non-Muslim:** Rambut panjang diikat rapi
+• Kuku bersih, tidak diwarnai
+• **Dilarang:** make up berlebihan, softlens berwarna
 
-Ada yang spesifik ingin ditanyakan? 🤗`
+**⚠️ Barang Terlarang:**
+Narkoba, alkohol, rokok/vape, senjata tajam, pornografi
+
+Detail lengkap: Download guidebook! 📖`
+          }
+
+          // Tata tertib information
+          if (lowerInput.includes('tata tertib') || lowerInput.includes('aturan') || lowerInput.includes('peraturan') ||
+               lowerInput.includes('tertib')) {
+               return `📋 **Tata Tertib ORMIK 2025:**
+
+**✅ WAJIB:**
+• Menjaga nama baik STT Terpadu Nurul Fikri
+• Datang tepat waktu pukul **06:30 WIB**
+• Mengikuti seluruh rangkaian (wajib izin jika tidak bisa)
+• Menghormati panitia dan sesama peserta
+• Menerapkan **6S** (Senyum, Salam, Sapa, Sopan, Santun, Semangat)
+• Mengisi semua presensi yang disediakan
+• Memakai atribut sesuai ketentuan
+
+**❌ DILARANG:**
+• Senjata tajam dan senjata api
+• Rokok, vape, narkoba, alkohol, pornografi
+• Kontak fisik dengan lawan jenis
+• Smartphone (kecuali seizin Mentor/Kedisiplinan)
+• Perhiasan berlebihan, tindik, tato
+• Rambut berwarna, gaduh saat acara
+
+**📱 Perizinan:**
+• Izin sementara: langsung ke Tim Kedisiplinan
+• Izin tidak hadir: WhatsApp Mentor H-1 (maks 23:59 WIB)
+
+Patuhi aturan untuk pengalaman ORMIK yang maksimal! 🌟`
+          }
+
+          // Punishment system
+          if (lowerInput.includes('punishment') || lowerInput.includes('hukuman') || lowerInput.includes('sanksi') ||
+               lowerInput.includes('pelanggaran')) {
+               return `⚖️ **Sistem Punishment ORMIK 2025:**
+
+**🟡 RINGAN (1x Pelanggaran):**
+• Memungut 10 sampah di area kampus
+
+**🟠 SEDANG (2x Pelanggaran):**
+• Menyanyikan Lagu Mars STT Nurul Fikri
+• Membuat surat maaf ditandatangani 15 Panitia ORMIK
+
+**🔴 BERAT (Pelanggaran Berulang):**
+• Evaluasi langsung dari Project Officer/Steering Committee
+
+**⚫ KHUSUS (Pelanggaran Berat):**
+• Dilaporkan langsung ke pihak kampus
+• Contoh: narkoba, alkohol, pelecehan seksual
+
+**💡 Tips:** Patuhi aturan sejak awal untuk menghindari punishment dan fokus menikmati ORMIK! 😊
+
+Ada pertanyaan tentang aturan tertentu? Tanya aja! 🤗`
+          }
+
+          // Atribut and equipment
+          if (lowerInput.includes('atribut') || lowerInput.includes('perlengkapan') || lowerInput.includes('barang') ||
+               lowerInput.includes('bawa') || lowerInput.includes('perlu')) {
+               return `🎒 **Atribut & Perlengkapan ORMIK 2025:**
+
+**📅 DAY 1:**
+• ATK lengkap + Topi rimba navy
+• Name tag + Buku passport
+• Kantung kresek untuk sepatu + Sandal
+• Alat salat + Kartu BPJS + Tumbler
+• **Makanan:** Snack level up, zero panggang, air pegunungan, putih salju, bola kuning, kotak garing ayam
+
+**📅 LAST DAY:**
+• ATK + Topi rimba navy + Name tag
+• Buku passport + Kantung kresek + Sandal
+• Alat salat + BPJS + Tumbler
+• **Makanan:** Kernel kuning box, pixel puffs, coolant drive, power juice
+
+**👥 PER KOMPI:**
+• Trash bag
+
+**📝 Name Tag:**
+• Berbentuk siluet **ZEERO**
+• Kertas A4 dilaminating
+• Berisi: nama kompi, logo kompi, nama, foto 3x4, prodi, asal daerah, motto hidup
+• Tali sesuai prodi: SI=Oren, TI=Biru tua, BD=Merah
+
+Siapkan semua dengan teliti ya! �✨`
+          }
+
+          // Tugas (assignments)
+          if (lowerInput.includes('tugas') || lowerInput.includes('assignment') || lowerInput.includes('pekerjaan') ||
+               lowerInput.includes('kerjaan')) {
+               return `📝 **Tugas ORMIK 2025:**
+
+**🌅 PRA ORMIK - Individu:**
+• Buat name tag siluet ZEERO (A4 dilaminating)
+• Upload twibbon IG + tag @ormikxplore
+• Video perkenalan di reels IG
+• Hafal Hymne & Mars STT NF
+
+**🌅 PRA ORMIK - Kompi:**
+• Buat akun IG kompi + logo kompi
+• Buat yel-yel + persiapan bakat last day
+• Buat passport kompi
+
+**📚 DAY 1:**
+• **Individu:** Resume materi day 1
+• **Kompi:** Upload video yel-yel, dokumentasi, konten edukasi teknologi
+
+**🎉 LAST DAY:**
+• **Individu:** Mini gift untuk Mentor, 2 surat bentuk pesawat
+• **Kompi:** Unjuk bakat kolaborasi 2 kompi (1 Mentor)
+
+**💡 Tips:** Kerjakan tugas dengan kreatif dan penuh semangat! Tim terbaik menunggu kalian! 🌟
+
+Butuh detail tugas tertentu? Tanya aja! 😊`
+          }
+
+          // Enhanced contact with official Instagram
+          if (lowerInput.includes('kontak') || lowerInput.includes('contact') || lowerInput.includes('hubungi') ||
+               lowerInput.includes('telepon') || lowerInput.includes('whatsapp') || lowerInput.includes('email')) {
+               return `📞 **Kontak Informasi ORMIK 2025:**
+
+**📱 Hotline ORMIK:**
+• **WhatsApp:** ${this.context.ormikData.contact.phone}
+• **Telegram:** ${this.context.ormikData.contact.social.telegram}
+
+**📱 Media Sosial Resmi:**
+• **Instagram:** ${this.context.ormikData.contact.social.instagram} 
+• **TikTok:** ${this.context.ormikData.contact.social.tiktok}
+• **STT NF Official:** @sttnf_official
+
+**📧 Email:**
+• ${this.context.ormikData.contact.email}
+
+**⏰ Jam Operasional:**
+• Senin - Jumat: 08:00 - 17:00 WIB
+• Sabtu: 08:00 - 12:00 WIB
+
+**🎯 Untuk Tugas:**
+• Tag @ormikxplore di semua upload Instagram
+• Kirim tugas via GForm penugasan
+
+Jangan ragu bertanya kapan saja! Tim kami siap membantu �`
+          }
+
+          // Default response with comprehensive information
+          return `Halo! Saya **ZEERO** 🤖, Asisten AI ORMIK Explore 2025!
+
+Terima kasih sudah bertanya! Saya siap membantu dengan informasi lengkap dari guidebook resmi:
+
+**📚 Yang Bisa Saya Bantu:**
+• 📅 **"jadwal"** - Timeline kegiatan ORMIK
+• 👥 **"divisi"** - Struktur organisasi panitia
+• 📍 **"lokasi"** - Alamat dan fasilitas kampus  
+• 📞 **"kontak"** - Info panitia dan media sosial
+• 💡 **"tips"** - Panduan sukses mengikuti ORMIK
+• 👔 **"dress code"** - Aturan berpakaian putra/putri
+• 📋 **"tata tertib"** - Peraturan dan ketentuan
+• ⚖️ **"punishment"** - Sistem sanksi pelanggaran
+• � **"atribut"** - Perlengkapan yang harus dibawa
+• 📝 **"tugas"** - Assignment individu dan kompi
+
+**�🎯 Contoh Pertanyaan:**
+_"Apa dress code untuk putri?"_
+_"Bagaimana sistem punishment?"_
+_"Tugas apa saja di PRA ORMIK?"_
+_"Atribut apa yang harus dibawa?"_
+
+**🌟 Semua informasi berasal dari guidebook resmi ORMIK 2025!** 
+
+Ada yang spesifik ingin ditanyakan? Ketik kata kunci atau tanya langsung! 🤗`
      }
 
-     // Method untuk integrasi dengan PDF guidebook (untuk implementasi masa depan)
-     async loadGuideBookContent(pdfUrl: string): Promise<void> {
-          // TODO: Implement PDF parsing and vector embedding
-          // This will be used to enhance AI responses with guidebook content
-          console.log('Loading guidebook content from:', pdfUrl)
+     // Get available keywords for help
+     getAvailableKeywords(): string[] {
+          return [
+               'jadwal', 'schedule', 'tanggal', 'waktu',
+               'divisi', 'struktur', 'organisasi', 'panitia',
+               'lokasi', 'kampus', 'tempat', 'alamat',
+               'kontak', 'telepon', 'whatsapp', 'email',
+               'tips', 'saran', 'persiapan', 'panduan',
+               'dress code', 'pakaian', 'seragam',
+               'tata tertib', 'aturan', 'peraturan',
+               'punishment', 'hukuman', 'sanksi',
+               'atribut', 'perlengkapan', 'barang',
+               'tugas', 'assignment', 'kerjaan'
+          ]
      }
 }
 
 // Export singleton instance
-export const ormikAI = new OrmikAIService()
-export default OrmikAIService
+export const ormikAI = new ZeeroAIService()
+export default ZeeroAIService
