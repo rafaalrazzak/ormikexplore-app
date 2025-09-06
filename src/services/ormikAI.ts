@@ -47,9 +47,8 @@ interface ChatContext {
                }
           }
           contact: {
-               phone: string
-               email: string
-               social: Record<string, string>
+               instagram: string
+               instagram_handle: string
           }
      }
 }
@@ -158,13 +157,8 @@ class ZeeroAIService {
                          }
                     },
                     contact: {
-                         phone: "0812-3456-7890",
-                         email: "info@ormik.stttnf.ac.id",
-                         social: {
-                              instagram: "@ormikxplore",
-                              tiktok: "@ormikstttnf",
-                              telegram: "@ormik2025"
-                         }
+                         instagram: "https://www.instagram.com/ormikxplore/",
+                         instagram_handle: "@ormikxplore"
                     }
                }
           }
@@ -260,27 +254,31 @@ Jagakarsa, Jakarta Selatan 12610
 📍 **Google Maps:** "STT Terpadu Nurul Fikri"`
           }
 
-          // Contact information
+          // Contact information - Updated to Instagram DM only
           if (lowerInput.includes('kontak') || lowerInput.includes('contact') || lowerInput.includes('hubungi') ||
                lowerInput.includes('telepon') || lowerInput.includes('whatsapp') || lowerInput.includes('email')) {
                return `📞 **Kontak Informasi ORMIK 2025:**
 
-**📱 Hotline ORMIK:**
-• **WhatsApp:** ${this.context.ormikData.contact.phone}
-• **Telegram:** ${this.context.ormikData.contact.social.telegram}
+**📱 Hubungi Kami Via Instagram DM:**
+• **Instagram:** ${this.context.ormikData.contact.instagram_handle}
+• **Direct Link:** ${this.context.ormikData.contact.instagram}
 
-**📱 Media Sosial:**
-• **Instagram:** ${this.context.ormikData.contact.social.instagram}
-• **TikTok:** ${this.context.ormikData.contact.social.tiktok}
+**📋 Untuk Tugas & Upload:**
+• Tag ${this.context.ormikData.contact.instagram_handle} di semua upload Instagram
+• Kirim link tugas via DM Instagram
+• Gunakan GForm penugasan yang diberikan Mentor
 
-**📧 Email:**
-• ${this.context.ormikData.contact.email}
+**💬 Panduan Menghubungi:**
+1. Buka Instagram ${this.context.ormikData.contact.instagram_handle}
+2. Tap "Message" atau ikon DM
+3. Kirim pertanyaan dengan jelas
+4. Tunggu respons dari tim
 
-**⏰ Jam Operasional:**
-• Senin - Jumat: 08:00 - 17:00 WIB
-• Sabtu: 08:00 - 12:00 WIB
+**⏰ Response Time:**
+• Hari kerja: Maks 2-4 jam
+• Weekend: Maks 6-8 jam
 
-Jangan ragu untuk bertanya kapan saja! Tim kami siap membantu 😊`
+Semua komunikasi resmi melalui Instagram DM ya! 📱✨`
           }
 
           // Tips and guidelines
@@ -312,11 +310,11 @@ Jangan ragu untuk bertanya kapan saja! Tim kami siap membantu 😊`
           }
 
           // Dress code information - Enhanced with official guidebook data
-          if (lowerInput.includes('dress') || lowerInput.includes('pakaian') || lowerInput.includes('baju') ||
-               lowerInput.includes('seragam') || lowerInput.includes('kostum')) {
+          if (lowerInput.includes('dress') || lowerInput.includes('pakaian') || lowerInput.includes('baju') || 
+              lowerInput.includes('seragam') || lowerInput.includes('kostum')) {
                return `👔 **Dress Code ORMIK 2025 (Official Guidebook):**
 
-**�‍🎓 PUTRA:**
+**👨‍🎓 PUTRA:**
 • Kemeja putih bersih, rapi, sopan (baju **dimasukkan**)
 • Celana panjang hitam/biru dongker (tidak ketat)
 • Ikat pinggang hitam + kaos kaki putih
@@ -342,8 +340,8 @@ Detail lengkap: Download guidebook! 📖`
           }
 
           // Tata tertib information
-          if (lowerInput.includes('tata tertib') || lowerInput.includes('aturan') || lowerInput.includes('peraturan') ||
-               lowerInput.includes('tertib')) {
+          if (lowerInput.includes('tata tertib') || lowerInput.includes('aturan') || lowerInput.includes('peraturan') || 
+              lowerInput.includes('tertib')) {
                return `📋 **Tata Tertib ORMIK 2025:**
 
 **✅ WAJIB:**
@@ -371,8 +369,8 @@ Patuhi aturan untuk pengalaman ORMIK yang maksimal! 🌟`
           }
 
           // Punishment system
-          if (lowerInput.includes('punishment') || lowerInput.includes('hukuman') || lowerInput.includes('sanksi') ||
-               lowerInput.includes('pelanggaran')) {
+          if (lowerInput.includes('punishment') || lowerInput.includes('hukuman') || lowerInput.includes('sanksi') || 
+              lowerInput.includes('pelanggaran')) {
                return `⚖️ **Sistem Punishment ORMIK 2025:**
 
 **🟡 RINGAN (1x Pelanggaran):**
@@ -395,8 +393,8 @@ Ada pertanyaan tentang aturan tertentu? Tanya aja! 🤗`
           }
 
           // Atribut and equipment
-          if (lowerInput.includes('atribut') || lowerInput.includes('perlengkapan') || lowerInput.includes('barang') ||
-               lowerInput.includes('bawa') || lowerInput.includes('perlu')) {
+          if (lowerInput.includes('atribut') || lowerInput.includes('perlengkapan') || lowerInput.includes('barang') || 
+              lowerInput.includes('bawa') || lowerInput.includes('perlu')) {
                return `🎒 **Atribut & Perlengkapan ORMIK 2025:**
 
 **📅 DAY 1:**
@@ -421,12 +419,12 @@ Ada pertanyaan tentang aturan tertentu? Tanya aja! 🤗`
 • Berisi: nama kompi, logo kompi, nama, foto 3x4, prodi, asal daerah, motto hidup
 • Tali sesuai prodi: SI=Oren, TI=Biru tua, BD=Merah
 
-Siapkan semua dengan teliti ya! �✨`
+Siapkan semua dengan teliti ya! 📖✨`
           }
 
           // Tugas (assignments)
-          if (lowerInput.includes('tugas') || lowerInput.includes('assignment') || lowerInput.includes('pekerjaan') ||
-               lowerInput.includes('kerjaan')) {
+          if (lowerInput.includes('tugas') || lowerInput.includes('assignment') || lowerInput.includes('pekerjaan') || 
+              lowerInput.includes('kerjaan')) {
                return `📝 **Tugas ORMIK 2025:**
 
 **🌅 PRA ORMIK - Individu:**
@@ -453,34 +451,6 @@ Siapkan semua dengan teliti ya! �✨`
 Butuh detail tugas tertentu? Tanya aja! 😊`
           }
 
-          // Enhanced contact with official Instagram
-          if (lowerInput.includes('kontak') || lowerInput.includes('contact') || lowerInput.includes('hubungi') ||
-               lowerInput.includes('telepon') || lowerInput.includes('whatsapp') || lowerInput.includes('email')) {
-               return `📞 **Kontak Informasi ORMIK 2025:**
-
-**📱 Hotline ORMIK:**
-• **WhatsApp:** ${this.context.ormikData.contact.phone}
-• **Telegram:** ${this.context.ormikData.contact.social.telegram}
-
-**📱 Media Sosial Resmi:**
-• **Instagram:** ${this.context.ormikData.contact.social.instagram} 
-• **TikTok:** ${this.context.ormikData.contact.social.tiktok}
-• **STT NF Official:** @sttnf_official
-
-**📧 Email:**
-• ${this.context.ormikData.contact.email}
-
-**⏰ Jam Operasional:**
-• Senin - Jumat: 08:00 - 17:00 WIB
-• Sabtu: 08:00 - 12:00 WIB
-
-**🎯 Untuk Tugas:**
-• Tag @ormikxplore di semua upload Instagram
-• Kirim tugas via GForm penugasan
-
-Jangan ragu bertanya kapan saja! Tim kami siap membantu �`
-          }
-
           // Default response with comprehensive information
           return `Halo! Saya **ZEERO** 🤖, Asisten AI ORMIK Explore 2025!
 
@@ -490,15 +460,15 @@ Terima kasih sudah bertanya! Saya siap membantu dengan informasi lengkap dari gu
 • 📅 **"jadwal"** - Timeline kegiatan ORMIK
 • 👥 **"divisi"** - Struktur organisasi panitia
 • 📍 **"lokasi"** - Alamat dan fasilitas kampus  
-• 📞 **"kontak"** - Info panitia dan media sosial
+• 📞 **"kontak"** - Info Instagram DM resmi
 • 💡 **"tips"** - Panduan sukses mengikuti ORMIK
 • 👔 **"dress code"** - Aturan berpakaian putra/putri
 • 📋 **"tata tertib"** - Peraturan dan ketentuan
 • ⚖️ **"punishment"** - Sistem sanksi pelanggaran
-• � **"atribut"** - Perlengkapan yang harus dibawa
+• 🎒 **"atribut"** - Perlengkapan yang harus dibawa
 • 📝 **"tugas"** - Assignment individu dan kompi
 
-**�🎯 Contoh Pertanyaan:**
+**🎯 Contoh Pertanyaan:**
 _"Apa dress code untuk putri?"_
 _"Bagaimana sistem punishment?"_
 _"Tugas apa saja di PRA ORMIK?"_
@@ -526,6 +496,8 @@ Ada yang spesifik ingin ditanyakan? Ketik kata kunci atau tanya langsung! 🤗`
      }
 }
 
-// Export singleton instance
-export const ormikAI = new ZeeroAIService()
-export default ZeeroAIService
+// Create and export singleton instance
+const ormikAI = new ZeeroAIService()
+
+export { ormikAI }
+export default ormikAI

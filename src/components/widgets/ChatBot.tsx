@@ -285,7 +285,7 @@ export default function ChatBot() {
                               </div>
 
                               {/* Messages */}
-                              <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50">
+                              <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
                                    {/* Suggestion Chips */}
                                    {showSuggestions && messages.length === 1 && (
                                         <motion.div
@@ -296,7 +296,7 @@ export default function ChatBot() {
                                         >
                                              <div className="text-xs text-gray-500 mb-2 px-1">💡 Pertanyaan Cepat:</div>
                                              <div 
-                                                  className="flex flex-wrap gap-2 max-h-32 overflow-y-auto custom-scrollbar-y pr-2"
+                                                  className="flex flex-wrap gap-2 max-h-36 overflow-y-auto custom-scrollbar-y px-2 py-1"
                                              >
                                                   {suggestions.map((suggestion, index) => (
                                                        <motion.button
