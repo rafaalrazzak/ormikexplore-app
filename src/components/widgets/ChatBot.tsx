@@ -78,6 +78,8 @@ export default function ChatBot() {
      const [inputValue, setInputValue] = useState('')
      const [isTyping, setIsTyping] = useState(false)
      const [showSuggestions, setShowSuggestions] = useState(true)
+     const [aiMode, setAiMode] = useState<'auto' | 'keyword-only'>('auto')
+     const [ollamaStatus, setOllamaStatus] = useState<'unknown' | 'healthy' | 'unhealthy'>('unknown')
      const messagesEndRef = useRef<HTMLDivElement>(null)
      const inputRef = useRef<HTMLInputElement>(null)
      const scrollContainerRef = useRef<HTMLDivElement>(null)
@@ -211,12 +213,38 @@ export default function ChatBot() {
 
      const getAIResponse = async (userInput: string): Promise<string> => {
           try {
-               return await ormikAI.generateResponse(userInput)
+               // Check Ollama status periodically
+               if (aiMode === 'auto') {
+                    updateOllamaStatus()
+               }
+               
+               if (aiMode === 'keyword-only') {
+                    // Force keyword-only mode
+                    return await ormikAI.getKeywordBasedResponse(userInput)
+               } else {
+                    // Use hybrid mode (auto)
+                    return await ormikAI.generateResponse(userInput)
+               }
           } catch (error) {
                console.error('AI Response Error:', error)
                return 'Maaf, terjadi kesalahan. Silakan coba lagi dalam beberapa saat. 🙏\n\nUntuk informasi lengkap, silakan:\n• Baca guidebook di bagian Download\n• Hubungi panitia melalui kontak resmi\n• Tanyakan ke mentor atau kakak tingkat'
           }
      }
+     
+     // Update Ollama status
+     const updateOllamaStatus = async () => {
+          try {
+               const response = await fetch('/api/ai', { method: 'GET' })
+               setOllamaStatus(response.ok ? 'healthy' : 'unhealthy')
+          } catch {
+               setOllamaStatus('unhealthy')
+          }
+     }
+     
+     // Check Ollama status on component mount
+     useEffect(() => {
+          updateOllamaStatus()
+     }, [])
 
      // Function to format message with bold text
      const formatMessage = (content: string) => {
@@ -253,35 +281,65 @@ export default function ChatBot() {
                               className="fixed bottom-20 right-4 z-50 w-80 sm:w-96 h-[32rem] sm:h-[36rem] bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col overflow-hidden"
                          >
                               {/* Header */}
-                              <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4 flex items-center justify-between">
-                                   <div className="flex items-center gap-3">
-                                        <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center overflow-hidden">
-                                             <Image
-                                                  src="/assets/maskot.svg"
-                                                  alt="ZEERO Maskot"
-                                                  width={24}
-                                                  height={24}
-                                                  className="w-6 h-6 object-contain"
-                                                  onError={(e) => {
-                                                       // Fallback to bot icon if maskot image fails
-                                                       const target = e.target as HTMLImageElement;
-                                                       target.style.display = 'none';
-                                                       target.nextElementSibling?.classList.remove('hidden');
-                                                  }}
-                                             />
-                                             <FaRobot className="w-5 h-5 hidden" />
+                              <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4 flex flex-col">
+                                   <div className="flex items-center justify-between mb-2">
+                                        <div className="flex items-center gap-3">
+                                             <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center overflow-hidden">
+                                                  <Image
+                                                       src="/assets/maskot.svg"
+                                                       alt="ZEERO Maskot"
+                                                       width={24}
+                                                       height={24}
+                                                       className="w-6 h-6 object-contain"
+                                                       onError={(e) => {
+                                                            // Fallback to bot icon if maskot image fails
+                                                            const target = e.target as HTMLImageElement;
+                                                            target.style.display = 'none';
+                                                            target.nextElementSibling?.classList.remove('hidden');
+                                                       }}
+                                                  />
+                                                  <FaRobot className="w-5 h-5 hidden" />
+                                             </div>
+                                             <div>
+                                                  <h3 className="font-semibold text-sm">ZEERO</h3>
+                                                  <p className="text-xs opacity-90">AI Helper 🤖</p>
+                                             </div>
                                         </div>
-                                        <div>
-                                             <h3 className="font-semibold text-sm">ZEERO</h3>
-                                             <p className="text-xs opacity-90">AI Helper 🤖</p>
-                                        </div>
+                                        <button
+                                             onClick={() => setIsOpen(false)}
+                                             className="w-8 h-8 rounded-full hover:bg-white/20 transition-colors flex items-center justify-center"
+                                        >
+                                             <FiX className="w-5 h-5" />
+                                        </button>
                                    </div>
-                                   <button
-                                        onClick={() => setIsOpen(false)}
-                                        className="w-8 h-8 rounded-full hover:bg-white/20 transition-colors flex items-center justify-center"
-                                   >
-                                        <FiX className="w-5 h-5" />
-                                   </button>
+                                   
+                                   {/* AI Mode Toggle */}
+                                   <div className="flex items-center justify-between">
+                                        <div className="flex items-center gap-2 text-xs">
+                                             <span className="opacity-80">Mode:</span>
+                                             <button
+                                                  onClick={() => setAiMode(aiMode === 'auto' ? 'keyword-only' : 'auto')}
+                                                  className={`px-2 py-1 rounded-full text-xs font-medium transition-colors ${
+                                                       aiMode === 'auto' 
+                                                            ? 'bg-white/20 text-white' 
+                                                            : 'bg-white/10 text-white/70 hover:bg-white/15'
+                                                  }`}
+                                             >
+                                                  {aiMode === 'auto' ? '🧠 Smart' : '⚡ Fast'}
+                                             </button>
+                                        </div>
+                                        
+                                        {/* Ollama Status Indicator */}
+                                        {aiMode === 'auto' && (
+                                             <div className="flex items-center gap-1 text-xs opacity-80">
+                                                  <div className={`w-2 h-2 rounded-full ${
+                                                       ollamaStatus === 'healthy' ? 'bg-green-400' :
+                                                       ollamaStatus === 'unhealthy' ? 'bg-red-400' : 'bg-yellow-400'
+                                                  }`} />
+                                                  <span className="capitalize">{ollamaStatus}</span>
+                                             </div>
+                                        )}
+                                   </div>
                               </div>
 
                               {/* Messages */}

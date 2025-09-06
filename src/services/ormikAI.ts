@@ -55,9 +55,13 @@ interface ChatContext {
 
 class ZeeroAIService {
      private context: ChatContext
+     private ollamaHealthy: boolean = false
+     private lastHealthCheck: number = 0
+     private readonly HEALTH_CHECK_INTERVAL = 30000 // 30 seconds
 
      constructor() {
           this.context = this.initializeContext()
+          this.checkOllamaHealth()
      }
 
      private initializeContext(): ChatContext {
@@ -164,13 +168,156 @@ class ZeeroAIService {
           }
      }
 
-     // Main method to generate responses
+     // Main method to generate responses - Enhanced Hybrid System
      async generateResponse(userInput: string): Promise<string> {
+          return this.getHybridResponse(userInput)
+     }
+
+     // Hybrid response system: Ollama + Keyword fallback
+     private async getHybridResponse(userInput: string): Promise<string> {
+          const lowerInput = userInput.toLowerCase()
+          
+          // Step 1: Check for simple keyword matches (instant response)
+          const keywordConfidence = this.getKeywordConfidence(userInput)
+          if (keywordConfidence > 0.85) {
+               return this.getKeywordBasedResponse(userInput)
+          }
+          
+          // Step 2: Try Ollama for complex/conversational queries
+          if (this.shouldUseOllama(userInput)) {
+               try {
+                    const ollamaResponse = await this.getOllamaResponse(userInput)
+                    if (ollamaResponse && ollamaResponse.length > 10) {
+                         return ollamaResponse
+                    }
+               } catch (error) {
+                    console.log('Ollama fallback to keyword:', error)
+               }
+          }
+          
+          // Step 3: Enhanced keyword fallback
           return this.getKeywordBasedResponse(userInput)
      }
 
-     // Enhanced keyword-based response system
-     private getKeywordBasedResponse(userInput: string): string {
+     // Check if query should use Ollama (complex/conversational)
+     private shouldUseOllama(userInput: string): boolean {
+          const complexPatterns = [
+               /bagaimana.*jika/i,
+               /mengapa.*tidak/i,
+               /apa.*bedanya/i,
+               /bisakah.*menjelaskan/i,
+               /tolong.*jelaskan/i,
+               /saya.*ingin.*tahu/i,
+               /gimana.*cara/i,
+               /kenapa.*harus/i
+          ]
+          
+          const conversationalPatterns = [
+               /saya.*bingung/i,
+               /tidak.*mengerti/i,
+               /kurang.*jelas/i,
+               /lebih.*detail/i
+          ]
+          
+          return complexPatterns.some(p => p.test(userInput)) ||
+                 conversationalPatterns.some(p => p.test(userInput))
+     }
+
+     // Get confidence score for keyword matching
+     private getKeywordConfidence(userInput: string): number {
+          const lowerInput = userInput.toLowerCase()
+          
+          // High confidence keywords (exact matches)
+          const highConfidenceKeywords = [
+               'jadwal', 'schedule', 'tanggal', 'waktu',
+               'kontak', 'contact', 'telepon', 'instagram',
+               'lokasi', 'alamat', 'kampus', 'tempat',
+               'dress code', 'pakaian', 'baju', 'seragam'
+          ]
+          
+          // Medium confidence keywords
+          const mediumConfidenceKeywords = [
+               'divisi', 'struktur', 'panitia', 'tim',
+               'atribut', 'perlengkapan', 'barang',
+               'tugas', 'assignment', 'kerjaan',
+               'tata tertib', 'aturan', 'peraturan',
+               'punishment', 'hukuman', 'sanksi'
+          ]
+          
+          // Calculate confidence based on keyword matches
+          let confidence = 0
+          
+          highConfidenceKeywords.forEach(keyword => {
+               if (lowerInput.includes(keyword)) confidence += 0.4
+          })
+          
+          mediumConfidenceKeywords.forEach(keyword => {
+               if (lowerInput.includes(keyword)) confidence += 0.3
+          })
+          
+          return Math.min(confidence, 1.0)
+     }
+
+     // Call Ollama API with error handling
+     private async getOllamaResponse(userInput: string): Promise<string> {
+          await this.ensureOllamaHealth()
+          
+          if (!this.ollamaHealthy) {
+               throw new Error('Ollama service not available')
+          }
+          
+          const response = await fetch('/api/ai', {
+               method: 'POST',
+               headers: {
+                    'Content-Type': 'application/json',
+               },
+               body: JSON.stringify({ message: userInput }),
+          })
+          
+          const data = await response.json()
+          
+          if (data.fallback) {
+               throw new Error('Ollama returned fallback')
+          }
+          
+          return data.response
+     }
+
+     // Health check for Ollama service
+     private async checkOllamaHealth(): Promise<void> {
+          try {
+               const response = await fetch('/api/ai', {
+                    method: 'GET',
+                    signal: AbortSignal.timeout(5000)
+               })
+               
+               this.ollamaHealthy = response.ok
+               this.lastHealthCheck = Date.now()
+          } catch (error) {
+               this.ollamaHealthy = false
+               this.lastHealthCheck = Date.now()
+          }
+     }
+
+     // Ensure Ollama health with periodic checks
+     private async ensureOllamaHealth(): Promise<void> {
+          const now = Date.now()
+          if (now - this.lastHealthCheck > this.HEALTH_CHECK_INTERVAL) {
+               await this.checkOllamaHealth()
+          }
+     }
+
+     // Get current AI mode status
+     public getAIStatus(): { mode: string, ollamaHealthy: boolean, lastCheck: number } {
+          return {
+               mode: 'hybrid',
+               ollamaHealthy: this.ollamaHealthy,
+               lastCheck: this.lastHealthCheck
+          }
+     }
+
+     // Enhanced keyword-based response system (public for manual access)
+     public getKeywordBasedResponse(userInput: string): string {
           const lowerInput = userInput.toLowerCase()
 
           // ZEERO introduction and greetings
