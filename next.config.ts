@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
       }
     ]
   },
-  
+
   // API rewrites for Ollama proxy
   async rewrites() {
     return [
@@ -21,7 +21,7 @@ const nextConfig: NextConfig = {
           destination: 'http://localhost:11434/api/:path*'
         }
       ] : []),
-      
+
       // Production: proxy to local network Ollama
       ...(process.env.NODE_ENV === 'production' && process.env.OLLAMA_BASE_URL ? [
         {
