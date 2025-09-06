@@ -80,7 +80,10 @@ JAWABAN (maksimal 400 kata, fokus ORMIK/STT NF saja):`
 
 export async function POST(request: NextRequest) {
      const startTime = Date.now()
-     let config: any
+     
+     // Get Ollama configuration based on environment
+     const isDev = process.env.NODE_ENV === 'development'
+     const config = isDev ? OLLAMA_CONFIG.development : OLLAMA_CONFIG.production
      
      try {
           // Get client IP for rate limiting
@@ -110,9 +113,6 @@ export async function POST(request: NextRequest) {
           }
 
           // Get Ollama configuration based on environment
-          const isDev = process.env.NODE_ENV === 'development'
-          config = isDev ? OLLAMA_CONFIG.development : OLLAMA_CONFIG.production
-          
           console.log(`[OLLAMA_CONFIG] Environment: ${isDev ? 'development' : 'production'}`)
           console.log(`[OLLAMA_CONFIG] Base URL: ${config.baseUrl}`)
           console.log(`[OLLAMA_CONFIG] Model: ${config.model}`)
@@ -212,11 +212,11 @@ export async function POST(request: NextRequest) {
           if (error instanceof Error) {
                // Network-specific error details
                if (error.message.includes('ECONNREFUSED')) {
-                    console.error(`[CONNECTION_ERROR] Ollama server is not running or not accessible at ${config?.baseUrl}`)
+                    console.error(`[CONNECTION_ERROR] Ollama server is not running or not accessible at ${config.baseUrl}`)
                } else if (error.message.includes('ENOTFOUND')) {
-                    console.error(`[DNS_ERROR] Cannot resolve hostname in ${config?.baseUrl}`)
+                    console.error(`[DNS_ERROR] Cannot resolve hostname in ${config.baseUrl}`)
                } else if (error.message.includes('ETIMEDOUT')) {
-                    console.error(`[TIMEOUT_ERROR] Connection to ${config?.baseUrl} timed out`)
+                    console.error(`[TIMEOUT_ERROR] Connection to ${config.baseUrl} timed out`)
                } else if (error.message.includes('aborted')) {
                     console.error(`[ABORT_ERROR] Request was aborted (likely timeout)`)
                }
@@ -229,16 +229,16 @@ export async function POST(request: NextRequest) {
                timestamp: new Date().toISOString(),
                debug: {
                     responseTime,
-                    baseUrl: config?.baseUrl || 'unknown',
-                    model: config?.model || 'unknown',
+                    baseUrl: config.baseUrl,
+                    model: config.model,
                     environment: process.env.NODE_ENV,
                     errorName: error instanceof Error ? error.name : 'Unknown',
                     errorMessage: error instanceof Error ? error.message : String(error),
                     // Connection troubleshooting hints
                     troubleshooting: {
-                         checkOllamaRunning: `curl ${config?.baseUrl}/api/tags`,
-                         checkPort: `telnet ${config?.baseUrl?.replace('http://', '').split(':')[0]} 11434`,
-                         checkNetwork: `ping ${config?.baseUrl?.replace('http://', '').split(':')[0]}`
+                         checkOllamaRunning: `curl ${config.baseUrl}/api/tags`,
+                         checkPort: `telnet ${config.baseUrl.replace('http://', '').split(':')[0]} 11434`,
+                         checkNetwork: `ping ${config.baseUrl.replace('http://', '').split(':')[0]}`
                     }
                }
           }, { status: 503 })
@@ -248,11 +248,12 @@ export async function POST(request: NextRequest) {
 // Enhanced health check endpoint with detailed diagnostics
 export async function GET() {
      const startTime = Date.now()
-     let config: any
+     
+     // Get Ollama configuration based on environment
+     const isDev = process.env.NODE_ENV === 'development'
+     const config = isDev ? OLLAMA_CONFIG.development : OLLAMA_CONFIG.production
      
      try {
-          const isDev = process.env.NODE_ENV === 'development'
-          config = isDev ? OLLAMA_CONFIG.development : OLLAMA_CONFIG.production
 
           console.log(`[HEALTH_CHECK] Starting health check...`)
           console.log(`[HEALTH_CHECK] Environment: ${isDev ? 'development' : 'production'}`)
@@ -274,9 +275,9 @@ export async function GET() {
           if (response.ok) {
                const data = await response.json()
                const models = data.models || []
-               const hasRequiredModel = models.some((m: any) => m.name === config.model)
+               const hasRequiredModel = models.some((m: { name: string }) => m.name === config.model)
                
-               console.log(`[HEALTH_CHECK] Available models: ${models.map((m: any) => m.name).join(', ')}`)
+               console.log(`[HEALTH_CHECK] Available models: ${models.map((m: { name: string }) => m.name).join(', ')}`)
                console.log(`[HEALTH_CHECK] Required model ${config.model} available: ${hasRequiredModel}`)
 
                return NextResponse.json({
@@ -285,7 +286,7 @@ export async function GET() {
                     baseUrl: config.baseUrl,
                     model: config.model,
                     responseTime,
-                    availableModels: models.map((m: any) => ({
+                    availableModels: models.map((m: { name: string; size: number; modified_at: string }) => ({
                          name: m.name,
                          size: m.size,
                          modifiedAt: m.modified_at
@@ -349,8 +350,8 @@ export async function GET() {
           return NextResponse.json({
                status: 'unhealthy',
                environment: process.env.NODE_ENV,
-               baseUrl: config?.baseUrl || 'unknown',
-               model: config?.model || 'unknown',
+               baseUrl: config.baseUrl,
+               model: config.model,
                responseTime,
                error: error instanceof Error ? error.message : 'Unknown error',
                errorType,
@@ -358,15 +359,15 @@ export async function GET() {
                debug: {
                     connectionTest: 'FAILED',
                     errorName: error instanceof Error ? error.name : 'Unknown',
-                    baseUrlParsed: config?.baseUrl ? {
+                    baseUrlParsed: {
                          protocol: config.baseUrl.split('://')[0],
                          host: config.baseUrl.split('://')[1]?.split(':')[0],
                          port: config.baseUrl.split(':')[2] || '80'
-                    } : null
+                    }
                },
                troubleshooting: {
                     steps: troubleshootingSteps,
-                    quickTest: `curl ${config?.baseUrl}/api/tags`,
+                    quickTest: `curl ${config.baseUrl}/api/tags`,
                     checkService: 'systemctl status ollama',
                     checkPort: 'netstat -tulpn | grep 11434',
                     checkModels: 'ollama list'
