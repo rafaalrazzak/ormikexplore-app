@@ -129,35 +129,109 @@ netstat -tulpn | grep 11434  # Connection status
 
 ### Common Issues
 
-1. **Ollama Connection Failed**
+1. **Ollama Connection Failed (127.0.0.1:11434)**
    ```bash
-   # Check service
-   systemctl status ollama
+   # Check if Ollama is running
+   curl http://127.0.0.1:11434/api/tags
    
-   # Restart if needed
-   systemctl restart ollama
+   # If connection refused:
+   ollama serve
+   
+   # Check process
+   ps aux | grep ollama
    ```
 
 2. **Model Not Found**
    ```bash
-   # Re-pull model
+   # Check available models
+   ollama list
+   
+   # Pull required model
    ollama pull llama3.1:8b
+   
+   # Verify model exists
+   curl http://127.0.0.1:11434/api/tags
    ```
 
-3. **Network Issues**
+3. **Service Unavailable (503 Error)**
    ```bash
-   # Test dari Coolify container
-   curl http://[SERVER_IP]:11434/api/tags
+   # Run debugging script
+   bash debug-ollama.sh
+   # atau untuk Windows:
+   .\debug-ollama.ps1
+   
+   # Manual checks:
+   systemctl status ollama    # Linux
+   Get-Process ollama         # Windows
    ```
 
-4. **High Memory Usage**
+4. **Network Issues in Docker/Coolify**
+   ```bash
+   # Test from container
+   docker exec [CONTAINER_ID] curl http://127.0.0.1:11434/api/tags
+   
+   # If 127.0.0.1 not accessible from container, try:
+   # - host.docker.internal:11434 (Docker Desktop)
+   # - 172.17.0.1:11434 (Docker Linux)
+   # - Your actual IP address
+   ```
+
+5. **High Memory Usage**
    ```bash
    # Monitor model memory
    ollama ps
    
-   # Consider lighter model jika perlu
+   # Use lighter model if needed
    ollama pull llama3.1:3b
    ```
+
+### Debugging Tools
+
+1. **Enhanced API Logs**
+   - Check Coolify application logs
+   - Look for detailed error messages dengan troubleshooting hints
+   - Response includes connection test commands
+
+2. **Health Check Endpoint**
+   ```bash
+   # Detailed health check
+   curl https://your-app.coolify.io/api/ai
+   
+   # Returns:
+   # - Connection status
+   # - Available models
+   # - Response times
+   # - Troubleshooting commands
+   ```
+
+3. **Debug Scripts**
+   ```bash
+   # Linux/Mac
+   bash debug-ollama.sh
+   
+   # Windows PowerShell
+   .\debug-ollama.ps1
+   ```
+
+### Specific Fix for 127.0.0.1 Issues
+
+Jika menggunakan `127.0.0.1:11434` dan masih error:
+
+```bash
+# 1. Pastikan Ollama running
+ollama serve
+
+# 2. Test koneksi lokal
+curl http://127.0.0.1:11434/api/tags
+
+# 3. Jika berhasil lokal tapi gagal dari Coolify:
+# Update environment variable ke IP yang accessible dari container
+# Cek IP dengan:
+ip route get 1.1.1.1 | grep -oP 'src \K\S+'
+
+# 4. Update di Coolify:
+OLLAMA_BASE_URL=http://[ACTUAL_IP]:11434
+```
 
 ## 🎯 Deployment Checklist
 
