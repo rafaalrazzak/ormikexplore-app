@@ -79,6 +79,9 @@ JAWABAN (maksimal 400 kata, fokus ORMIK/STT NF saja):`
 }
 
 export async function POST(request: NextRequest) {
+     const startTime = Date.now()
+     let config: any
+     
      try {
           // Get client IP for rate limiting
           const ip = request.headers.get('x-forwarded-for') ||
@@ -87,31 +90,49 @@ export async function POST(request: NextRequest) {
 
           // Check rate limit
           if (isRateLimited(ip)) {
+               console.log(`[RATE_LIMIT] IP ${ip} exceeded rate limit`)
                return NextResponse.json({
                     error: 'Rate limit exceeded. Please try again later.',
-                    fallback: true
+                    fallback: true,
+                    debug: { rateLimited: true, ip }
                }, { status: 429 })
           }
 
           const { message } = await request.json()
 
           if (!message || message.trim().length === 0) {
+               console.log(`[VALIDATION_ERROR] Empty message from IP ${ip}`)
                return NextResponse.json({
                     error: 'Message is required',
-                    fallback: true
+                    fallback: true,
+                    debug: { emptyMessage: true }
                }, { status: 400 })
           }
 
           // Get Ollama configuration based on environment
           const isDev = process.env.NODE_ENV === 'development'
-          const config = isDev ? OLLAMA_CONFIG.development : OLLAMA_CONFIG.production
+          config = isDev ? OLLAMA_CONFIG.development : OLLAMA_CONFIG.production
+          
+          console.log(`[OLLAMA_CONFIG] Environment: ${isDev ? 'development' : 'production'}`)
+          console.log(`[OLLAMA_CONFIG] Base URL: ${config.baseUrl}`)
+          console.log(`[OLLAMA_CONFIG] Model: ${config.model}`)
 
           // Build specialized ORMIK prompt
           const prompt = buildORMIKPrompt(message)
 
+          // Pre-connection test
+          console.log(`[CONNECTION_TEST] Testing connection to ${config.baseUrl}...`)
+          
           // Call Ollama API with timeout
           const controller = new AbortController()
-          const timeoutId = setTimeout(() => controller.abort(), 15000) // 15 second timeout
+          const timeoutId = setTimeout(() => {
+               console.log(`[TIMEOUT] Request to ${config.baseUrl} timed out after 15 seconds`)
+               controller.abort()
+          }, 15000) // 15 second timeout
+
+          console.log(`[OLLAMA_REQUEST] Sending request to ${config.baseUrl}/api/generate`)
+          console.log(`[OLLAMA_REQUEST] Model: ${config.model}`)
+          console.log(`[OLLAMA_REQUEST] Prompt length: ${prompt.length} chars`)
 
           const ollamaResponse = await fetch(`${config.baseUrl}/api/generate`, {
                method: 'POST',
@@ -134,12 +155,21 @@ export async function POST(request: NextRequest) {
           })
 
           clearTimeout(timeoutId)
+          
+          const responseTime = Date.now() - startTime
+          console.log(`[OLLAMA_RESPONSE] Status: ${ollamaResponse.status}`)
+          console.log(`[OLLAMA_RESPONSE] Response time: ${responseTime}ms`)
 
           if (!ollamaResponse.ok) {
-               throw new Error(`Ollama API error: ${ollamaResponse.status}`)
+               const errorText = await ollamaResponse.text()
+               console.error(`[OLLAMA_ERROR] Status: ${ollamaResponse.status}`)
+               console.error(`[OLLAMA_ERROR] Response: ${errorText}`)
+               
+               throw new Error(`Ollama API error: ${ollamaResponse.status} - ${errorText}`)
           }
 
           const data = await ollamaResponse.json()
+          console.log(`[OLLAMA_SUCCESS] Response length: ${data.response?.length || 0} chars`)
 
           // Clean and validate response
           let response = data.response?.trim() || ''
@@ -153,51 +183,194 @@ export async function POST(request: NextRequest) {
 
           if (!isRelevant && response.length > 50) {
                response = "Maaf, saya hanya bisa membantu pertanyaan seputar ORMIK 2025 dan STT Nurul Fikri. Silakan hubungi @ormikxplore di Instagram untuk informasi lainnya. 😊"
+               console.log(`[RELEVANCE_FILTER] Response filtered for relevance`)
           }
+
+          console.log(`[SUCCESS] Total request time: ${Date.now() - startTime}ms`)
 
           return NextResponse.json({
                response: response,
                model: config.model,
                timestamp: new Date().toISOString(),
-               fallback: false
+               fallback: false,
+               debug: {
+                    responseTime: Date.now() - startTime,
+                    baseUrl: config.baseUrl,
+                    environment: isDev ? 'development' : 'production'
+               }
           })
 
      } catch (error) {
-          console.error('Ollama API Error:', error)
+          const responseTime = Date.now() - startTime
+          
+          // Detailed error logging
+          console.error(`[OLLAMA_API_ERROR] Time: ${responseTime}ms`)
+          console.error(`[OLLAMA_API_ERROR] Config: ${JSON.stringify(config)}`)
+          console.error(`[OLLAMA_API_ERROR] Error name: ${error instanceof Error ? error.name : 'Unknown'}`)
+          console.error(`[OLLAMA_API_ERROR] Error message: ${error instanceof Error ? error.message : String(error)}`)
+          
+          if (error instanceof Error) {
+               // Network-specific error details
+               if (error.message.includes('ECONNREFUSED')) {
+                    console.error(`[CONNECTION_ERROR] Ollama server is not running or not accessible at ${config?.baseUrl}`)
+               } else if (error.message.includes('ENOTFOUND')) {
+                    console.error(`[DNS_ERROR] Cannot resolve hostname in ${config?.baseUrl}`)
+               } else if (error.message.includes('ETIMEDOUT')) {
+                    console.error(`[TIMEOUT_ERROR] Connection to ${config?.baseUrl} timed out`)
+               } else if (error.message.includes('aborted')) {
+                    console.error(`[ABORT_ERROR] Request was aborted (likely timeout)`)
+               }
+          }
 
-          // Return fallback indicator for hybrid system
+          // Return detailed error for debugging
           return NextResponse.json({
                error: 'AI service temporarily unavailable',
                fallback: true,
-               timestamp: new Date().toISOString()
+               timestamp: new Date().toISOString(),
+               debug: {
+                    responseTime,
+                    baseUrl: config?.baseUrl || 'unknown',
+                    model: config?.model || 'unknown',
+                    environment: process.env.NODE_ENV,
+                    errorName: error instanceof Error ? error.name : 'Unknown',
+                    errorMessage: error instanceof Error ? error.message : String(error),
+                    // Connection troubleshooting hints
+                    troubleshooting: {
+                         checkOllamaRunning: `curl ${config?.baseUrl}/api/tags`,
+                         checkPort: `telnet ${config?.baseUrl?.replace('http://', '').split(':')[0]} 11434`,
+                         checkNetwork: `ping ${config?.baseUrl?.replace('http://', '').split(':')[0]}`
+                    }
+               }
           }, { status: 503 })
      }
 }
 
-// Health check endpoint
+// Enhanced health check endpoint with detailed diagnostics
 export async function GET() {
+     const startTime = Date.now()
+     let config: any
+     
      try {
           const isDev = process.env.NODE_ENV === 'development'
-          const config = isDev ? OLLAMA_CONFIG.development : OLLAMA_CONFIG.production
+          config = isDev ? OLLAMA_CONFIG.development : OLLAMA_CONFIG.production
 
+          console.log(`[HEALTH_CHECK] Starting health check...`)
+          console.log(`[HEALTH_CHECK] Environment: ${isDev ? 'development' : 'production'}`)
+          console.log(`[HEALTH_CHECK] Base URL: ${config.baseUrl}`)
+          console.log(`[HEALTH_CHECK] Model: ${config.model}`)
+
+          // Test connection to Ollama
+          console.log(`[HEALTH_CHECK] Testing connection to ${config.baseUrl}/api/tags`)
+          
           const response = await fetch(`${config.baseUrl}/api/tags`, {
                method: 'GET',
                signal: AbortSignal.timeout(5000)
           })
+          
+          const responseTime = Date.now() - startTime
+          console.log(`[HEALTH_CHECK] Response status: ${response.status}`)
+          console.log(`[HEALTH_CHECK] Response time: ${responseTime}ms`)
 
           if (response.ok) {
+               const data = await response.json()
+               const models = data.models || []
+               const hasRequiredModel = models.some((m: any) => m.name === config.model)
+               
+               console.log(`[HEALTH_CHECK] Available models: ${models.map((m: any) => m.name).join(', ')}`)
+               console.log(`[HEALTH_CHECK] Required model ${config.model} available: ${hasRequiredModel}`)
+
                return NextResponse.json({
                     status: 'healthy',
                     environment: isDev ? 'development' : 'production',
-                    baseUrl: config.baseUrl
+                    baseUrl: config.baseUrl,
+                    model: config.model,
+                    responseTime,
+                    availableModels: models.map((m: any) => ({
+                         name: m.name,
+                         size: m.size,
+                         modifiedAt: m.modified_at
+                    })),
+                    hasRequiredModel,
+                    timestamp: new Date().toISOString(),
+                    debug: {
+                         connectionTest: 'SUCCESS',
+                         modelsFound: models.length
+                    }
                })
           } else {
-               throw new Error('Ollama not responding')
+               const errorText = await response.text()
+               console.error(`[HEALTH_CHECK] Error response: ${response.status} - ${errorText}`)
+               
+               throw new Error(`Ollama responded with ${response.status}: ${errorText}`)
           }
      } catch (error) {
+          const responseTime = Date.now() - startTime
+          
+          console.error(`[HEALTH_CHECK_ERROR] Time: ${responseTime}ms`)
+          console.error(`[HEALTH_CHECK_ERROR] Config: ${JSON.stringify(config)}`)
+          console.error(`[HEALTH_CHECK_ERROR] Error: ${error instanceof Error ? error.message : String(error)}`)
+
+          // Determine error type for better diagnostics
+          let errorType = 'UNKNOWN'
+          let troubleshootingSteps: string[] = []
+
+          if (error instanceof Error) {
+               if (error.message.includes('ECONNREFUSED')) {
+                    errorType = 'CONNECTION_REFUSED'
+                    troubleshootingSteps = [
+                         'Check if Ollama is running: systemctl status ollama',
+                         'Start Ollama: systemctl start ollama',
+                         'Check port: netstat -tulpn | grep 11434'
+                    ]
+               } else if (error.message.includes('ENOTFOUND')) {
+                    errorType = 'DNS_RESOLUTION'
+                    troubleshootingSteps = [
+                         'Check hostname resolution',
+                         'Verify IP address is correct',
+                         'Test ping to host'
+                    ]
+               } else if (error.message.includes('timeout')) {
+                    errorType = 'TIMEOUT'
+                    troubleshootingSteps = [
+                         'Check network connectivity',
+                         'Verify firewall settings',
+                         'Test connection: curl ' + config?.baseUrl + '/api/tags'
+                    ]
+               } else if (error.message.includes('404')) {
+                    errorType = 'ENDPOINT_NOT_FOUND'
+                    troubleshootingSteps = [
+                         'Ollama is running but API endpoints not available',
+                         'Check Ollama version compatibility',
+                         'Restart Ollama service'
+                    ]
+               }
+          }
+
           return NextResponse.json({
                status: 'unhealthy',
-               error: error instanceof Error ? error.message : 'Unknown error'
+               environment: process.env.NODE_ENV,
+               baseUrl: config?.baseUrl || 'unknown',
+               model: config?.model || 'unknown',
+               responseTime,
+               error: error instanceof Error ? error.message : 'Unknown error',
+               errorType,
+               timestamp: new Date().toISOString(),
+               debug: {
+                    connectionTest: 'FAILED',
+                    errorName: error instanceof Error ? error.name : 'Unknown',
+                    baseUrlParsed: config?.baseUrl ? {
+                         protocol: config.baseUrl.split('://')[0],
+                         host: config.baseUrl.split('://')[1]?.split(':')[0],
+                         port: config.baseUrl.split(':')[2] || '80'
+                    } : null
+               },
+               troubleshooting: {
+                    steps: troubleshootingSteps,
+                    quickTest: `curl ${config?.baseUrl}/api/tags`,
+                    checkService: 'systemctl status ollama',
+                    checkPort: 'netstat -tulpn | grep 11434',
+                    checkModels: 'ollama list'
+               }
           }, { status: 503 })
      }
 }
