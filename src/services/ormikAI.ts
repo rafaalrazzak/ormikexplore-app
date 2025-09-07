@@ -68,11 +68,9 @@ class ZeeroAIService {
           return {
                ormikData: {
                     schedule: [
-                         { id: "pra-ormik", title: "PRA ORMIK", date: "Monday, Sept 8, 2025", fullDate: "2025-09-08" },
-                         { id: "day-1", title: "DAY 1", date: "Tuesday, Sept 16, 2025", fullDate: "2025-09-16" },
-                         { id: "day-2", title: "DAY 2", date: "Wednesday, Sept 17, 2025", fullDate: "2025-09-17" },
-                         { id: "day-3", title: "DAY 3", date: "Thursday, Sept 18, 2025", fullDate: "2025-09-18" },
-                         { id: "last-day", title: "LAST DAY", date: "Saturday, Sept 20, 2025", fullDate: "2025-09-20" }
+                         { id: "pra-ormik", title: "PRA ORMIK", date: "Senin, Sept 8, 2025", fullDate: "2025-09-08" },
+                         { id: "day-1", title: "DAY 1", date: "Selasa, Sept 16, 2025", fullDate: "2025-09-16" },
+                         { id: "last-day", title: "LAST DAY", date: "Sabtu, Sept 20, 2025", fullDate: "2025-09-20" }
                     ],
                     divisions: [
                          { name: "Project Officer", position: "PO", description: "Penanggung jawab penuh pelaksanaan ORMIK" },
