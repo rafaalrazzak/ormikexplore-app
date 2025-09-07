@@ -176,13 +176,13 @@ class ZeeroAIService {
      // Hybrid response system: Ollama + Keyword fallback
      private async getHybridResponse(userInput: string): Promise<string> {
           const lowerInput = userInput.toLowerCase()
-          
+
           // Step 1: Check for simple keyword matches (instant response)
           const keywordConfidence = this.getKeywordConfidence(userInput)
           if (keywordConfidence > 0.85) {
                return this.getKeywordBasedResponse(userInput)
           }
-          
+
           // Step 2: Try Ollama for complex/conversational queries
           if (this.shouldUseOllama(userInput)) {
                try {
@@ -194,7 +194,7 @@ class ZeeroAIService {
                     console.log('Ollama fallback to keyword:', error)
                }
           }
-          
+
           // Step 3: Enhanced keyword fallback
           return this.getKeywordBasedResponse(userInput)
      }
@@ -211,22 +211,22 @@ class ZeeroAIService {
                /gimana.*cara/i,
                /kenapa.*harus/i
           ]
-          
+
           const conversationalPatterns = [
                /saya.*bingung/i,
                /tidak.*mengerti/i,
                /kurang.*jelas/i,
                /lebih.*detail/i
           ]
-          
+
           return complexPatterns.some(p => p.test(userInput)) ||
-                 conversationalPatterns.some(p => p.test(userInput))
+               conversationalPatterns.some(p => p.test(userInput))
      }
 
      // Get confidence score for keyword matching
      private getKeywordConfidence(userInput: string): number {
           const lowerInput = userInput.toLowerCase()
-          
+
           // High confidence keywords (exact matches)
           const highConfidenceKeywords = [
                'jadwal', 'schedule', 'tanggal', 'waktu',
@@ -234,7 +234,7 @@ class ZeeroAIService {
                'lokasi', 'alamat', 'kampus', 'tempat',
                'dress code', 'pakaian', 'baju', 'seragam'
           ]
-          
+
           // Medium confidence keywords
           const mediumConfidenceKeywords = [
                'divisi', 'struktur', 'panitia', 'tim',
@@ -243,29 +243,29 @@ class ZeeroAIService {
                'tata tertib', 'aturan', 'peraturan',
                'punishment', 'hukuman', 'sanksi'
           ]
-          
+
           // Calculate confidence based on keyword matches
           let confidence = 0
-          
+
           highConfidenceKeywords.forEach(keyword => {
                if (lowerInput.includes(keyword)) confidence += 0.4
           })
-          
+
           mediumConfidenceKeywords.forEach(keyword => {
                if (lowerInput.includes(keyword)) confidence += 0.3
           })
-          
+
           return Math.min(confidence, 1.0)
      }
 
      // Call Ollama API with error handling
      private async getOllamaResponse(userInput: string): Promise<string> {
           await this.ensureOllamaHealth()
-          
+
           if (!this.ollamaHealthy) {
                throw new Error('Ollama service not available')
           }
-          
+
           const response = await fetch('/api/ai', {
                method: 'POST',
                headers: {
@@ -273,13 +273,13 @@ class ZeeroAIService {
                },
                body: JSON.stringify({ message: userInput }),
           })
-          
+
           const data = await response.json()
-          
+
           if (data.fallback) {
                throw new Error('Ollama returned fallback')
           }
-          
+
           return data.response
      }
 
@@ -290,7 +290,7 @@ class ZeeroAIService {
                     method: 'GET',
                     signal: AbortSignal.timeout(5000)
                })
-               
+
                this.ollamaHealthy = response.ok
                this.lastHealthCheck = Date.now()
           } catch (error) {
@@ -457,8 +457,8 @@ Semua komunikasi resmi melalui Instagram DM ya! 📱✨`
           }
 
           // Dress code information - Enhanced with official guidebook data
-          if (lowerInput.includes('dress') || lowerInput.includes('pakaian') || lowerInput.includes('baju') || 
-              lowerInput.includes('seragam') || lowerInput.includes('kostum')) {
+          if (lowerInput.includes('dress') || lowerInput.includes('pakaian') || lowerInput.includes('baju') ||
+               lowerInput.includes('seragam') || lowerInput.includes('kostum')) {
                return `👔 **Dress Code ORMIK 2025 (Official Guidebook):**
 
 **👨‍🎓 PUTRA:**
@@ -487,8 +487,8 @@ Detail lengkap: Download guidebook! 📖`
           }
 
           // Tata tertib information
-          if (lowerInput.includes('tata tertib') || lowerInput.includes('aturan') || lowerInput.includes('peraturan') || 
-              lowerInput.includes('tertib')) {
+          if (lowerInput.includes('tata tertib') || lowerInput.includes('aturan') || lowerInput.includes('peraturan') ||
+               lowerInput.includes('tertib')) {
                return `📋 **Tata Tertib ORMIK 2025:**
 
 **✅ WAJIB:**
@@ -516,8 +516,8 @@ Patuhi aturan untuk pengalaman ORMIK yang maksimal! 🌟`
           }
 
           // Punishment system
-          if (lowerInput.includes('punishment') || lowerInput.includes('hukuman') || lowerInput.includes('sanksi') || 
-              lowerInput.includes('pelanggaran')) {
+          if (lowerInput.includes('punishment') || lowerInput.includes('hukuman') || lowerInput.includes('sanksi') ||
+               lowerInput.includes('pelanggaran')) {
                return `⚖️ **Sistem Punishment ORMIK 2025:**
 
 **🟡 RINGAN (1x Pelanggaran):**
@@ -540,8 +540,8 @@ Ada pertanyaan tentang aturan tertentu? Tanya aja! 🤗`
           }
 
           // Atribut and equipment
-          if (lowerInput.includes('atribut') || lowerInput.includes('perlengkapan') || lowerInput.includes('barang') || 
-              lowerInput.includes('bawa') || lowerInput.includes('perlu')) {
+          if (lowerInput.includes('atribut') || lowerInput.includes('perlengkapan') || lowerInput.includes('barang') ||
+               lowerInput.includes('bawa') || lowerInput.includes('perlu')) {
                return `🎒 **Atribut & Perlengkapan ORMIK 2025:**
 
 **📅 DAY 1:**
@@ -570,8 +570,8 @@ Siapkan semua dengan teliti ya! 📖✨`
           }
 
           // Tugas (assignments)
-          if (lowerInput.includes('tugas') || lowerInput.includes('assignment') || lowerInput.includes('pekerjaan') || 
-              lowerInput.includes('kerjaan')) {
+          if (lowerInput.includes('tugas') || lowerInput.includes('assignment') || lowerInput.includes('pekerjaan') ||
+               lowerInput.includes('kerjaan')) {
                return `📝 **Tugas ORMIK 2025:**
 
 **🌅 PRA ORMIK - Individu:**
