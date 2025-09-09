@@ -20,36 +20,51 @@ RATE_LIMIT_MAX=10
 RATE_LIMIT_WINDOW=3600000
 ```
 
-## ZEERO AI Service Requirements
+## ZEERO AI FastAPI Service Structure
 
-Your ZEERO AI service should have these endpoints:
-
-### 1. Chat Endpoint: `/v1/chat`
+### Response Model (ChatResponse):
 ```json
-POST /v1/chat
-Content-Type: application/json
-
 {
-  "query": "Pertanyaan tentang ORMIK 2025 STT Nurul Fikri: apa itu ORMIK?"
-}
-
-Response:
-{
-  "response": "ORMIK adalah Orientasi Mahasiswa Ikatan Keluarga...",
-  "status": "success"
+  "answer": "Response text dari ZEERO AI",
+  "confidence": 0.8,
+  "topic_ok": true,
+  "truncated": false
 }
 ```
 
-### 2. Health Check Endpoint: `/health`
+### Request Model (ChatRequest):
 ```json
-GET /health
-
-Response:
 {
-  "status": "healthy",
-  "service": "ZEERO AI",
-  "version": "1.0.0"
+  "query": "Pertanyaan tentang ORMIK 2025 STT Nurul Fikri: apa itu ORMIK?"
 }
+```
+
+### Health Check Response:
+```json
+{
+  "ok": true
+}
+```
+
+## Integration Flow
+
+1. **Next.js** receives chat request
+2. **API Route** `/api/ai` processes and forwards to ZEERO AI
+3. **ZEERO AI FastAPI** returns structured response
+4. **Next.js** returns formatted response to frontend
+
+## Environment Setup
+
+### Development
+```env
+NODE_ENV=development
+ZEERO_API_URL=http://localhost:8000
+```
+
+### Production
+```env
+NODE_ENV=production
+ZEERO_API_URL=https://your-zeero-ai-domain.com
 ```
 
 ## Next.js Rewrite Configuration

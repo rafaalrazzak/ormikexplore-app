@@ -138,18 +138,27 @@ export async function POST(request: NextRequest) {
           const data = await zeeroResponse.json()
           console.log(`[ZEERO_SUCCESS] Response received`)
 
-          // Extract response from ZEERO AI
-          let response = data.response || data.message || data.answer || ''
+          // Extract response from ZEERO AI (matching FastAPI response structure)
+          let response = data.answer || data.response || data.message || ''
 
           if (!response) {
                throw new Error('No response received from ZEERO AI')
           }
 
+          // Log additional ZEERO AI metadata
+          const confidence = data.confidence || 0
+          const topicOk = data.topic_ok !== undefined ? data.topic_ok : true
+          const truncated = data.truncated || false
+
+          console.log(`[ZEERO_METADATA] Confidence: ${confidence}, Topic OK: ${topicOk}, Truncated: ${truncated}`)
           console.log(`[SUCCESS] Total request time: ${Date.now() - startTime}ms`)
 
           return NextResponse.json({
                response: response,
                service: 'ZEERO AI',
+               confidence: confidence,
+               topicOk: topicOk,
+               truncated: truncated,
                timestamp: new Date().toISOString(),
                fallback: false,
                debug: {
@@ -218,7 +227,7 @@ export async function GET() {
           console.log(`[HEALTH_CHECK] Base URL: ${config.baseUrl}`)
 
           // Test connection to ZEERO AI
-          console.log(`[HEALTH_CHECK] Testing connection to ${config.baseUrl}`)
+          console.log(`[HEALTH_CHECK] Testing connection to ${config.baseUrl}/health`)
           
           const response = await fetch(`${config.baseUrl}/health`, {
                method: 'GET',
@@ -240,10 +249,11 @@ export async function GET() {
                     baseUrl: config.baseUrl,
                     service: 'ZEERO AI',
                     responseTime,
+                    serviceHealth: data,
                     timestamp: new Date().toISOString(),
                     debug: {
                          connectionTest: 'SUCCESS',
-                         serviceData: data
+                         serviceStatus: data.ok || 'unknown'
                     }
                })
           } else {
