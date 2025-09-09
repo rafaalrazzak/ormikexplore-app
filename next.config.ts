@@ -11,22 +11,14 @@ const nextConfig: NextConfig = {
     ]
   },
 
-  // API rewrites for Ollama proxy
+  // API rewrites for ZEERO AI proxy
   async rewrites() {
     return [
-      // Development: proxy to localhost Ollama
-      ...(process.env.NODE_ENV === 'development' ? [
+      // ZEERO AI Service proxy
+      ...(process.env.ZEERO_API_URL ? [
         {
-          source: '/api/ollama/:path*',
-          destination: 'http://localhost:11434/api/:path*'
-        }
-      ] : []),
-
-      // Production: proxy to local network Ollama
-      ...(process.env.NODE_ENV === 'production' && process.env.OLLAMA_BASE_URL ? [
-        {
-          source: '/api/ollama/:path*',
-          destination: `${process.env.OLLAMA_BASE_URL}/api/:path*`
+          source: '/api/zeero/:path*',
+          destination: `${process.env.ZEERO_API_URL}/:path*`
         }
       ] : [])
     ]

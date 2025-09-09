@@ -1,6 +1,6 @@
 // ZEERO AI Service for ORMIK ChatBot
-// This service handles intelligent keyword-based responses for ORMIK 2025
-// Integrated with complete guidebook data
+// This service handles intelligent responses using ZEERO AI API
+// Integrated with complete guidebook data and fallback keyword system
 
 interface ChatContext {
      ormikData: {
