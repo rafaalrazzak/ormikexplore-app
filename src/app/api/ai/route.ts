@@ -21,7 +21,6 @@ const RATE_LIMIT = {
 
 // Token management untuk mencegah limit
 const MAX_INPUT_TOKENS = 2000  // ~1500 words
-const MAX_OUTPUT_TOKENS = 800  // ~600 words
 
 function getRateLimitKey(ip: string): string {
      return `rate_limit:${ip}`
@@ -139,7 +138,7 @@ export async function POST(request: NextRequest) {
           console.log(`[ZEERO_SUCCESS] Response received`)
 
           // Extract response from ZEERO AI (matching FastAPI response structure)
-          let response = data.answer || data.response || data.message || ''
+          const response = data.answer || data.response || data.message || ''
 
           if (!response) {
                throw new Error('No response received from ZEERO AI')
