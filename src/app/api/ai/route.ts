@@ -4,12 +4,12 @@ import { NextRequest, NextResponse } from 'next/server'
 const OLLAMA_CONFIG = {
      development: {
           baseUrl: 'http://localhost:11434',
-          model: 'llama3.1:8b'
+          model: 'llama3.2:1b'  // Lighter model for development
      },
      production: {
           // Your local network Ollama server
           baseUrl: process.env.OLLAMA_BASE_URL || 'http://127.0.0.1:11434',
-          model: process.env.OLLAMA_MODEL || 'llama3.1:8b'
+          model: process.env.OLLAMA_MODEL || 'llama3.2:1b'  // Default to lighter model
      }
 }
 
