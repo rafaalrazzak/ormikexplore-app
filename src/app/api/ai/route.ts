@@ -15,12 +15,12 @@ const ZEERO_CONFIG = {
 // Rate limiting untuk mencegah overload
 const requestCounts = new Map<string, { count: number, resetTime: number }>()
 const RATE_LIMIT = {
-     maxRequests: 10, // per IP per hour
+     maxRequests: 500, // per IP per hour - increased for your own AI agent
      windowMs: 60 * 60 * 1000 // 1 hour
 }
 
 // Token management untuk mencegah limit
-const MAX_INPUT_TOKENS = 2000  // ~1500 words
+const MAX_INPUT_TOKENS = 8000  // ~6000 words - increased capacity
 
 function getRateLimitKey(ip: string): string {
      return `rate_limit:${ip}`
@@ -96,7 +96,7 @@ export async function POST(request: NextRequest) {
 
           // Call ZEERO AI API with timeout
           const controller = new AbortController()
-          const timeoutId = setTimeout(() => controller.abort(), 15000)
+          const timeoutId = setTimeout(() => controller.abort(), 30000) // Increased to 30 seconds
 
           const zeeroResponse = await fetch(`${config.baseUrl}${config.endpoint}`, {
                method: 'POST',
@@ -180,7 +180,7 @@ export async function GET() {
      try {
           const response = await fetch(`${config.baseUrl}/health`, {
                method: 'GET',
-               signal: AbortSignal.timeout(5000)
+               signal: AbortSignal.timeout(10000) // Increased to 10 seconds
           })
           
           const responseTime = Date.now() - startTime

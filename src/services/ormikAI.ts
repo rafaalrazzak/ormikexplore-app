@@ -44,7 +44,7 @@ class ZeeroAIService {
      private async callZeeroAI(userInput: string): Promise<ZeeroResponse | null> {
           try {
                const controller = new AbortController()
-               const timeoutId = setTimeout(() => controller.abort(), 15000)
+               const timeoutId = setTimeout(() => controller.abort(), 30000) // Increased to 30 seconds
 
                const response = await fetch(this.API_ENDPOINT, {
                     method: 'POST',
@@ -94,7 +94,7 @@ class ZeeroAIService {
           if (lowerInput.includes('halo') || lowerInput.includes('hai') || lowerInput.includes('hello')) {
                response = "Halo! Saya **ZEERO** 🤖, AI Assistant untuk ORMIK 2025. Maaf, sistem utama sedang dalam pemeliharaan. Silakan hubungi @ormikxplore di Instagram untuk informasi lebih lanjut."
           } else if (lowerInput.includes('jadwal') || lowerInput.includes('schedule')) {
-               response = "📅 **Jadwal ORMIK 2025:**\n• PRA ORMIK: Senin, 8 Sept 2025\n• DAY 1: Selasa, 16 Sept 2025\n• DAY 2: Rabu, 17 Sept 2025\n• DAY 3: Kamis, 18 Sept 2025\n• LAST DAY: Sabtu, 20 Sept 2025\n\nInfo lengkap: @ormikxplore"
+               response = "📅 **Jadwal ORMIK 2025:**\n• PRA ORMIK: Senin, 8 September 2025\n• DAY 1: Selasa, 16 September 2025\n• LAST DAY: Sabtu, 20 September 2025\n\nInfo lengkap: @ormikxplore"
           } else if (lowerInput.includes('kontak') || lowerInput.includes('instagram')) {
                response = "📞 **Kontak ORMIK 2025:**\nInstagram: @ormikxplore\nLink: https://www.instagram.com/ormikxplore/\n\nSemua informasi resmi melalui DM Instagram ya! 📱"
           } else {
@@ -124,7 +124,7 @@ class ZeeroAIService {
           try {
                const response = await fetch(this.API_ENDPOINT, {
                     method: 'GET',
-                    signal: AbortSignal.timeout(5000)
+                    signal: AbortSignal.timeout(10000) // Increased to 10 seconds
                })
 
                this.zeeroHealthy = response.ok
