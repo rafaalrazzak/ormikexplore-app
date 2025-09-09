@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaRobot } from "react-icons/fa";
 import { FiSend, FiX, FiUser, FiMessageSquare, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import Image from 'next/image';
-import { ormikAI } from '@/services/ormikAI'
+import { getAIResponse, checkAIHealth } from '@/services/ormikAI'
 
 interface Message {
      id: string
@@ -78,7 +78,7 @@ export default function ChatBot() {
      const [inputValue, setInputValue] = useState('')
      const [isTyping, setIsTyping] = useState(false)
      const [showSuggestions, setShowSuggestions] = useState(true)
-     const [ollamaStatus, setOllamaStatus] = useState<'unknown' | 'healthy' | 'unhealthy'>('unknown')
+     const [zeeroStatus, setZeeroStatus] = useState<'unknown' | 'healthy' | 'unhealthy'>('unknown')
      const messagesEndRef = useRef<HTMLDivElement>(null)
      const inputRef = useRef<HTMLInputElement>(null)
      const scrollContainerRef = useRef<HTMLDivElement>(null)
@@ -130,7 +130,7 @@ export default function ChatBot() {
           setShowSuggestions(false) // Hide suggestions after first user message
 
           try {
-               const response = await getAIResponse(userMessage.content)
+               const response = await getAIResponseInternal(userMessage.content)
 
                setTimeout(() => {
                     const botMessage: Message = {
@@ -180,7 +180,7 @@ export default function ChatBot() {
                setIsTyping(true)
                setShowSuggestions(false)
 
-               getAIResponse(query).then(response => {
+               getAIResponseInternal(query).then(response => {
                     setTimeout(() => {
                          const botMessage: Message = {
                               id: (Date.now() + 1).toString(),
@@ -210,32 +210,29 @@ export default function ChatBot() {
           }
      }
 
-     const getAIResponse = async (userInput: string): Promise<string> => {
+     const getAIResponseInternal = async (userInput: string): Promise<string> => {
           try {
-               // Check Ollama status periodically
-               updateOllamaStatus()
-               
-               // Always use hybrid mode (auto detection)
-               return await ormikAI.generateResponse(userInput)
-          } catch (error) {
-               console.error('AI Response Error:', error)
-               return 'Maaf, terjadi kesalahan. Silakan coba lagi dalam beberapa saat. 🙏\n\nUntuk informasi lengkap, silakan:\n• Baca guidebook di bagian Download\n• Hubungi panitia melalui kontak resmi\n• Tanyakan ke mentor atau kakak tingkat'
-          }
-     }
-     
-     // Update Ollama status
-     const updateOllamaStatus = async () => {
-          try {
-               const response = await fetch('/api/ai', { method: 'GET' })
-               setOllamaStatus(response.ok ? 'healthy' : 'unhealthy')
+               updateZeeroStatus()
+               const response = await getAIResponse(userInput)
+               return response.response
           } catch {
-               setOllamaStatus('unhealthy')
+               return 'Maaf, terjadi kesalahan. Silakan coba lagi dalam beberapa saat. 🙏\n\nUntuk informasi lengkap, silakan:\n• Baca guidebook di bagian Download\n• Hubungi panitia melalui kontak resmi @ormikxplore\n• Tanyakan ke mentor atau kakak tingkat'
           }
      }
      
-     // Check Ollama status on component mount
+     // Update ZEERO AI status
+     const updateZeeroStatus = async () => {
+          try {
+               const healthy = await checkAIHealth()
+               setZeeroStatus(healthy ? 'healthy' : 'unhealthy')
+          } catch {
+               setZeeroStatus('unhealthy')
+          }
+     }
+     
+     // Check ZEERO AI status on component mount
      useEffect(() => {
-          updateOllamaStatus()
+          updateZeeroStatus()
      }, [])
 
      // Function to format message with bold text
@@ -298,13 +295,13 @@ export default function ChatBot() {
                                    </div>
                                    
                                    <div className="flex items-center gap-3">
-                                        {/* Ollama Status Indicator */}
+                                        {/* ZEERO AI Status Indicator */}
                                         <div className="flex items-center gap-1 text-xs opacity-80">
                                              <div className={`w-2 h-2 rounded-full ${
-                                                  ollamaStatus === 'healthy' ? 'bg-green-400' :
-                                                  ollamaStatus === 'unhealthy' ? 'bg-red-400' : 'bg-yellow-400'
+                                                  zeeroStatus === 'healthy' ? 'bg-green-400' :
+                                                  zeeroStatus === 'unhealthy' ? 'bg-red-400' : 'bg-yellow-400'
                                              }`} />
-                                             <span className="capitalize">{ollamaStatus}</span>
+                                             <span className="capitalize">{zeeroStatus}</span>
                                         </div>
                                         
                                         <button
