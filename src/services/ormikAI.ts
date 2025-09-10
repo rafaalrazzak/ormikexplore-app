@@ -10,6 +10,55 @@ interface ZeeroResponse {
      truncated: boolean
      fallback: boolean
      timestamp: string
+     hasLinks?: boolean // New field to indicate if response contains links
+}
+
+// Export utility functions for external use
+export function formatLinksInText(text: string): { formattedText: string; hasLinks: boolean } {
+     // Regular expression to match URLs (http, https, ftp, www)
+     const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+|ftp:\/\/[^\s]+)/gi
+     
+     let hasLinks = false
+     const formattedText = text.replace(urlRegex, (url) => {
+          hasLinks = true
+          
+          // Ensure URL has protocol
+          let fullUrl = url
+          if (url.startsWith('www.')) {
+               fullUrl = 'https://' + url
+          }
+          
+          // Create a clickable link format for markdown-like rendering
+          // This will be processed by the ChatBot component
+          return `[${url}](${fullUrl})`
+     })
+     
+     // Also handle existing markdown-style links to ensure they're preserved
+     const markdownLinkRegex = /\[([^\]]+)\]\(([^)]+)\)/g
+     if (markdownLinkRegex.test(formattedText)) {
+          hasLinks = true
+     }
+     
+     return { formattedText, hasLinks }
+}
+
+// Test function for URL detection (for development/debugging)
+export function testUrlDetection() {
+     const testCases = [
+          "Visit https://www.instagram.com/ormikxplore/ for more info",
+          "Check out www.google.com and https://github.com",
+          "Already formatted: [Instagram](https://www.instagram.com/ormikxplore/)",
+          "Mixed: Visit https://example.com or [Custom Link](https://custom.com)",
+          "No links in this text"
+     ]
+     
+     console.log("🔗 URL Detection Test Results:")
+     testCases.forEach((test, index) => {
+          const result = formatLinksInText(test)
+          console.log(`${index + 1}. "${test}"`)
+          console.log(`   → "${result.formattedText}" (hasLinks: ${result.hasLinks})`)
+          console.log("")
+     })
 }
 
 class ZeeroAIService {
@@ -67,14 +116,19 @@ class ZeeroAIService {
                this.zeeroHealthy = true
                this.lastHealthCheck = Date.now()
 
+               // Process response text to format links
+               const rawResponse = data.response || ''
+               const { formattedText, hasLinks } = formatLinksInText(rawResponse)
+
                return {
-                    response: data.response || '',
+                    response: formattedText,
                     service: data.service || 'ZEERO AI',
                     confidence: data.confidence || 0,
                     topicOk: data.topicOk !== undefined ? data.topicOk : true,
                     truncated: data.truncated || false,
                     fallback: data.fallback || false,
-                    timestamp: data.timestamp || new Date().toISOString()
+                    timestamp: data.timestamp || new Date().toISOString(),
+                    hasLinks: hasLinks
                }
 
           } catch (error) {
@@ -101,14 +155,18 @@ class ZeeroAIService {
                response = "Maaf, sistem ZEERO sedang dalam pemeliharaan. Untuk informasi lengkap tentang ORMIK 2025, silakan hubungi @ormikxplore di Instagram. Terima kasih! 🙏"
           }
 
+          // Process fallback response for links as well
+          const { formattedText, hasLinks } = formatLinksInText(response)
+
           return {
-               response,
+               response: formattedText,
                service: 'Fallback System',
                confidence: 0.1,
                topicOk: true,
                truncated: false,
                fallback: true,
-               timestamp: new Date().toISOString()
+               timestamp: new Date().toISOString(),
+               hasLinks: hasLinks
           }
      }
 

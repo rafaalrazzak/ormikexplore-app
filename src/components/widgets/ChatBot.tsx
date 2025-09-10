@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaRobot } from "react-icons/fa";
 import { FiSend, FiX, FiUser, FiMessageSquare, FiChevronLeft, FiChevronRight } from "react-icons/fi";
@@ -235,13 +235,63 @@ export default function ChatBot() {
           updateZeeroStatus()
      }, [])
 
-     // Function to format message with bold text
+     // Function to format message with bold text and clickable links
      const formatMessage = (content: string) => {
-          const parts = content.split(/(\*\*.*?\*\*)/g)
-          return parts.map((part, index) => {
+          // First, handle markdown-style links [text](url)
+          const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g
+          const parts: (string | React.ReactNode)[] = []
+          let lastIndex = 0
+          let match
+
+          while ((match = linkRegex.exec(content)) !== null) {
+               // Add text before the link
+               if (match.index > lastIndex) {
+                    const beforeText = content.slice(lastIndex, match.index)
+                    parts.push(...formatBoldText(beforeText))
+               }
+
+               // Add the link
+               const linkText = match[1]
+               const linkUrl = match[2]
+               parts.push(
+                    <a
+                         key={`link-${match.index}`}
+                         href={linkUrl}
+                         target="_blank"
+                         rel="noopener noreferrer"
+                         className="text-blue-600 hover:text-blue-800 underline font-medium transition-colors duration-200"
+                         onClick={(e) => {
+                              e.stopPropagation()
+                         }}
+                    >
+                         {linkText}
+                    </a>
+               )
+
+               lastIndex = linkRegex.lastIndex
+          }
+
+          // Add remaining text after last link
+          if (lastIndex < content.length) {
+               const remainingText = content.slice(lastIndex)
+               parts.push(...formatBoldText(remainingText))
+          }
+
+          // If no links were found, just format bold text
+          if (parts.length === 0) {
+               return formatBoldText(content)
+          }
+
+          return parts
+     }
+
+     // Helper function to format bold text (**text**)
+     const formatBoldText = (text: string): (string | React.ReactNode)[] => {
+          const boldParts = text.split(/(\*\*.*?\*\*)/g)
+          return boldParts.map((part, index) => {
                if (part.startsWith('**') && part.endsWith('**')) {
                     const boldText = part.slice(2, -2)
-                    return <strong key={index} className="font-semibold">{boldText}</strong>
+                    return <strong key={`bold-${index}`} className="font-semibold">{boldText}</strong>
                }
                return part
           })
