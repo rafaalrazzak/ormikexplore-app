@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server'
 // ZEERO AI configuration
 const ZEERO_CONFIG = {
      development: {
-          baseUrl: process.env.ZEERO_API_URL || 'http://localhost:3001',
+          baseUrl: process.env.ZEERO_API_URL || 'http://localhost:6969',
           endpoint: '/v1/chat'
      },
      production: {
