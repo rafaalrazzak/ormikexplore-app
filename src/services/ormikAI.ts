@@ -16,7 +16,7 @@ class ZeeroAIService {
      private zeeroHealthy: boolean = false
      private lastHealthCheck: number = 0
      private readonly HEALTH_CHECK_INTERVAL = 30000 // 30 seconds
-     private readonly API_ENDPOINT = '/api/ai'
+     private readonly API_ENDPOINT = '/api/zeero'
 
      constructor() {
           this.checkZeeroHealth()

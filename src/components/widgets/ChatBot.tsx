@@ -199,10 +199,10 @@ export default function ChatBot() {
           if (scrollContainerRef.current) {
                const scrollAmount = 150
                const currentScroll = scrollContainerRef.current.scrollLeft
-               const newScroll = direction === 'left' 
-                    ? currentScroll - scrollAmount 
+               const newScroll = direction === 'left'
+                    ? currentScroll - scrollAmount
                     : currentScroll + scrollAmount
-               
+
                scrollContainerRef.current.scrollTo({
                     left: newScroll,
                     behavior: 'smooth'
@@ -219,7 +219,7 @@ export default function ChatBot() {
                return 'Maaf, terjadi kesalahan. Silakan coba lagi dalam beberapa saat. 🙏\n\nUntuk informasi lengkap, silakan:\n• Baca guidebook di bagian Download\n• Hubungi panitia melalui kontak resmi @ormikxplore\n• Tanyakan ke mentor atau kakak tingkat'
           }
      }
-     
+
      // Update ZEERO AI status
      const updateZeeroStatus = async () => {
           try {
@@ -229,7 +229,7 @@ export default function ChatBot() {
                setZeeroStatus('unhealthy')
           }
      }
-     
+
      // Check ZEERO AI status on component mount
      useEffect(() => {
           updateZeeroStatus()
@@ -258,7 +258,7 @@ export default function ChatBot() {
           <>
                {/* Custom Scrollbar Styles */}
                <style jsx global>{scrollbarStyles}</style>
-               
+
                {/* Chat Message Box - Separate from button */}
                <AnimatePresence>
                     {isOpen && (
@@ -293,17 +293,16 @@ export default function ChatBot() {
                                              <p className="text-xs opacity-90">AI Helper 🤖</p>
                                         </div>
                                    </div>
-                                   
+
                                    <div className="flex items-center gap-3">
                                         {/* ZEERO AI Status Indicator */}
                                         <div className="flex items-center gap-1 text-xs opacity-80">
-                                             <div className={`w-2 h-2 rounded-full ${
-                                                  zeeroStatus === 'healthy' ? 'bg-green-400' :
+                                             <div className={`w-2 h-2 rounded-full ${zeeroStatus === 'healthy' ? 'bg-green-400' :
                                                   zeeroStatus === 'unhealthy' ? 'bg-red-400' : 'bg-yellow-400'
-                                             }`} />
+                                                  }`} />
                                              <span className="capitalize">{zeeroStatus}</span>
                                         </div>
-                                        
+
                                         <button
                                              onClick={() => setIsOpen(false)}
                                              className="w-8 h-8 rounded-full hover:bg-white/20 transition-colors flex items-center justify-center"
@@ -324,7 +323,7 @@ export default function ChatBot() {
                                              className="mb-4"
                                         >
                                              <div className="text-xs text-gray-500 mb-2 px-1">💡 Pertanyaan Cepat:</div>
-                                             <div 
+                                             <div
                                                   className="flex flex-wrap gap-2 max-h-36 overflow-y-auto custom-scrollbar-y px-2 py-1"
                                              >
                                                   {suggestions.map((suggestion, index) => (
@@ -444,7 +443,7 @@ export default function ChatBot() {
                                                   </button>
 
                                                   {/* Suggestions Container */}
-                                                  <div 
+                                                  <div
                                                        ref={scrollContainerRef}
                                                        className="flex gap-2 overflow-x-auto pb-2 custom-scrollbar px-8 sm:px-8"
                                                   >
