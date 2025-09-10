@@ -17,7 +17,7 @@ const nextConfig: NextConfig = {
       // ZEERO AI Service proxy
       ...(process.env.ZEERO_API_URL ? [
         {
-          source: '/api/zeero/:path*',
+          source: '/api/ai/:path*',
           destination: `${process.env.ZEERO_API_URL}/:path*`
         }
       ] : [])
