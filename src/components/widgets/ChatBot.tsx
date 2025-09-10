@@ -14,7 +14,7 @@ interface Message {
      timestamp: Date
 }
 
-// Custom styles for better scrollbar support across browsers
+// Custom styles for better scrollbar support across browsers and text wrapping
 const scrollbarStyles = `
   .custom-scrollbar {
     scrollbar-width: thin;
@@ -61,6 +61,26 @@ const scrollbarStyles = `
   
   .custom-scrollbar-y::-webkit-scrollbar-thumb:hover {
     background: #9ca3af;
+  }
+
+  /* Enhanced word breaking for chat messages */
+  .chat-message-content {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
+    max-width: 100%;
+  }
+
+  /* Link styling with proper wrapping */
+  .chat-message-content a {
+    word-break: break-all;
+    overflow-wrap: break-word;
+  }
+
+  /* Prevent horizontal overflow in chat container */
+  .chat-container {
+    overflow-x: hidden;
   }
 `
 
@@ -259,7 +279,7 @@ export default function ChatBot() {
                          href={linkUrl}
                          target="_blank"
                          rel="noopener noreferrer"
-                         className="text-blue-600 hover:text-blue-800 underline font-medium transition-colors duration-200"
+                         className="text-blue-600 hover:text-blue-800 underline font-medium transition-colors duration-200 break-all overflow-wrap-anywhere"
                          onClick={(e) => {
                               e.stopPropagation()
                          }}
@@ -363,7 +383,7 @@ export default function ChatBot() {
                               </div>
 
                               {/* Messages */}
-                              <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
+                              <div className="flex-1 overflow-y-auto overflow-x-hidden p-4 space-y-4 bg-gray-50 chat-container">
                                    {/* Suggestion Chips */}
                                    {showSuggestions && messages.length === 1 && (
                                         <motion.div
@@ -428,11 +448,11 @@ export default function ChatBot() {
                                                             </>
                                                        )}
                                                   </div>
-                                                  <div className={`rounded-2xl px-4 py-3 text-sm ${message.sender === 'user'
+                                                  <div className={`rounded-2xl px-4 py-3 text-sm min-w-0 overflow-hidden ${message.sender === 'user'
                                                        ? 'bg-blue-600 text-white rounded-br-md'
                                                        : 'bg-white text-gray-800 rounded-bl-md shadow-sm'
                                                        }`}>
-                                                       <div className="whitespace-pre-wrap leading-relaxed">
+                                                       <div className="chat-message-content whitespace-pre-wrap leading-relaxed break-words overflow-wrap-anywhere">
                                                             {formatMessage(message.content)}
                                                        </div>
                                                        <div className={`text-xs mt-2 opacity-70 ${message.sender === 'user' ? 'text-blue-100' : 'text-gray-500'
